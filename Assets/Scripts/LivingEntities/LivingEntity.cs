@@ -85,7 +85,7 @@ namespace LivingEntities
 
         #region Unity Methods
 
-        private void Awake()
+        protected virtual void Awake()
         {
             OnDeathEvent += OnDeath;
 
@@ -115,7 +115,7 @@ namespace LivingEntities
 
             if (Health <= 0)
             {
-                OnDeathEvent.Invoke();
+                OnDeathEvent?.Invoke();
             }
         }
 
