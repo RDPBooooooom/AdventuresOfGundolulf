@@ -111,8 +111,8 @@ namespace Player
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
 
-            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x);
-            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y);
+            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.deltaTime);
             
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
 
