@@ -101,6 +101,11 @@ namespace LivingEntities
             if (IsAlive)
             {
                 Health += amount;
+
+                if (Health >= MaxHealth)
+                {
+                    Health = MaxHealth;
+                }
             }
         }
 
