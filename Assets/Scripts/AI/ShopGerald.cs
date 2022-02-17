@@ -9,7 +9,7 @@ public class ShopGerald : MonoBehaviour
     int money = 250; // ? Depends on difficulty ?
     List<Item> itemsForSale;
     int amountOfItems = 5;
-    List<Item> items =  new() { new AmulettofRegeneration(), new Hourglass(), new MagicMilk(), new MagicSplit(), new Pickaxe(), new ReverseEye(), new RingofResting(), new Shield(), new Staff(), new Swoop(), new Sword(), new ToxicPaper(), new HealthPotion()}; // List with All items
+    List<Item> items =  new List<Item>() { new AmulettofRegeneration(), new Hourglass(), new MagicMilk(), new MagicSplit(), new Pickaxe(), new ReverseEye(), new RingofResting(), new Shield(), new Staff(), new Swoop(), new Sword(), new ToxicPaper(), new HealthPotion()}; // List with All items
     int valueLossFactor = 2;
     #endregion
 
