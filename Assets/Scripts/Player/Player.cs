@@ -11,7 +11,7 @@ namespace Player
         #region Fields
 
         private PlayerInput _input;
-        private Rigidbody _rigidbody;
+        private Animator _animator;
         private Camera _camera;
 
         [SerializeField] private float _speedMutliplier;
@@ -44,7 +44,7 @@ namespace Player
         protected void Start()
         {
             _camera = Camera.main;
-            _rigidbody = GetComponent<Rigidbody>();
+            _animator = GetComponent<Animator>();
 
             _input.Ingame.Enable();
         }
@@ -111,6 +111,9 @@ namespace Player
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
 
+            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y);
+            
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
 
             transform.Translate(direction * Time.deltaTime * _speedMutliplier, Space.World);
