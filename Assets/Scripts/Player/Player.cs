@@ -125,6 +125,7 @@ namespace Player
 
             Debug.DrawLine(transform.position, worldPoint, Color.red);
 
+            // ToDo: If looking at a wall, the player can look upwards which looks weird
             transform.LookAt(worldPoint);
         }
 
