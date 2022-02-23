@@ -17,8 +17,13 @@ namespace LivingEntities
         [SerializeField] private float _speed;
         [SerializeField] private bool _isAlive;
 
+        [Header("Melee")]
+        [SerializeField] private Transform _attackPoint;
+        [SerializeField] private float _attackRange;
+        [SerializeField] private LayerMask _hostileEntityLayers;
+
         #endregion
-    
+
         #region Properties
 
         public float MaxHealth
@@ -63,10 +68,28 @@ namespace LivingEntities
             set => _speed = value;
         }
 
-        public Boolean IsAlive
+        public bool IsAlive
         {
             get => _isAlive;
             protected set => _isAlive = value;
+        }
+
+        public Transform AttackPoint
+        {
+            get => _attackPoint;
+            protected set => _attackPoint = value;
+        }
+
+        public float AttackRange
+        {
+            get => _attackRange;
+            protected set => _attackRange = value;
+        }
+
+        public LayerMask HostileEntityLayers
+        {
+            get => _hostileEntityLayers;
+            protected set => _hostileEntityLayers = value;
         }
 
         #endregion
@@ -124,6 +147,11 @@ namespace LivingEntities
             IsAlive = false;
             Debug.Log("Entity died [" + GetType().Name + "]");
         }
-    
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
+        }
+
     }
 }

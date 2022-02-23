@@ -14,21 +14,11 @@ namespace Player
         private Animator _animator;
         private Camera _camera;
 
+        private Teleport _teleport;
+        private Melee _melee;
+        private SpellCast _spellCast;
+
         [SerializeField] private float _speedMutliplier;
-
-        #endregion
-
-        #region Delegates
-
-        public delegate void TeleportHandler(Vector3 startPos, Vector3 endPos);
-
-        #endregion
-
-        #region Events
-
-        public event TeleportHandler OnTeleportStart;
-        public event TeleportHandler OnTeleportEnd;
-
         #endregion
 
         #region Unity Methods
@@ -38,6 +28,10 @@ namespace Player
             base.Awake();
 
             _input = new PlayerInput();
+            _teleport = new Teleport(this, this);
+            _melee = new Melee(this);
+            //_spellCast = new SpellCast(this);
+
             SubscribeToEvents();
         }
 
@@ -55,40 +49,7 @@ namespace Player
             LookDirection();
         }
 
-        #endregion
-
-        #region Character Actions
-
-        public void Teleport()
-        {
-            Teleport(GetCurrentMousePosInWorld());
-        }
-
-        public void Teleport(Vector3 targetPos)
-        {
-            // TODO Implement cooldown
-            Vector3 startPosition = transform.position;
-            
-            OnTeleportStart?.Invoke(startPosition, targetPos);
-            //TODO Play Teleport animation
-
-            // TODO Figure out a way to not teleport in to walls etc.
-            transform.position = targetPos;
-
-            //TODO Play landing animation
-            
-            OnTeleportEnd?.Invoke(startPosition, transform.position);
-        }
-
-        public void Melee()
-        {
-        }
-
-        public void CastSpell()
-        {
-        }
-
-        #endregion
+        #endregion        
 
         #region Helper Methods
 
@@ -102,6 +63,10 @@ namespace Player
             //TODO Throw exception when failing to retrieve valid position
             return Vector3.zero;
         }
+
+        #endregion
+
+        #region Character actions
 
         #endregion
 
@@ -133,17 +98,20 @@ namespace Player
         private void PerformMelee(InputAction.CallbackContext context)
         {
             Debug.Log("Melee Input performed");
+            _melee.Use();
         }
 
         private void PerformSpellCast(InputAction.CallbackContext context)
         {
             Debug.Log("Spell Cast Input performed");
+            _spellCast.Use();
         }
 
         private void PerformTeleport(InputAction.CallbackContext context)
         {
             Debug.Log("Teleport Input performed");
-            Teleport();
+            _teleport.TargetPos = GetCurrentMousePosInWorld();
+            _teleport.Use();
         }
 
         private void PerformInteract(InputAction.CallbackContext context)
