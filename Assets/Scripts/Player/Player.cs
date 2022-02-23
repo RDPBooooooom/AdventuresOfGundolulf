@@ -14,6 +14,7 @@ namespace Player
         private Animator _animator;
         private Camera _camera;
 
+        //TODO Introduce const for speed Multiplier
         [SerializeField] private float _speedMutliplier;
 
         #endregion
