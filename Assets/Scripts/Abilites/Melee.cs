@@ -28,10 +28,11 @@ public class Melee : Ability
     public void DoMeele()
     {
         Collider[] hitHostileEntity = Physics.OverlapSphere(_owner.AttackPoint.position, _owner.AttackRange, _owner.HostileEntityLayers);
-
+        Debug.Log(hitHostileEntity.Length);
         foreach (Collider hostileEntity in hitHostileEntity)
         {
-            _targetEntity = hostileEntity.GetComponent<LivingEntity>();
+            _targetEntity = hostileEntity.GetComponentInChildren<LivingEntity>();
+            Debug.Log(_targetEntity.name);
             _targetEntity.DamageEntity(_owner.Attack);
         }
 
