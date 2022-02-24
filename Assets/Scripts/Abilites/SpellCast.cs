@@ -22,6 +22,7 @@ public class SpellCast : Ability
         if (isReady)
         {
             Projectile();
+            StartCooldown();
         }
     }
 

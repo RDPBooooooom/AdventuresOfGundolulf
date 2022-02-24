@@ -25,10 +25,8 @@ public class Projectile : MonoBehaviour
     {
         if (IsInLayerMask(other.gameObject.layer, Owner.HostileEntites()))
         {
-            Debug.Log("Hit an Enemy!!!!!!");
             if (other.GetComponent<LivingEntity>() != null)
             {
-                Debug.Log("Dealt Damage");
                 Owner.DealDamage(other.GetComponent<LivingEntity>());
             }
         }
@@ -36,6 +34,6 @@ public class Projectile : MonoBehaviour
     
     public static bool IsInLayerMask(int layer, LayerMask layerMask)
     {
-        return layerMask == (layerMask & (1 << layer));
+        return layerMask == (layerMask | (1 << layer));
     }
 }
