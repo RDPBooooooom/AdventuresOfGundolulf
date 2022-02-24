@@ -19,7 +19,7 @@ namespace LivingEntities
 
         [Header("Melee")]
         [SerializeField] private Transform _meleeAttackPoint;
-        [SerializeField] private float _meleeAttackRange;
+        [SerializeField] private float _meleeAttackRange = 1;
         [SerializeField] private LayerMask _hostileEntityLayers;
 
         [Header("SpellCast")]

@@ -1185,6 +1185,8 @@ GameObject:
   - component: {fileID: 4218065369974760}
   - component: {fileID: 95416572284354854}
   - component: {fileID: 7950679828092425089}
+  - component: {fileID: -9058167169981045776}
+  - component: {fileID: -6871594404205706041}
   m_Layer: 11
   m_Name: OrcShaman
   m_TagString: Untagged
@@ -1247,11 +1249,42 @@ MonoBehaviour:
   _haste: 85
   _speed: 14
   _isAlive: 1
-  _attackPoint: {fileID: 0}
-  _attackRange: 1
+  _meleeAttackPoint: {fileID: 0}
+  _meleeAttackRange: 0
   _hostileEntityLayers:
     serializedVersion: 2
     m_Bits: 1024
+  _spellCastAttackPoint: {fileID: 0}
+  _projectilePrefab: {fileID: 0}
+  _projectileForce: 0
+--- !u!136 &-9058167169981045776
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880296544152820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &-6871594404205706041
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1880296544152820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1892427834730432
 GameObject:
   m_ObjectHideFlags: 0

@@ -1186,6 +1186,10 @@ GameObject:
   - component: {fileID: 4459296852300358}
   - component: {fileID: 95865715334774026}
   - component: {fileID: 7972519871496248910}
+  - component: {fileID: 3781784818602246566}
+  - component: {fileID: -809414340090630056}
+  - component: {fileID: 2224279657052055990}
+  - component: {fileID: 545413300424353591}
   m_Layer: 11
   m_Name: OrcWarlord
   m_TagString: Untagged
@@ -1248,11 +1252,70 @@ MonoBehaviour:
   _haste: 85
   _speed: 14
   _isAlive: 0
-  _attackPoint: {fileID: 0}
-  _attackRange: 1
+  _meleeAttackPoint: {fileID: 0}
+  _meleeAttackRange: 0
   _hostileEntityLayers:
     serializedVersion: 2
     m_Bits: 1024
+  _spellCastAttackPoint: {fileID: 0}
+  _projectilePrefab: {fileID: 0}
+  _projectileForce: 0
+--- !u!136 &3781784818602246566
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906022184173130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &-809414340090630056
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906022184173130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &2224279657052055990
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906022184173130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &545413300424353591
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906022184173130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1930077169355358
 GameObject:
   m_ObjectHideFlags: 0

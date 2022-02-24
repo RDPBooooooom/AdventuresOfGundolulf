@@ -5,12 +5,12 @@ namespace LivingEntities
     public class OrcEntity : LivingEntity
     {
         Melee melee;
-        Player.Player player;
+        PlayerScripts.Player player;
 
         private void Start()
         {
             melee = new Melee(this);
-            player = FindObjectOfType<Player.Player>(); 
+            player = FindObjectOfType<PlayerScripts.Player>(); 
         }
         private void FixedUpdate()
         {
