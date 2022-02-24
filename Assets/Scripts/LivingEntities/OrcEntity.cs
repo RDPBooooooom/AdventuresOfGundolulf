@@ -30,7 +30,6 @@ namespace LivingEntities
 
         bool PlayerInRange()
         {
-            Debug.Log(gameObject.name + " is doing the ouch to the Player");
             return Vector3.Distance(transform.position, player.transform.position) <= MeleeAttackRange;
         }
     }

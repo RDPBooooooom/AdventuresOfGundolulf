@@ -27,6 +27,7 @@ public class Melee : Ability
         {
             LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
             _targetEntity.DamageEntity(_owner.Attack);
+            Debug.Log(_owner.name + " hit " + _targetEntity.name);
         }
 
         StartCooldown();

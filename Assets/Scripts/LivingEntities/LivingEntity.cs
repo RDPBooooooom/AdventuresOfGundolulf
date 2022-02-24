@@ -158,7 +158,6 @@ namespace LivingEntities
         public void DamageEntity(float amount)
         {
             Health -= amount;
-            Debug.Log(gameObject.name + " says: Ouch");
             if (Health <= 0)
             {
                 OnDeathEvent?.Invoke();
