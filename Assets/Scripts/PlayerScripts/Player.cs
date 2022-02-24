@@ -1,10 +1,8 @@
-﻿using System;
-using LivingEntities;
-using UnityEditorInternal;
+﻿using LivingEntities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Player
+namespace PlayerScripts
 {
     public class Player : LivingEntity
     {
