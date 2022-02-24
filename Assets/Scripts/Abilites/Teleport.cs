@@ -36,7 +36,7 @@ public class Teleport : Ability
     {
         cooldown = 2f;
         isReady = true;
-        this._targetEntity = targetEntity;
+        _targetEntity = targetEntity;
     }
 
     public override void Use()

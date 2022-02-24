@@ -7,7 +7,6 @@ public class SpellCast : Ability
 {
     #region Fields
 
-    private LivingEntity _targetEntity;
     private GameObject _projectile;
 
     #endregion
@@ -20,30 +19,26 @@ public class SpellCast : Ability
 
     public override void Use()
     {
-        
         if (isReady)
         {
-            DoSpellCast();
-        }
-    }
-
-    public void DoSpellCast()
-    {
-        Projectile();
-
-        Collider[] hostileEntitiesHit = Physics.OverlapSphere(_projectile.transform.position, _projectile.transform.localScale.x, _owner.HostileEntityLayers);
-
-        foreach (Collider hostileEntity in hostileEntitiesHit)
-        {
-            LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
-            _targetEntity.DamageEntity(_owner.Intelligence);
+            Projectile();
         }
     }
 
     public void Projectile()
     {
         _projectile = Object.Instantiate(_owner.ProjectilePrefab, _owner.SpellCastAttackPoint.position, _owner.SpellCastAttackPoint.rotation);
+        Projectile projectile = _projectile.GetComponent<Projectile>();
+        projectile.Owner = this;
+
         Rigidbody rigidbody = _projectile.GetComponent<Rigidbody>();
         rigidbody.AddForce(_owner.SpellCastAttackPoint.forward * _owner.ProjectileForce, ForceMode.Impulse);
     }
+
+    public void DealDamage(LivingEntity targetEntity)
+    {
+        targetEntity.DamageEntity(_owner.Intelligence);
+    }
+
+    public LayerMask HostileEntites() => _owner.HostileEntityLayers;
 }
