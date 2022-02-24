@@ -17,8 +17,18 @@ namespace LivingEntities
         [SerializeField] private float _speed;
         [SerializeField] private bool _isAlive;
 
+        [Header("Melee")]
+        [SerializeField] private Transform _meleeAttackPoint;
+        [SerializeField] private float _meleeAttackRange;
+        [SerializeField] private LayerMask _hostileEntityLayers;
+
+        [Header("SpellCast")]
+        [SerializeField] private Transform _spellCastAttackPoint;
+        [SerializeField] private GameObject _projectilePrefab;
+        [SerializeField] private float _projectileForce;
+
         #endregion
-    
+
         #region Properties
 
         public float MaxHealth
@@ -63,10 +73,46 @@ namespace LivingEntities
             set => _speed = value;
         }
 
-        public Boolean IsAlive
+        public bool IsAlive
         {
             get => _isAlive;
             protected set => _isAlive = value;
+        }
+
+        public Transform MeleeAttackPoint
+        {
+            get => _meleeAttackPoint;
+            protected set => _meleeAttackPoint = value;
+        }
+
+        public float MeleeAttackRange
+        {
+            get => _meleeAttackRange;
+            protected set => _meleeAttackRange = value;
+        }
+
+        public LayerMask HostileEntityLayers
+        {
+            get => _hostileEntityLayers;
+            protected set => _hostileEntityLayers = value;
+        }
+
+        public Transform SpellCastAttackPoint
+        {
+            get => _spellCastAttackPoint;
+            protected set => _spellCastAttackPoint = value;
+        }
+
+        public GameObject ProjectilePrefab
+        {
+            get => _projectilePrefab;
+            protected set => _projectilePrefab = value;
+        }
+
+        public float ProjectileForce
+        {
+            get => _projectileForce;
+            protected set => _projectileForce = value;
         }
 
         #endregion
@@ -112,7 +158,6 @@ namespace LivingEntities
         public void DamageEntity(float amount)
         {
             Health -= amount;
-
             if (Health <= 0)
             {
                 OnDeathEvent?.Invoke();
@@ -124,6 +169,11 @@ namespace LivingEntities
             IsAlive = false;
             Debug.Log("Entity died [" + GetType().Name + "]");
         }
-    
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
+        }
+
     }
 }
