@@ -18,9 +18,14 @@ namespace LivingEntities
         [SerializeField] private bool _isAlive;
 
         [Header("Melee")]
-        [SerializeField] private Transform _attackPoint;
-        [SerializeField] private float _attackRange;
+        [SerializeField] private Transform _meleeAttackPoint;
+        [SerializeField] private float _meleeAttackRange;
         [SerializeField] private LayerMask _hostileEntityLayers;
+
+        [Header("SpellCast")]
+        [SerializeField] private Transform _spellCastAttackPoint;
+        [SerializeField] private GameObject _projectilePrefab;
+        [SerializeField] private float _projectileForce;
 
         #endregion
 
@@ -74,22 +79,40 @@ namespace LivingEntities
             protected set => _isAlive = value;
         }
 
-        public Transform AttackPoint
+        public Transform MeleeAttackPoint
         {
-            get => _attackPoint;
-            protected set => _attackPoint = value;
+            get => _meleeAttackPoint;
+            protected set => _meleeAttackPoint = value;
         }
 
-        public float AttackRange
+        public float MeleeAttackRange
         {
-            get => _attackRange;
-            protected set => _attackRange = value;
+            get => _meleeAttackRange;
+            protected set => _meleeAttackRange = value;
         }
 
         public LayerMask HostileEntityLayers
         {
             get => _hostileEntityLayers;
             protected set => _hostileEntityLayers = value;
+        }
+
+        public Transform SpellCastAttackPoint
+        {
+            get => _spellCastAttackPoint;
+            protected set => _spellCastAttackPoint = value;
+        }
+
+        public GameObject ProjectilePrefab
+        {
+            get => _projectilePrefab;
+            protected set => _projectilePrefab = value;
+        }
+
+        public float ProjectileForce
+        {
+            get => _projectileForce;
+            protected set => _projectileForce = value;
         }
 
         #endregion
@@ -150,7 +173,7 @@ namespace LivingEntities
 
         private void OnDrawGizmosSelected()
         {
-            Gizmos.DrawWireSphere(AttackPoint.position, AttackRange);
+            Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
         }
 
     }

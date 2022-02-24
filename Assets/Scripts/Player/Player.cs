@@ -30,7 +30,7 @@ namespace Player
             _input = new PlayerInput();
             _teleport = new Teleport(this, this);
             _melee = new Melee(this);
-            //_spellCast = new SpellCast(this);
+            _spellCast = new SpellCast(this);
 
             SubscribeToEvents();
         }

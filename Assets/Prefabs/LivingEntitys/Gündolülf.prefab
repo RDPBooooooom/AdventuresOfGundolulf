@@ -927,6 +927,7 @@ Transform:
   - {fileID: 4038062640412194}
   - {fileID: 4015872813585934}
   - {fileID: 4220861754973719373}
+  - {fileID: 3153508010744783922}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -961,14 +962,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c016bcf77eaa49d08999ab0b70c7fee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 1
+  _maxHealth: 100
   _health: 0
-  _attack: 0
-  _intelligence: 0
-  _range: 0
-  _haste: 0
+  _attack: 10
+  _intelligence: 15
+  _range: 300
+  _haste: 100
   _speed: 10
   _isAlive: 0
+  _meleeAttackPoint: {fileID: 0}
+  _meleeAttackRange: 0
+  _hostileEntityLayers:
+    serializedVersion: 2
+    m_Bits: 6144
+  _spellCastAttackPoint: {fileID: 0}
   _speedMutliplier: 1
 --- !u!1 &1752813088756096
 GameObject:
@@ -1341,6 +1348,49 @@ Transform:
   m_Father: {fileID: 4947674420561342}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2744196956973554735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3153508010744783922}
+  - component: {fileID: 6415450737269182025}
+  m_Layer: 10
+  m_Name: SpellCastAttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3153508010744783922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744196956973554735}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.92, z: 0.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4529959548488580}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6415450737269182025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2744196956973554735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee662a4fda3a5a4fb56c7bac099a57d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6384553463721607097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,7 +1402,7 @@ GameObject:
   - component: {fileID: 4220861754973719373}
   - component: {fileID: 983382483}
   m_Layer: 10
-  m_Name: AttackPoint
+  m_Name: MeleeAttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1366,7 +1416,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6384553463721607097}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.87, z: 1}
+  m_LocalPosition: {x: 0, y: 0.87, z: 0.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4529959548488580}

@@ -1004,37 +1004,25 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _haste
-      value: 100
+      propertyPath: _projectileForce
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _range
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _attack
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _isAlive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _attackPoint
+      propertyPath: _meleeAttackPoint
       value: 
       objectReference: {fileID: 983382484}
     - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _attackRange
-      value: 1
+      propertyPath: _meleeAttackRange
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
-      propertyPath: _intelligence
-      value: 15
-      objectReference: {fileID: 0}
+      propertyPath: _projectilePrefab
+      value: 
+      objectReference: {fileID: 4063637104488778814, guid: 55e0e82dbaa0b7e4892708c310edf924, type: 3}
+    - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: _spellCastAttackPoint
+      value: 
+      objectReference: {fileID: 983382482}
     - target: {fileID: 739857981, guid: f9527c2757f240d4092108c99f07e436, type: 3}
       propertyPath: _hostileEntityLayers.m_Bits
       value: 6144
@@ -1087,8 +1075,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3153508010744783922, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153508010744783922, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3153508010744783922, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220861754973719373, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220861754973719373, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+--- !u!4 &983382482 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3153508010744783922, guid: f9527c2757f240d4092108c99f07e436, type: 3}
+  m_PrefabInstance: {fileID: 983382481}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &983382484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4220861754973719373, guid: f9527c2757f240d4092108c99f07e436, type: 3}
