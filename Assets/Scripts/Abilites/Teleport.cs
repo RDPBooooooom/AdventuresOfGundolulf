@@ -14,6 +14,7 @@ public class Teleport : Ability
     #region Properties
 
     public Vector3 TargetPos { get; set; }
+    int teleportRange = 25;
 
     #endregion
 
@@ -41,7 +42,7 @@ public class Teleport : Ability
 
     public override void Use()
     {
-        if (isReady)
+        if (isReady && InRange() && IsValidTargetPosition())
         {
             DoTeleport();
         }
@@ -63,6 +64,27 @@ public class Teleport : Ability
         OnTeleportEnd?.Invoke(startPosition, _targetEntity.transform.position);
 
         StartCooldown();
+    }
+
+    bool InRange()
+    {
+        return Vector3.Distance(_targetEntity.transform.position, TargetPos) <= teleportRange;
+    }
+
+    bool IsValidTargetPosition()
+    {
+        int layerMask = LayerMask.GetMask("Floor");
+        layerMask = ~layerMask;
+
+        Ray ray = Camera.main.ScreenPointToRay(TargetPos);
+
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, 500f, layerMask))
+        {
+            Debug.Log("Why not working");
+            if (hitInfo.transform.gameObject.layer == layerMask)
+                return true;
+        }
+        return false;
     }
 
     #endregion
