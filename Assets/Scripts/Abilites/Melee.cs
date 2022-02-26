@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Melee : Ability
 {
+    #region Methods
+
     public Melee(LivingEntity owner) : base(owner)
     {
         cooldown = 100 / owner.Haste;
@@ -16,6 +18,7 @@ public class Melee : Ability
         if (isReady)
         {
             DoMeele();
+            StartCooldown();
         }
     }
 
@@ -29,7 +32,7 @@ public class Melee : Ability
             _targetEntity.DamageEntity(_owner.Attack);
             Debug.Log(_owner.name + " hit " + _targetEntity.name);
         }
-
-        StartCooldown();
     }
+
+    #endregion
 }

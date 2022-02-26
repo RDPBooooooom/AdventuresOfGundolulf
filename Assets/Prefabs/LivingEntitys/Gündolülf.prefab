@@ -68,7 +68,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5377686449992547376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0, y: 1, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7828432883996781467}
@@ -837,7 +837,8 @@ GameObject:
   - component: {fileID: 7828432883996781467}
   - component: {fileID: 7917566391464695937}
   - component: {fileID: 7832949159022310946}
-  - component: {fileID: 7832949158357465809}
+  - component: {fileID: 5263268419993395426}
+  - component: {fileID: 7929843121742003906}
   m_Layer: 10
   m_Name: "G\xFCndol\xFClf"
   m_TagString: Untagged
@@ -911,8 +912,8 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 4063637104488778814, guid: 55e0e82dbaa0b7e4892708c310edf924, type: 3}
   _projectileForce: 20
   _speedMutliplier: 1
---- !u!135 &7832949158357465809
-SphereCollider:
+--- !u!136 &5263268419993395426
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -921,8 +922,23 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &7929843121742003906
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7832335072319612961}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7832416989243936157
 GameObject:

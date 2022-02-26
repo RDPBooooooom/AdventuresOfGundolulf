@@ -11,6 +11,8 @@ public class SpellCast : Ability
 
     #endregion
 
+    #region Methods
+
     public SpellCast(LivingEntity owner) : base(owner)
     {
         cooldown = 100 / owner.Haste;
@@ -41,5 +43,17 @@ public class SpellCast : Ability
         targetEntity.DamageEntity(_owner.Intelligence);
     }
 
-    public LayerMask HostileEntites() => _owner.HostileEntityLayers;
+    #endregion
+
+    #region Get Values
+
+    public LayerMask GetHostileEntites() => _owner.HostileEntityLayers;
+
+    public float GetRange() => _owner.Range;
+
+    public Vector3 GetPosition() => _owner.transform.position;
+
+    public Collider[] GetCollider() => _owner.GetComponents<Collider>();
+
+    #endregion
 }
