@@ -16,6 +16,8 @@ namespace PlayerScripts
         private Melee _melee;
         private SpellCast _spellCast;
 
+        private int _groundLayer;
+
         //TODO Introduce const for speed Multiplier
         [SerializeField] private float _speedMutliplier;
         #endregion
@@ -31,6 +33,8 @@ namespace PlayerScripts
             _melee = new Melee(this);
             _spellCast = new SpellCast(this);
 
+            _groundLayer = LayerMask.GetMask("Floor");
+            
             SubscribeToEvents();
         }
 
@@ -63,6 +67,17 @@ namespace PlayerScripts
             return Vector3.zero;
         }
 
+        private Vector3 GetCurrentMousePosInWorldOnGround()
+        {
+            Vector2 mousePos = _input.Ingame.MousePosition.ReadValue<Vector2>();
+            if (Physics.Raycast(_camera.ScreenPointToRay(mousePos), out RaycastHit hitInfo, 1000, _groundLayer))
+            {
+                return hitInfo.point;
+            }
+            //TODO Find clostest point to ground
+            return Vector3.zero;
+        }
+
         #endregion
 
         #region Character actions
@@ -85,9 +100,9 @@ namespace PlayerScripts
 
         private void LookDirection()
         {
-            Vector3 worldPoint = GetCurrentMousePosInWorld();
+            Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
 
-            Debug.DrawLine(transform.position, worldPoint, Color.red);
+            Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
 
             // ToDo: If looking at a wall, the player can look upwards which looks weird
             transform.LookAt(worldPoint);
@@ -109,7 +124,7 @@ namespace PlayerScripts
         private void PerformTeleport(InputAction.CallbackContext context)
         {
             Debug.Log("Teleport Input performed");
-            _teleport.TargetPos = GetCurrentMousePosInWorld();
+            _teleport.TargetPos = GetCurrentMousePosInWorldOnGround();
             _teleport.Use();
         }
 

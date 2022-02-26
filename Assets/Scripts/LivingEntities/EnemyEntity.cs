@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using PlayerScripts;
 using UnityEngine;
 
 namespace LivingEntities
 {
-    public class EnemyEntity : LivingEntity
+    public abstract class EnemyEntity : LivingEntity
     {
-        Melee melee;
-        PlayerScripts.Player player;
+        protected Melee melee;
+        protected Player player;
 
         // Start is called before the first frame update
-        protected virtual void Start()
+        protected void Start()
         {
             melee = new Melee(this);
-            player = FindObjectOfType<PlayerScripts.Player>();
+            player = FindObjectOfType<Player>();
         }
 
-        protected virtual void FixedUpdate()
+        protected void FixedUpdate()
         {
             if (PlayerInRange())
                 melee.Use();
@@ -27,12 +28,12 @@ namespace LivingEntities
         protected virtual void FollowPlayer()
         {
             //ToDo
-            Debug.Log("Following player");
+           // Debug.Log("Following player");
         }
 
         protected virtual bool PlayerInRange()
         {
-            Debug.Log(Vector3.Distance(transform.position, player.transform.position) <= MeleeAttackRange);
+            //Debug.Log(Vector3.Distance(transform.position, player.transform.position) <= MeleeAttackRange);
             return Vector3.Distance(transform.position, player.transform.position) <= MeleeAttackRange;
         }
     }

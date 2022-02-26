@@ -77,12 +77,12 @@ namespace Levels
             List<Cell> cellGrid = new List<Cell>();
             _numberOfRoomsSqr = Mathf.CeilToInt(Mathf.Sqrt(NumberOfRooms));
 
-            int worldPosZ = 0;
+            float worldPosZ = 0;
 
             for (int i = 0; i < _numberOfRoomsSqr; i++)
             {
-                worldPosZ += 24;
-                int worldPosX = 0;
+                worldPosZ += 25.5f;
+                float worldPosX = 0;
 
                 for (int j = 0; j < _numberOfRoomsSqr; j++)
                 {

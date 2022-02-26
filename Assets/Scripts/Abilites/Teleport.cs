@@ -14,7 +14,7 @@ public class Teleport : Ability
     #region Properties
 
     public Vector3 TargetPos { get; set; }
-    int teleportRange = 25;
+    public int TeleportRange { get; set; } = 25;
 
     #endregion
 
@@ -42,7 +42,7 @@ public class Teleport : Ability
 
     public override void Use()
     {
-        if (isReady && InRange() && IsValidTargetPosition())
+        if (isReady)
         {
             DoTeleport();
         }
@@ -50,6 +50,8 @@ public class Teleport : Ability
 
     public void DoTeleport()
     {
+        TrimTargetPos();
+        
         // TODO Implement cooldown
         Vector3 startPosition = _targetEntity.transform.position;
 
@@ -66,23 +68,27 @@ public class Teleport : Ability
         StartCooldown();
     }
 
-    bool InRange()
+    private void TrimTargetPos()
     {
-        return Vector3.Distance(_targetEntity.transform.position, TargetPos) <= teleportRange;
+        float teleportDistance = Vector3.Distance(_targetEntity.transform.position, TargetPos);
+        
+        if (teleportDistance < TeleportRange) return;
+        
+        Vector3 direction = TargetPos.normalized - _targetEntity.transform.position.normalized;
+
+
+        TargetPos -= (direction * (teleportDistance - TeleportRange));
     }
 
-    bool IsValidTargetPosition()
+    private bool IsValidTargetPosition()
     {
         int layerMask = LayerMask.GetMask("Floor");
-        layerMask = ~layerMask;
 
         Ray ray = Camera.main.ScreenPointToRay(TargetPos);
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, 500f, layerMask))
         {
-            Debug.Log("Why not working");
-            if (hitInfo.transform.gameObject.layer == layerMask)
-                return true;
+            return true;
         }
         return false;
     }
