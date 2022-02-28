@@ -19,7 +19,7 @@ namespace LivingEntities
 
         [Header("Melee")]
         [SerializeField] private Transform _meleeAttackPoint;
-        [SerializeField] private float _meleeAttackRange = 1;
+        [SerializeField] private float _meleeAttackRange;
         [SerializeField] private LayerMask _hostileEntityLayers;
 
         [Header("SpellCast")]
@@ -142,7 +142,7 @@ namespace LivingEntities
     
         #endregion
 
-        public void HealEntity(float amount)
+        public virtual void HealEntity(float amount)
         {
             if (IsAlive)
             {
@@ -155,7 +155,7 @@ namespace LivingEntities
             }
         }
 
-        public void DamageEntity(float amount)
+        public virtual void DamageEntity(float amount)
         {
             Health -= amount;
             if (Health <= 0)
