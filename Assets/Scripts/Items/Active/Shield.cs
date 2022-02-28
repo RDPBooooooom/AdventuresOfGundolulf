@@ -1,8 +1,9 @@
+using Assets.Scripts.Interfaces;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : Item
+public class Shield : Item, IUsable
 {
     // Start is called before the first frame update
     void Start()
@@ -15,5 +16,10 @@ public class Shield : Item
     void Update()
     {
         
+    }
+
+    public void Use()
+    {
+        throw new System.NotImplementedException();
     }
 }

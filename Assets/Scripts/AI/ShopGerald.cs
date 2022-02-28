@@ -2,8 +2,9 @@ using System.Collections;
 using Random = System.Random;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts;
 
-public class ShopGerald : MonoBehaviour
+public class ShopGerald : MonoBehaviour, IInteractable
 {
     #region Declaring Variables
     int money = 250; // ? Depends on difficulty ?
@@ -44,5 +45,10 @@ public class ShopGerald : MonoBehaviour
 
         }
         return itemsSale;
+    }
+
+    public void Interact()
+    {
+        throw new System.NotImplementedException();
     }
 }
