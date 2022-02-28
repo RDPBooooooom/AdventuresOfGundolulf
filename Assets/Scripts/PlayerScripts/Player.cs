@@ -1,6 +1,7 @@
 ﻿using LivingEntities;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace PlayerScripts
 {
@@ -11,15 +12,14 @@ namespace PlayerScripts
         private PlayerInput _input;
         private Animator _animator;
         private Camera _camera;
+        private Rigidbody _rigidbody;
         
         private Teleport _teleport;
         private Melee _melee;
         private SpellCast _spellCast;
 
         private int _groundLayer;
-
-        //TODO Introduce const for speed Multiplier
-        [SerializeField] private float _speedMutliplier;
+        
         #endregion
 
         #region Unity Methods
@@ -42,11 +42,12 @@ namespace PlayerScripts
         {
             _camera = Camera.main;
             _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
         }
 
-        protected void Update()
+        protected void FixedUpdate()
         {
             Movement();
             LookDirection();
@@ -94,8 +95,8 @@ namespace PlayerScripts
             _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.deltaTime);
             
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
-
-            transform.Translate(direction * Time.deltaTime * _speedMutliplier, Space.World);
+            
+            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier), ForceMode.VelocityChange);
         }
 
         private void LookDirection()
@@ -103,8 +104,7 @@ namespace PlayerScripts
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
 
             Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
-
-            // ToDo: If looking at a wall, the player can look upwards which looks weird
+            
             transform.LookAt(worldPoint);
         }
 

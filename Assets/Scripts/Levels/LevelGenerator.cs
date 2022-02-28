@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Levels.Rooms;
 using UnityEngine;
+using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace Levels
@@ -53,13 +53,15 @@ namespace Levels
             List<Room> rooms = new List<Room>();
             List<Cell> cells = DepthFirstSearch();
 
+            GameObject levelParent = new GameObject("Level");
+            
             foreach (Cell cell in cells)
             {
                 try
                 {
                     Room roomPrefab = GetRandomRoom<CombatRoom>(cell.DoorDirections);
-                    rooms.Add(GameObject.Instantiate(roomPrefab, cell.worldPos, Quaternion.identity));
-                    rooms.Last().name = cell.name;
+                    rooms.Add(Object.Instantiate(roomPrefab, cell.WorldPos, Quaternion.identity, levelParent.transform));
+                    rooms.Last().name = cell.Name;
                 }
                 catch (NoRoomFoundException _)
                 {
@@ -88,8 +90,8 @@ namespace Levels
                 {
                     worldPosX += 35;
                     cellGrid.Add(new Cell());
-                    cellGrid.Last().worldPos = new Vector3(worldPosX, 0, worldPosZ);
-                    cellGrid.Last().name = "Cell [" + i + "," + j + "]";
+                    cellGrid.Last().WorldPos = new Vector3(worldPosX, 0, worldPosZ);
+                    cellGrid.Last().Name = "Cell [" + i + "," + j + "]";
                 }
             }
 
@@ -135,7 +137,7 @@ namespace Levels
                             currentCell = newCell;
                             cellGrid[newCell].DoorDirections |= DoorDirections.left;
 
-                            DrawDebugLine(current.worldPos, cellGrid[newCell].worldPos, Color.magenta);
+                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                         else
                         {
@@ -143,7 +145,7 @@ namespace Levels
                             currentCell = newCell;
                             cellGrid[newCell].DoorDirections |= DoorDirections.bottom;
 
-                            DrawDebugLine(current.worldPos, cellGrid[newCell].worldPos, Color.magenta);
+                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                     }
                     else
@@ -155,7 +157,7 @@ namespace Levels
                             currentCell = newCell;
                             cellGrid[newCell].DoorDirections |= DoorDirections.right;
 
-                            DrawDebugLine(current.worldPos, cellGrid[newCell].worldPos, Color.magenta);
+                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                         else
                         {
@@ -163,7 +165,7 @@ namespace Levels
                             currentCell = newCell;
                             cellGrid[newCell].DoorDirections |= DoorDirections.top;
 
-                            DrawDebugLine(current.worldPos, cellGrid[newCell].worldPos, Color.magenta);
+                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                     }
                 }
@@ -182,22 +184,22 @@ namespace Levels
             if (!_drawDebug) return;
             if (cell - _numberOfRoomsSqr >= 0)
             {
-                Debug.DrawLine(cellGrid[cell].worldPos + new Vector3(2, 0, 0),
-                    cellGrid[cell - _numberOfRoomsSqr].worldPos + new Vector3(2, 0, 0), Color.black,
+                Debug.DrawLine(cellGrid[cell].WorldPos + new Vector3(2, 0, 0),
+                    cellGrid[cell - _numberOfRoomsSqr].WorldPos + new Vector3(2, 0, 0), Color.black,
                     1000000);
             }
 
             if (cell + _numberOfRoomsSqr < cellGrid.Count)
-                Debug.DrawLine(cellGrid[cell].worldPos + new Vector3(-2, 0, 0),
-                    cellGrid[cell + _numberOfRoomsSqr].worldPos + new Vector3(-2, 0, 0), Color.yellow,
+                Debug.DrawLine(cellGrid[cell].WorldPos + new Vector3(-2, 0, 0),
+                    cellGrid[cell + _numberOfRoomsSqr].WorldPos + new Vector3(-2, 0, 0), Color.yellow,
                     1000000); //Bot
             if ((cell + 1) % _numberOfRoomsSqr != 0)
-                Debug.DrawLine(cellGrid[cell].worldPos + new Vector3(0, 0, 2),
-                    cellGrid[cell + 1].worldPos + new Vector3(0, 0, 2), Color.red,
+                Debug.DrawLine(cellGrid[cell].WorldPos + new Vector3(0, 0, 2),
+                    cellGrid[cell + 1].WorldPos + new Vector3(0, 0, 2), Color.red,
                     1000000); // Right
             if (cell % _numberOfRoomsSqr != 0)
-                Debug.DrawLine(cellGrid[cell].worldPos + new Vector3(0, 0, -2),
-                    cellGrid[cell + -1].worldPos + new Vector3(0, 0, -2), Color.green,
+                Debug.DrawLine(cellGrid[cell].WorldPos + new Vector3(0, 0, -2),
+                    cellGrid[cell + -1].WorldPos + new Vector3(0, 0, -2), Color.green,
                     1000000); // Left
         }
 
@@ -244,10 +246,10 @@ namespace Levels
 
     internal class Cell
     {
-        public String name;
-        public bool Visited = false;
+        public String Name;
+        public bool Visited;
         public DoorDirections DoorDirections;
-        public Vector3 worldPos;
+        public Vector3 WorldPos;
         public List<int> Neighbours;
     }
 
