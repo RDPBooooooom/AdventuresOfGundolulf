@@ -3,7 +3,11 @@ guid: 9a1e3ace26d97d24b986085bca91869b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - _meleeAttackPoint: {instanceID: 0}
+  - _spellCastAttackPoint: {instanceID: 0}
+  - _projectilePrefab: {instanceID: 0}
+  - coin: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

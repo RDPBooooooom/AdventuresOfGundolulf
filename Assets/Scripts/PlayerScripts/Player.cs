@@ -36,6 +36,7 @@ namespace PlayerScripts
             _groundLayer = LayerMask.GetMask("Floor");
             
             SubscribeToEvents();
+
         }
 
         protected void Start()
@@ -45,6 +46,7 @@ namespace PlayerScripts
             _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
+            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
         }
 
         protected void FixedUpdate()
@@ -82,6 +84,8 @@ namespace PlayerScripts
         #endregion
 
         #region Character actions
+
+
 
         #endregion
 
@@ -151,6 +155,21 @@ namespace PlayerScripts
 
         #endregion
 
+        #endregion
+
+        #region Override Methods
+
+        public override void HealEntity(float amount)
+        {
+            base.HealEntity(amount);
+
+            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
+        }
+        public override void DamageEntity(float amount)
+        {
+            base.DamageEntity(amount);
+            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
+        }
         #endregion
     }
 }
