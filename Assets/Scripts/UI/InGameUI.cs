@@ -13,6 +13,12 @@ namespace UserInterface
         public Text GoldAmount;
         public Image Item;
         public int Gold;
+
+        public Text AttackValue;
+        public Text IntelligenceValue;
+        public Text RangeValue;
+        public Text HasteValue;
+        public Text SpeedValue;
         #endregion
         // Start is called before the first frame update
         void Awake()
