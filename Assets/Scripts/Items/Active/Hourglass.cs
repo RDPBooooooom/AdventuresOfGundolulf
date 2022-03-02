@@ -8,7 +8,7 @@ public class Hourglass : ActiveItem, IUsable
     // Start is called before the first frame update
     void Start()
     {
-        value = 15;
+        Value = 15;
         Cooldown = 30;
         IsReady = true; // Be careful not to be able to abuse -> switch active item and use instantly
     }

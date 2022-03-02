@@ -7,7 +7,7 @@ public class ToxicPaper : SpellItem
     // Start is called before the first frame update
     void Start()
     {
-        value = 15;
+        Value = 15;
     }
 
     // Update is called once per frame

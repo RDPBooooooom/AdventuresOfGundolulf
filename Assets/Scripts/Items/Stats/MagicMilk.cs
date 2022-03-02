@@ -7,7 +7,7 @@ public class MagicMilk : StatsItem
     // Start is called before the first frame update
     void Start()
     {
-        value = 5;
+        Value = 5;
     }
 
     // Update is called once per frame

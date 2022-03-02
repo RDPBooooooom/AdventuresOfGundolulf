@@ -18,16 +18,16 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     void Sell(Item item)
     {
-        money += item.value;
+        money += item.Value;
         equippedItems.Remove(item);
         //TO DO: Add to player
     }
 
     void Buy(Item item)
     {
-        if (money >= Mathf.RoundToInt(item.value / valueLossFactor)) // TO DO: Abrunden
+        if (money >= Mathf.RoundToInt(item.Value / valueLossFactor)) // TO DO: Abrunden
         {
-            money -= Mathf.RoundToInt(item.value / valueLossFactor);
+            money -= Mathf.RoundToInt(item.Value / valueLossFactor);
             equippedItems.Add(item);
             //TO DO: Remove from Player
         }

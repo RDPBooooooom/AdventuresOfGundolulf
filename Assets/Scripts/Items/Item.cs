@@ -9,7 +9,7 @@ public class Item : MonoBehaviour, IInteractable
     // Class that all items will inherit from
     #region Declaring Variables
 
-    public int value { get; protected set; }
+    public int Value { get; protected set; }
     public Sprite uiImage;
     
     #endregion
