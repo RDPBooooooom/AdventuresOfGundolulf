@@ -73,8 +73,8 @@ public class Teleport : Ability
         float teleportDistance = Vector3.Distance(_targetEntity.transform.position, TargetPos);
         
         if (teleportDistance < TeleportRange) return;
-        
-        Vector3 direction = TargetPos.normalized - _targetEntity.transform.position.normalized;
+
+        Vector3 direction = (TargetPos - _targetEntity.transform.position).normalized;
 
 
         TargetPos -= (direction * (teleportDistance - TeleportRange));
