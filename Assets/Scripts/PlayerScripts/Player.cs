@@ -1,4 +1,6 @@
-﻿using LivingEntities;
+﻿using Assets.Scripts;
+using Assets.Scripts.Interfaces;
+using LivingEntities;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -17,8 +19,10 @@ namespace PlayerScripts
         private Teleport _teleport;
         private Melee _melee;
         private SpellCast _spellCast;
+        private ActiveItem _activeItem;
 
         private int _groundLayer;
+        [SerializeField] private float _interactRange;
         
         #endregion
 
@@ -32,6 +36,7 @@ namespace PlayerScripts
             _teleport = new Teleport(this, this);
             _melee = new Melee(this);
             _spellCast = new SpellCast(this);
+            _activeItem = null;
 
             _groundLayer = LayerMask.GetMask("Floor");
             
@@ -53,6 +58,7 @@ namespace PlayerScripts
         {
             Movement();
             LookDirection();
+            GetInteractableObject();
         }
 
         #endregion        
@@ -81,11 +87,56 @@ namespace PlayerScripts
             return Vector3.zero;
         }
 
+        private IInteractable GetInteractableObject()
+        {
+            Collider[] closeObjects = Physics.OverlapSphere(transform.position, _interactRange);
+
+            IInteractable closestInteractable = null;
+            float closestDistance = float.MaxValue;
+
+            foreach (Collider closeObject in closeObjects)
+            {
+                IInteractable currentObject = closeObject.GetComponent<IInteractable>();
+
+                if (currentObject != null)
+                {
+                    float distance = Vector3.Distance(transform.position, closeObject.transform.position);
+
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestInteractable = currentObject;
+                    }
+                }
+            }
+
+            return closestInteractable;
+        }
+
         #endregion
 
         #region Character actions
 
+        private void InteractWithObject()
+        {
+            // ToDo: Display Text if you can interact with something
 
+            IInteractable interactableObject = GetInteractableObject();
+
+            if (interactableObject == null)
+            {
+                return;
+            }
+
+            interactableObject.Interact();
+        }
+
+        private void UseItem()
+        {
+            IUsable usableObject = (IUsable)_activeItem;
+
+            usableObject.Use();
+        }
 
         #endregion
 
@@ -135,11 +186,13 @@ namespace PlayerScripts
         private void PerformInteract(InputAction.CallbackContext context)
         {
             Debug.Log("Interact Input performed");
+            InteractWithObject();
         }
 
         private void PerformActiveItem(InputAction.CallbackContext context)
         {
             Debug.Log("Active Item Input performed");
+            UseItem();
         }
 
         #region Events

@@ -15,13 +15,13 @@ public class SpellCast : Ability
 
     public SpellCast(LivingEntity owner) : base(owner)
     {
-        cooldown = 100 / owner.Haste;
-        isReady = true;
+        Cooldown = 100 / owner.Haste;
+        IsReady = true;
     }
 
     public override void Use()
     {
-        if (isReady)
+        if (IsReady)
         {
             Projectile();
             StartCooldown();

@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Staff : Item
+public class Staff : MeleeItem
 {
     // Start is called before the first frame update
     void Start()
     {
-        category = Category.Melee;
         value = 5;
     }
 
