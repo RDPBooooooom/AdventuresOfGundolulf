@@ -168,6 +168,7 @@ namespace LivingEntities
         {
             IsAlive = false;
             Debug.Log("Entity died [" + GetType().Name + "]");
+            Destroy(gameObject);
         }
 
         private void OnDrawGizmosSelected()

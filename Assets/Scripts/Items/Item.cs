@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
@@ -16,5 +17,7 @@ public class Item : MonoBehaviour
     }
     protected Category category;
     public int value { get; protected set; }
+
+    public Sprite uiImage;
     #endregion
 }

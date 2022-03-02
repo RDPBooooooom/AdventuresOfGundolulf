@@ -1736,7 +1736,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 5032
+  m_Text: 0
 --- !u!222 &857841001
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1867,13 +1867,13 @@ MonoBehaviour:
   ingamePanel: {fileID: 771097868}
   HealthDisplayBar: {fileID: 1115435285}
   GoldAmount: {fileID: 857841000}
-  Item: {fileID: 8545743860454369497}
   Gold: 0
   AttackValue: {fileID: 1282508317}
   IntelligenceValue: {fileID: 276598500}
   RangeValue: {fileID: 1480562644}
   HasteValue: {fileID: 1513731420}
   SpeedValue: {fileID: 289824297}
+  Item: {fileID: 8545743860454369497}
 --- !u!1001 &1066520610
 PrefabInstance:
   m_ObjectHideFlags: 0

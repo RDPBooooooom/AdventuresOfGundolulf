@@ -67,7 +67,7 @@ namespace LivingEntities
             {
                 for (int i = 0; i < amount; i++)
                 {
-                    Instantiate(coin, transform.position, Quaternion.identity);
+                    Instantiate(coin, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
                 }
             }
         }
