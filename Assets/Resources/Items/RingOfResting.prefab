@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3670079573707298644}
   - component: {fileID: -316547027986098742}
+  - component: {fileID: 989399880472802936}
   m_Layer: 0
   m_Name: RingOfResting
   m_TagString: Untagged
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiImage: {fileID: 21300000, guid: 5ebc3d18886d6fa44929a08d61fe6d7e, type: 3}
+--- !u!135 &989399880472802936
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4879592713031222337}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: -0.6, y: 0, z: 0}
 --- !u!1001 &199502036878352599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -102,7 +116,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64016878066063426, guid: e2ed58c181474c441adc906f9a058932, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e2ed58c181474c441adc906f9a058932, type: 3}
 --- !u!4 &199502036878725973 stripped
 Transform:
@@ -176,7 +191,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64765653088313832, guid: 72766e0bd6c1cde4eb35ec04e1325561, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 72766e0bd6c1cde4eb35ec04e1325561, type: 3}
 --- !u!4 &369984287952466513 stripped
 Transform:
@@ -238,7 +254,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64016878066063426, guid: e2ed58c181474c441adc906f9a058932, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e2ed58c181474c441adc906f9a058932, type: 3}
 --- !u!4 &7429041604299889456 stripped
 Transform:

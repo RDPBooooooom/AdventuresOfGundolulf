@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LivingEntities
 {
-    public class OrcWarlordEntity : LivingEntity
+    public class OrcWarlordEntity : EnemyEntity
     {
         // Start is called before the first frame update
         void Start()

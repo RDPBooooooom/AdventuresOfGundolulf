@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LivingEntities
 {
-    public class LivingStatueEntity : LivingEntity
+    public class LivingStatueEntity : EnemyEntity
     {
         // Start is called before the first frame update
         void Start()

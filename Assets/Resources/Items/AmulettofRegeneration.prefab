@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6921353101459785369}
   - component: {fileID: 7241839445127784248}
   - component: {fileID: 7241839445129250130}
-  - component: {fileID: 7233697555424608354}
+  - component: {fileID: 3993397754849457189}
   m_Layer: 0
-  m_Name: Amulett of Regeneration
+  m_Name: AmulettofRegeneration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -97,8 +97,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7233697555424608354
-MeshCollider:
+--- !u!135 &3993397754849457189
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,10 +107,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43299541128169672, guid: 7f1a5694420f6ed4b8ee195b961a2957, type: 2}
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: -0.6437931, y: -0.45918554, z: -0.0000038146973}
 --- !u!1001 &959276058702363742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,7 +165,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 64687041856016334, guid: 97a4a6007a49ec8499b0948c7a99e8f1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 97a4a6007a49ec8499b0948c7a99e8f1, type: 3}
 --- !u!4 &959276058702129000 stripped
 Transform:

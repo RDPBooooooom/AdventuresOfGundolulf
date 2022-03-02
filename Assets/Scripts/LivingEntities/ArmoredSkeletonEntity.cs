@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LivingEntities
 {
-    public class ArmoredSkeletonEntity : LivingEntity
+    public class ArmoredSkeletonEntity : EnemyEntity
     {
         // Start is called before the first frame update
         void Start()

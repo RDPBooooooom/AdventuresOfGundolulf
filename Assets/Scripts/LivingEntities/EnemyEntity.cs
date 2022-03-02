@@ -12,6 +12,10 @@ namespace LivingEntities
         protected Melee melee;
         protected Player player;
         [SerializeField] GameObject coin;
+
+        [Header("Item Prefabs")]
+        List<GameObject> items = new List<GameObject>();
+
         #endregion
 
         #region Unity Methods
@@ -20,6 +24,19 @@ namespace LivingEntities
         {
             melee = new Melee(this);
             player = FindObjectOfType<Player>();
+            items.Add(Resources.Load<GameObject>("Items/AmulettofRegeneration"));
+            items.Add(Resources.Load<GameObject>("Items/HealthPotion"));
+            //items.Add(Resources.Load<GameObject>("Items/HourGlass"));
+            items.Add(Resources.Load<GameObject>("Items/MagicMilk"));
+            //items.Add(Resources.Load<GameObject>("Items/MagicSplit"));
+            items.Add(Resources.Load<GameObject>("Items/PickAxe"));
+            //items.Add(Resources.Load<GameObject>("Items/ReverseEye"));
+            items.Add(Resources.Load<GameObject>("Items/RingOfResting"));
+            items.Add(Resources.Load<GameObject>("Items/Shield"));
+            items.Add(Resources.Load<GameObject>("Items/Staff"));
+            //items.Add(Resources.Load<GameObject>("Items/Swoop"));
+            items.Add(Resources.Load<GameObject>("Items/Sword"));
+            //items.Add(Resources.Load<GameObject>("Items/ToxicPaper"));
         }
 
         protected void FixedUpdate()
@@ -74,7 +91,9 @@ namespace LivingEntities
 
         protected virtual void DropItem()
         {
-            //TODO: get random Item and spawn
+            Random random = new Random();
+            int item = random.Next(0, 8);
+            Instantiate(items[item], new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
         }
 
         #endregion

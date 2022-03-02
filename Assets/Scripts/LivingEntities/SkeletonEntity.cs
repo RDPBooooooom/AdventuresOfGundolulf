@@ -1,6 +1,6 @@
 ﻿namespace LivingEntities
 {
-    public class SkeletonEntity : LivingEntity
+    public class SkeletonEntity : EnemyEntity
     {
         
     }
