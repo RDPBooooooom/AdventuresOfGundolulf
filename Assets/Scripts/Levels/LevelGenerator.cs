@@ -54,19 +54,41 @@ namespace Levels
             List<Cell> cells = DepthFirstSearch();
 
             GameObject levelParent = new GameObject("Level");
-            
+
             foreach (Cell cell in cells)
             {
                 try
                 {
                     Room roomPrefab = GetRandomRoom<CombatRoom>(cell.DoorDirections);
-                    rooms.Add(Object.Instantiate(roomPrefab, cell.WorldPos, Quaternion.identity, levelParent.transform));
-                    rooms.Last().name = cell.Name;
+                    Room room = Object.Instantiate(roomPrefab, cell.WorldPos, Quaternion.identity,
+                        levelParent.transform);
+                    room.name = cell.Name;
+                    rooms.Add(room);
                 }
-                catch (NoRoomFoundException _)
+                catch (NoRoomFoundException)
                 {
                     Debug.LogWarning("No room was found for " + cell.DoorDirections + ". Skiping room");
                 }
+            }
+
+            // Set Connected Rooms
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                Room room = rooms[i];
+
+                RoomConnections connections = room.RoomConnections;
+
+                if ((room.Data.Directions & DoorDirections.Bottom) != 0)
+                    connections.Bottom = rooms[i - _numberOfRoomsSqr];
+                if ((room.Data.Directions & DoorDirections.Top) != 0)
+                    connections.Top = rooms[i + _numberOfRoomsSqr];
+                if ((room.Data.Directions & DoorDirections.Left) != 0)
+                    connections.Left = rooms[i - 1];
+                if ((room.Data.Directions & DoorDirections.Right) != 0)
+                    connections.Right = rooms[i + 1];
+
+
+                room.RoomConnections = connections;
             }
 
             return rooms;
@@ -88,7 +110,7 @@ namespace Levels
 
                 for (int j = 0; j < _numberOfRoomsSqr; j++)
                 {
-                    worldPosX += 35;
+                    worldPosX += 35.5f;
                     cellGrid.Add(new Cell());
                     cellGrid.Last().WorldPos = new Vector3(worldPosX, 0, worldPosZ);
                     cellGrid.Last().Name = "Cell [" + i + "," + j + "]";
@@ -123,7 +145,7 @@ namespace Levels
                 {
                     path.Push(currentCell);
                     visitedCells++;
-                    
+
                     Random rand = new Random();
 
                     int newCell = current.Neighbours[rand.Next(0, current.Neighbours.Count - 1)];
@@ -133,17 +155,17 @@ namespace Levels
                         // Is top or right
                         if (newCell - 1 == currentCell)
                         {
-                            current.DoorDirections |= DoorDirections.right;
+                            current.DoorDirections |= DoorDirections.Right;
                             currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.left;
+                            cellGrid[newCell].DoorDirections |= DoorDirections.Left;
 
                             DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                         else
                         {
-                            current.DoorDirections |= DoorDirections.top;
+                            current.DoorDirections |= DoorDirections.Top;
                             currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.bottom;
+                            cellGrid[newCell].DoorDirections |= DoorDirections.Bottom;
 
                             DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
@@ -153,17 +175,17 @@ namespace Levels
                         // Is down or left
                         if (newCell + 1 == currentCell)
                         {
-                            current.DoorDirections |= DoorDirections.left;
+                            current.DoorDirections |= DoorDirections.Left;
                             currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.right;
+                            cellGrid[newCell].DoorDirections |= DoorDirections.Right;
 
                             DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }
                         else
                         {
-                            current.DoorDirections |= DoorDirections.bottom;
+                            current.DoorDirections |= DoorDirections.Bottom;
                             currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.top;
+                            cellGrid[newCell].DoorDirections |= DoorDirections.Top;
 
                             DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
                         }

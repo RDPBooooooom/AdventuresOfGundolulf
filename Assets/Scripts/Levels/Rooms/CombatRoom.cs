@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using LivingEntities;
+using Managers;
+using UnityEngine;
 
 namespace Levels.Rooms
 {
@@ -8,6 +11,7 @@ namespace Levels.Rooms
     {
         #region Fields
 
+        private List<LivingEntity> _enemiesPrfabs;
         private List<LivingEntity> _enemies;
 
         #endregion
@@ -20,19 +24,53 @@ namespace Levels.Rooms
 
         #region Unity Methods
 
+        private void Start()
+        {
+        }
+
         #endregion
 
         #region Room Methods
+
+        private void CheckCleared()
+        {
+            if (IsLeavable) return;
+            if (_enemies.Any(entity => entity.IsAlive))
+            {
+                IsLeavable = false;
+                return;
+            }
+
+            IsLeavable = true;
+            OnRoomCleared();
+        }
 
         public override void Enter()
         {
             base.Enter();
             //TODO Spawn enemies
+            if (WasVisited) return;
+            LoadEnemies();
+            _enemies = new List<LivingEntity>();
+            foreach (LivingEntity entity in _enemiesPrfabs)
+            {
+                LivingEntity activeEnemy = Instantiate(entity.gameObject, transform.position, Quaternion.identity)
+                    .GetComponent<LivingEntity>();
+                activeEnemy.OnDeathEvent += CheckCleared;
+                _enemies.Add(activeEnemy);
+            }
         }
 
-        public override void Leave()
+        private void LoadEnemies()
         {
-            if(IsLeavable) base.Leave();
+            _enemiesPrfabs = GameManager.Instance.EnemyManager.GetRandomEnemies();
+        }
+
+        protected override bool CanLeave()
+        {
+            if (!IsLeavable) return false;
+            
+            return true;
         }
 
         #endregion

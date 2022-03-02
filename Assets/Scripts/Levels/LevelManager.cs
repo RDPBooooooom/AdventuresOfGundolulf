@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Levels.Rooms;
+using Managers;
+using PlayerScripts;
 using UnityEngine;
 
 namespace Levels
@@ -37,11 +39,35 @@ namespace Levels
             _rooms = _levelGenerator.GenerateLevel();
             CurrentRoom = _rooms[Mathf.CeilToInt(Mathf.Sqrt(_numberOfRooms))];
             
-            //TODO Event Setup
-            
-            CurrentRoom.Enter();
+            RoomSetup();
         }
-        
-        
+
+        private void OnLeavingRoom(Room leaving, Room toEnter)
+        {
+            ClearSetup();
+            CurrentRoom = toEnter;
+
+            //TODO Move Character and Cam in a good way, This is WIP
+            FindObjectOfType<Player>().transform.position = toEnter.transform.position;
+            Vector3 pos1 = leaving.transform.position;
+            Vector3 pos2 = toEnter.transform.position;
+            Camera.main.transform.position += new Vector3(pos2.x - pos1.x, 0, pos2.z - pos1.z );
+            
+            
+            RoomSetup();
+        }
+
+        private void RoomSetup()
+        {
+            CurrentRoom.Enter();
+            CurrentRoom.LeaveRoom += OnLeavingRoom;
+        }
+
+        private void ClearSetup()
+        {
+            CurrentRoom.LeaveRoom -= OnLeavingRoom;
+        }
+
+
     }
 }

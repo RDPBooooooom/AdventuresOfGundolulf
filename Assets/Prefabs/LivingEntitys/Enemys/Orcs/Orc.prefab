@@ -1164,6 +1164,7 @@ MonoBehaviour:
   _spellCastAttackPoint: {fileID: 0}
   _projectilePrefab: {fileID: 0}
   _projectileForce: 0
+  coin: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
 --- !u!136 &8283289484755687195
 CapsuleCollider:
   m_ObjectHideFlags: 0

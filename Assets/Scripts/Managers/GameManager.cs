@@ -1,4 +1,3 @@
-using System;
 using Levels;
 using PlayerScripts;
 using UnityEngine;
@@ -10,6 +9,7 @@ namespace Managers
         #region Fields
 
         [SerializeField] private LevelManager _levelManagerPrefab;
+        [SerializeField] private EnemyManager _enemyManagerPrefab;
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Camera _playerCamPrefab;
 
@@ -17,9 +17,11 @@ namespace Managers
 
         #region Properties
 
-        public GameManager Instance { get; private set; }
+        public static GameManager Instance { get; private set; }
 
         public LevelManager LevelManager { get; private set; }
+
+        public EnemyManager EnemyManager { get; private set; }
 
         #endregion
 
@@ -38,6 +40,8 @@ namespace Managers
 
         private void Start()
         {
+            EnemyManager = Instantiate(_enemyManagerPrefab, this.transform);
+            
             LevelManager = Instantiate(_levelManagerPrefab, this.transform);
             LevelManager.GenerateLevel();
 
@@ -46,6 +50,8 @@ namespace Managers
             Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
             LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
             LevelManager.PlayerCam.transform.position += roomPosition;
+            
+            
         }
 
         #endregion
