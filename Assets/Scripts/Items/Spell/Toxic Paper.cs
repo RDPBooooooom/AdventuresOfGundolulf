@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ToxicPaper : Item
+public class ToxicPaper : SpellItem
 {
     // Start is called before the first frame update
     void Start()
     {
-        category = Category.Magic;
         value = 15;
     }
 

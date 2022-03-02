@@ -35,14 +35,14 @@ public class Teleport : Ability
 
     public Teleport(LivingEntity owner, LivingEntity targetEntity) : base(owner)
     {
-        cooldown = 2f;
-        isReady = true;
+        Cooldown = 2f;
+        IsReady = true;
         _targetEntity = targetEntity;
     }
 
     public override void Use()
     {
-        if (isReady)
+        if (IsReady)
         {
             DoTeleport();
         }

@@ -7,17 +7,19 @@ using Assets.Scripts;
 public class ShopGerald : MonoBehaviour, IInteractable
 {
     #region Declaring Variables
+
     int money = 250; // ? Depends on difficulty ?
-    List<Item> itemsForSale;
+    List<Item> equippedItems;
     int amountOfItems = 5;
     List<Item> items =  new List<Item>() { new AmulettofRegeneration(), new Hourglass(), new MagicMilk(), new MagicSplit(), new Pickaxe(), new ReverseEye(), new RingofResting(), new Shield(), new Staff(), new Swoop(), new Sword(), new ToxicPaper(), new HealthPotion()}; // List with All items
     int valueLossFactor = 2;
+
     #endregion
 
     void Sell(Item item)
     {
         money += item.value;
-        itemsForSale.Remove(item);
+        equippedItems.Remove(item);
         //TO DO: Add to player
     }
 
@@ -26,7 +28,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
         if (money >= Mathf.RoundToInt(item.value / valueLossFactor)) // TO DO: Abrunden
         {
             money -= Mathf.RoundToInt(item.value / valueLossFactor);
-            itemsForSale.Add(item);
+            equippedItems.Add(item);
             //TO DO: Remove from Player
         }
         else
@@ -47,8 +49,14 @@ public class ShopGerald : MonoBehaviour, IInteractable
         return itemsSale;
     }
 
+    void ShowAssortment()
+    {
+        // Gets executed if interacting
+        GetRandomInventory();
+    }
+
     public void Interact()
     {
-        throw new System.NotImplementedException();
+        ShowAssortment();
     }
 }

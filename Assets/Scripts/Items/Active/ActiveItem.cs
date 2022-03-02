@@ -1,16 +1,9 @@
-using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Ability
+public class ActiveItem : Item
 {
-    #region Fields
-
-    protected LivingEntity _owner;
-
-    #endregion
-
     #region Properties
 
     public float Cooldown { get; protected set; }
@@ -18,18 +11,11 @@ public abstract class Ability
 
     #endregion
 
-    public abstract void Use();
-
-    public Ability(LivingEntity owner)
-    {
-        _owner = owner;
-    }
-
     #region Cooldown
 
     protected void StartCooldown()
     {
-        _owner.StartCoroutine(CooldownTimer());
+        StartCoroutine(CooldownTimer());
     }
 
     protected IEnumerator CooldownTimer()
