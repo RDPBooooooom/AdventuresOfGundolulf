@@ -24,10 +24,6 @@ namespace Levels.Rooms
 
         #region Unity Methods
 
-        private void Start()
-        {
-        }
-
         #endregion
 
         #region Room Methods
@@ -69,7 +65,7 @@ namespace Levels.Rooms
         protected override bool CanLeave()
         {
             if (!IsLeavable) return false;
-            
+
             return true;
         }
 

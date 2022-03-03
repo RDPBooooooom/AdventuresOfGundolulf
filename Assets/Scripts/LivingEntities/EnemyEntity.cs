@@ -50,6 +50,7 @@ namespace LivingEntities
         {            
             if (PlayerInRange())
                 _melee.Use();
+        
             else
                 FollowPlayer();
         }

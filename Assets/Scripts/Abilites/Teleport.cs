@@ -1,6 +1,7 @@
 using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
 public class Teleport : Ability 
@@ -51,6 +52,7 @@ public class Teleport : Ability
     public void DoTeleport()
     {
         TrimTargetPos();
+        TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);
         
         // TODO Implement cooldown
         Vector3 startPosition = _targetEntity.transform.position;
@@ -78,19 +80,6 @@ public class Teleport : Ability
 
 
         TargetPos -= (direction * (teleportDistance - TeleportRange));
-    }
-
-    private bool IsValidTargetPosition()
-    {
-        int layerMask = LayerMask.GetMask("Floor");
-
-        Ray ray = Camera.main.ScreenPointToRay(TargetPos);
-
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, 500f, layerMask))
-        {
-            return true;
-        }
-        return false;
     }
 
     #endregion

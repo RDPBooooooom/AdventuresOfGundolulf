@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _wasVisited: 0
   _data: {fileID: 11400000, guid: 29771c20ad9c6ae40a54c15cb5074c4f, type: 2}
+  _floorPlane: {fileID: 1271146542545166978}
 --- !u!1 &1271146542545166978
 GameObject:
   m_ObjectHideFlags: 0
