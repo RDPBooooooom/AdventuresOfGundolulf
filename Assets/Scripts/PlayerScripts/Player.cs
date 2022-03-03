@@ -1,6 +1,8 @@
-﻿using Assets.Scripts;
+﻿using System;
+using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using LivingEntities;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -61,6 +63,11 @@ namespace PlayerScripts
             GetInteractableObject();
         }
 
+        private void OnDestroy()
+        {
+            _input.Ingame.Disable();
+        }
+
         #endregion        
 
         #region Helper Methods
@@ -68,22 +75,41 @@ namespace PlayerScripts
         private Vector3 GetCurrentMousePosInWorld()
         {
             Vector2 mousePos = _input.Ingame.MousePosition.ReadValue<Vector2>();
-            if (Physics.Raycast(_camera.ScreenPointToRay(mousePos), out RaycastHit hitInfo))
+            Ray ray = _camera.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
                 return hitInfo.point;
             }
-            //TODO Throw exception when failing to retrieve valid position
-            return Vector3.zero;
+            
+            return GetBackupPointInWorld(ray);
         }
 
         private Vector3 GetCurrentMousePosInWorldOnGround()
         {
             Vector2 mousePos = _input.Ingame.MousePosition.ReadValue<Vector2>();
-            if (Physics.Raycast(_camera.ScreenPointToRay(mousePos), out RaycastHit hitInfo, 1000, _groundLayer))
+            Ray ray = _camera.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000, _groundLayer))
             {
                 return hitInfo.point;
             }
-            //TODO Find clostest point to ground
+
+            return GetBackupPointInWorld(ray);
+        }
+
+        private Vector3 GetBackupPointInWorld(Ray ray)
+        {
+            //Setup Plane
+            Plane plane = new Plane();
+            plane.SetNormalAndPosition(Vector3.up, Vector3.zero);
+            
+            // Cast ray on plane
+            if (plane.Raycast(ray, out float enter))
+            {
+                return ray.GetPoint(enter);
+            }
+
+            // No Point found
+            Debug.LogError("No point was found!!!");
             return Vector3.zero;
         }
 
@@ -158,8 +184,15 @@ namespace PlayerScripts
         {
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
 
-            Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
-            
+            if (GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
+            {
+                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.green);
+            }
+            else
+            {
+                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
+            }
+
             transform.LookAt(worldPoint);
         }
 

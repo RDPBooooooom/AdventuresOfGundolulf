@@ -41,10 +41,10 @@ namespace LivingEntities
 
         protected void FixedUpdate()
         {
-            if (PlayerInRange())
+            /*if (PlayerInRange())
                 melee.Use();
             else
-                FollowPlayer();
+                FollowPlayer();*/
         }
         #endregion
 
