@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1753,6 +1753,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2242932178358013828, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555039598252934, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -1761,10 +1765,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orc (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7938555041075853062, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: coin
       value: 
       objectReference: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
+    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: _speed
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: _health
       value: 1
@@ -1779,7 +1791,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853065, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853066, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_RootOrder
@@ -1943,18 +1955,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59e2d0be680f485479129f9a33152777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuSceneName: MainMenuScene
-  currentSceneName: SampleScene
-  pauseMenu: {fileID: 187849823}
-  ingamePanel: {fileID: 771097868}
+  _mainMenuSceneName: Main
+  _currentSceneName: Ingame
+  _pauseMenu: {fileID: 187849823}
+  _ingamePanel: {fileID: 771097868}
   HealthDisplayBar: {fileID: 1115435285}
   GoldAmount: {fileID: 857841000}
   Gold: 0
-  AttackValue: {fileID: 1282508317}
-  IntelligenceValue: {fileID: 276598500}
-  RangeValue: {fileID: 1480562644}
-  HasteValue: {fileID: 1513731420}
-  SpeedValue: {fileID: 289824297}
+  _attackValue: {fileID: 1282508317}
+  _intelligenceValue: {fileID: 276598500}
+  _rangeValue: {fileID: 1480562644}
+  _hasteValue: {fileID: 1513731420}
+  _speedValue: {fileID: 289824297}
   Item: {fileID: 8545743860454369497}
 --- !u!1001 &1066520610
 PrefabInstance:
@@ -2112,6 +2124,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2242932178358013828, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555039598252934, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -2120,10 +2136,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orc (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7938555041075853062, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: coin
       value: 
       objectReference: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
+    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: _speed
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: _health
       value: 1
@@ -2138,7 +2162,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853065, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853066, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_RootOrder
@@ -2304,6 +2328,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2242932178358013828, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_Constraints
+      value: 116
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555039598252934, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
@@ -2312,10 +2340,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Orc (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7938555041075853062, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: coin
       value: 
       objectReference: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
+    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: _speed
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: _health
       value: 1
@@ -2330,7 +2366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853065, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853066, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_RootOrder
@@ -4584,13 +4620,13 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1744384908194287}
   serializedVersion: 2
-  m_Mass: 0.0000001
+  m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 100
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!1 &7525531183926106870
 GameObject:
@@ -4629,8 +4665,8 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7938555039598252934, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
-      propertyPath: m_LocalPosition.y
+    - target: {fileID: 2242932178358013828, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
+      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853062, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
@@ -4638,24 +4674,8 @@ PrefabInstance:
       value: Orc
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
-      propertyPath: coin
-      value: 
-      objectReference: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
-    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
-      propertyPath: _health
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
-      propertyPath: _maxHealth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938555041075853064, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: _meleeAttackRange
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7938555041075853065, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 7938555041075853066, guid: badeb88086af5f2499be1af06a7bb438, type: 3}
       propertyPath: m_RootOrder

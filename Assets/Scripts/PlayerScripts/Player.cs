@@ -146,9 +146,10 @@ namespace PlayerScripts
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
 
-            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.deltaTime);
-            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.deltaTime);
-            
+            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
+
+            inputVector.Normalize();
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
             
             _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier), ForceMode.VelocityChange);
@@ -203,7 +204,7 @@ namespace PlayerScripts
             _input.Ingame.CastSpell.performed += PerformSpellCast;
             _input.Ingame.Teleport.performed += PerformTeleport;
             _input.Ingame.Interact.performed += PerformInteract;
-            _input.Ingame.ActiveItem.performed += PerformActiveItem;
+            _input.Ingame.ActiveItem.performed += PerformActiveItem;            
         }
 
         #endregion
