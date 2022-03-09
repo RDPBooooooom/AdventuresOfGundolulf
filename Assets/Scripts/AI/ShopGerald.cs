@@ -3,18 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
 using PlayerScripts;
+using UserInterface;
 
 public class ShopGerald : MonoBehaviour, IInteractable
 {
-    #region Declaring Variables
+    #region Fields
 
     private Player _player;
 
     private int _merchantMoney = 250; // Depends on difficulty?
-    private int _amountOfItems = 5;
+    private int _amountOfItems = 4;
     private int _valueLossFactor = 2;
+    private string _potionPath = "HealthPotion";
 
-    private List<Item> _assortment;
+    #endregion
+
+    #region Properties
+
+    public List<Item> Assortment { get; private set; }
 
     #endregion
     private void Awake()
@@ -22,24 +28,24 @@ public class ShopGerald : MonoBehaviour, IInteractable
         _player = FindObjectOfType<Player>();
     }
 
-    void Sell(Item item)
+    public void SellToPlayer(Item item)
     {
         _merchantMoney += item.Value;
-        _assortment.Remove(item);
+        Assortment.Remove(item);
 
         _player.EquippedItems.Add(item);
 
         ItemManager.Instance.ItemEquipped(item);
     }
 
-    void Buy(Item item)
+    public void BuyFromPlayer(Item item)
     {
         int price = Mathf.FloorToInt(item.Value / _valueLossFactor);
 
         if (_merchantMoney >= price)
         {
             _merchantMoney -= price;
-            _assortment.Add(item);
+            Assortment.Add(item);
 
             _player.Gold += price;
             _player.EquippedItems.Remove(item);
@@ -55,10 +61,13 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     void ShowAssortment()
     {
-        // Gets executed if interacting
-        ItemManager.Instance.RandomItem(_amountOfItems);
+        if (Assortment == null)
+        {
+            Assortment = ItemManager.Instance.RandomItem(_amountOfItems);
+            Assortment.Add((Item)Resources.Load(_potionPath));
+        }
 
-        // ToDo: DisplayAssortment + Implement Sell/Buy
+        ShopUI.Instance.AssortmentUI();
     }
 
     public void Interact()

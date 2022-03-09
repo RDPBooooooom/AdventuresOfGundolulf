@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public class ItemManager : MonoBehaviour
 {
@@ -59,19 +60,9 @@ public class ItemManager : MonoBehaviour
 
     public List<Item> RandomItem(int amount)
     {
-        List<Item> randomItems = new List<Item>();
-
         if (NotEquippedItems.Count > amount)
         {
-            while (randomItems.Count < amount)
-            {
-                int randomItem = Random.Range(0, NotEquippedItems.Count - 1);
-
-                if (!randomItems.Contains(NotEquippedItems[randomItem]))
-                {
-                    randomItems.Add(NotEquippedItems[randomItem]);
-                }
-            }
+            List<Item> randomItems = ListUtils.GetRandomElements(NotEquippedItems, amount);
 
             return randomItems;
         }
@@ -80,6 +71,6 @@ public class ItemManager : MonoBehaviour
             return NotEquippedItems;
         }
     }
-
+    
     #endregion
 }

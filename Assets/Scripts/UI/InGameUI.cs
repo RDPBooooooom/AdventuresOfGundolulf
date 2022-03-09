@@ -23,7 +23,6 @@ namespace UserInterface
         [Header("Displays")]
         public Image HealthDisplayBar;
         public Text GoldAmount;
-        public int Gold;
 
         [Header("Stats")]
         [SerializeField] private Text _attackValue;
