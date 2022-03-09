@@ -193,7 +193,7 @@ namespace PlayerScripts
         {
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
 
-            if (GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
+            if (GameManager.Instance?.LevelManager?.CurrentRoom && GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
             {
                 Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.green);
             }

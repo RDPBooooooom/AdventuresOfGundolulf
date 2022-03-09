@@ -52,7 +52,8 @@ public class Teleport : Ability
     public void DoTeleport()
     {
         TrimTargetPos();
-        TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);
+        if(GameManager.Instance?.LevelManager?.CurrentRoom)
+            TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);
         
         // TODO Implement cooldown
         Vector3 startPosition = _targetEntity.transform.position;
