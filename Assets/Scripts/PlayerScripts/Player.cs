@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using LivingEntities;
@@ -25,7 +26,14 @@ namespace PlayerScripts
 
         private int _groundLayer;
         [SerializeField] private float _interactRange;
-        
+
+        #endregion
+
+        #region Properties
+
+        public int Gold { get; set; }
+        public List<Item> EquippedItems { get; set; }
+
         #endregion
 
         #region Unity Methods
