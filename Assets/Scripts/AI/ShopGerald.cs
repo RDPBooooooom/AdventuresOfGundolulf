@@ -1,58 +1,64 @@
 using System.Collections;
-using Random = System.Random;
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts;
+using PlayerScripts;
 
 public class ShopGerald : MonoBehaviour, IInteractable
 {
     #region Declaring Variables
 
-    int money = 250; // ? Depends on difficulty ?
-    List<Item> equippedItems;
-    int amountOfItems = 5;
-    List<Item> items =  new List<Item>() { new AmulettofRegeneration(), new Hourglass(), new MagicMilk(), new MagicSplit(), new Pickaxe(), new ReverseEye(), new RingofResting(), new Shield(), new Staff(), new Swoop(), new Sword(), new ToxicPaper(), new HealthPotion()}; // List with All items
-    int valueLossFactor = 2;
+    private Player _player;
+
+    private int _merchantMoney = 250; // Depends on difficulty?
+    private int _amountOfItems = 5;
+    private int _valueLossFactor = 2;
+
+    private List<Item> _assortment;
 
     #endregion
+    private void Awake()
+    {
+        _player = FindObjectOfType<Player>();
+    }
 
     void Sell(Item item)
     {
-        money += item.Value;
-        equippedItems.Remove(item);
-        //TO DO: Add to player
+        _merchantMoney += item.Value;
+        _assortment.Remove(item);
+
+        _player.EquippedItems.Add(item);
+
+        ItemManager.Instance.ItemEquipped(item);
     }
 
     void Buy(Item item)
     {
-        if (money >= Mathf.RoundToInt(item.Value / valueLossFactor)) // TO DO: Abrunden
+        int price = Mathf.FloorToInt(item.Value / _valueLossFactor);
+
+        if (_merchantMoney >= price)
         {
-            money -= Mathf.RoundToInt(item.Value / valueLossFactor);
-            equippedItems.Add(item);
-            //TO DO: Remove from Player
+            _merchantMoney -= price;
+            _assortment.Add(item);
+
+            _player.Gold += price;
+            _player.EquippedItems.Remove(item);
+
+            ItemManager.Instance.ItemSold(item);
         }
         else
-            Debug.LogError("Merchant does not have enough Money !");
-    }
-
-    List<Item> GetRandomInventory()
-    {
-        Random random = new Random();
-        List<Item> itemsSale = new List<Item>();
-        while(itemsSale.Count -1 < amountOfItems)
         {
-            int randomItem = random.Next(0, items.Count - 1);
-            if (!itemsSale.Contains(items[randomItem]))
-                itemsSale.Add(items[randomItem]);
-
+            // ToDo: Display Text, that the merchant doesn't have enough money
+            Debug.LogError("Merchant does not have enough Money!");
         }
-        return itemsSale;
     }
 
     void ShowAssortment()
     {
         // Gets executed if interacting
-        GetRandomInventory();
+        ItemManager.Instance.RandomItem(_amountOfItems);
+
+        // ToDo: DisplayAssortment + Implement Sell/Buy
     }
 
     public void Interact()
