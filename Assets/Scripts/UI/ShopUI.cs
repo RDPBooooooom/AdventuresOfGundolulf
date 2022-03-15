@@ -1,3 +1,4 @@
+using PlayerScripts;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -17,6 +18,7 @@ namespace UserInterface
         [SerializeField] private RawImage[] _images;
 
         private ShopGerald _shopGerald;
+        private Player _player;
         private List<Texture2D> _itemTextures;
         private Item _selectedItem;
 
@@ -35,6 +37,7 @@ namespace UserInterface
         private void Start()
         {
             _shopGerald = FindObjectOfType<ShopGerald>();
+            _player = FindObjectOfType<Player>();
         }
 
         private void Update()
@@ -45,11 +48,13 @@ namespace UserInterface
                 _sellButton.interactable = false;
             }
 
+            /*
             if (_itemTextures.Count != _shopGerald.Assortment.Count)
             {
                 GeneratePreviews();
                 DisplayItems();
             }
+            */
         }
         #endregion
 
@@ -84,8 +89,11 @@ namespace UserInterface
             _buyButton.interactable = true;
         }
 
-        public void SelectItemToSell()
+        public void SelectItemToSell(int index)
         {
+            // ToDo: Assign an index to each item of the player
+            _selectedItem = _player.EquippedItems[index];
+
             _sellButton.interactable = true;
         }
 
