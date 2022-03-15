@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PoisonGas : Scroll
+namespace Scrolls.StandardScrolls
 {
-    public PoisonGas()
+    public class PoisonGas : StandardScroll
     {
-        Weighting = 3;
+        public PoisonGas()
+        {
+            Cost = 3;
+        }
+
+        protected override void ApplyEffect()
+        {
+            Debug.Log("Activated " + GetType().Name);
+        }
     }
 }

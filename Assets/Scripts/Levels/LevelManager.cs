@@ -17,12 +17,10 @@ namespace Levels
 
         private LevelGenerator _levelGenerator;
 
-        private List<Room> _rooms;
-
         #endregion
 
         #region Properties
-
+        public List<Room> Rooms { get; private set; }
         public Room CurrentRoom { get; private set; }
         public Camera PlayerCam { get; set; }
 
@@ -36,8 +34,8 @@ namespace Levels
 
         public void GenerateLevel()
         {
-            _rooms = _levelGenerator.GenerateLevel();
-            CurrentRoom = _rooms[Mathf.CeilToInt(Mathf.Sqrt(_numberOfRooms))];
+            Rooms = _levelGenerator.GenerateLevel();
+            CurrentRoom = Rooms[Mathf.CeilToInt(Mathf.Sqrt(_numberOfRooms))];
             
             RoomSetup();
         }

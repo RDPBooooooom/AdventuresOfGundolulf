@@ -1,5 +1,6 @@
 using Levels;
 using PlayerScripts;
+using Scrolls;
 using UnityEngine;
 
 namespace Managers
@@ -23,6 +24,10 @@ namespace Managers
 
         public EnemyManager EnemyManager { get; private set; }
 
+        public DeckManager DeckManager { get; private set; }
+
+        public Player Player { get; private set; }
+
         #endregion
 
         #region Unity Methods
@@ -41,17 +46,19 @@ namespace Managers
         private void Start()
         {
             EnemyManager = Instantiate(_enemyManagerPrefab, this.transform);
-            
+
             LevelManager = Instantiate(_levelManagerPrefab, this.transform);
             LevelManager.GenerateLevel();
 
             Vector3 roomPosition = LevelManager.CurrentRoom.transform.position;
 
-            Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
+            Player = Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
             LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
             LevelManager.PlayerCam.transform.position += roomPosition;
-            
-            
+
+            DeckManager = new DeckManager();
+            DeckManager.LoadDecks();
+            LevelManager.Rooms.ForEach(room => room.EnterRoom += DeckManager.OnRoomEnter);
         }
 
         #endregion

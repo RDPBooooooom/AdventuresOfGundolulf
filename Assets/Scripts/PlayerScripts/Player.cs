@@ -4,6 +4,7 @@ using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using LivingEntities;
 using Managers;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -18,7 +19,7 @@ namespace PlayerScripts
         private Animator _animator;
         private Camera _camera;
         private Rigidbody _rigidbody;
-        
+
         private Teleport _teleport;
         private Melee _melee;
         private SpellCast _spellCast;
@@ -26,13 +27,39 @@ namespace PlayerScripts
 
         private int _groundLayer;
         [SerializeField] private float _interactRange;
+        
+        private int _gold;
 
         #endregion
 
         #region Properties
 
-        public int Gold { get; set; }
+        public int Gold
+        {
+            get => _gold;
+            set
+            {
+                _gold = value;
+                UpdateGoldEvent?.Invoke();
+            }
+        }
+
         public List<Item> EquippedItems { get; set; }
+
+        #endregion
+
+        #region Delegates
+
+        public delegate void UpdateHealthHandler();
+
+        public delegate void UpdateGoldHandler(); 
+
+        #endregion
+
+        #region Events
+
+        public event UpdateHealthHandler UpdateHealthEvent;
+        public event UpdateGoldHandler UpdateGoldEvent;
 
         #endregion
 
@@ -49,9 +76,8 @@ namespace PlayerScripts
             _activeItem = null;
 
             _groundLayer = LayerMask.GetMask("Floor");
-            
-            SubscribeToEvents();
 
+            SubscribeToEvents();
         }
 
         protected void Start()
@@ -61,7 +87,7 @@ namespace PlayerScripts
             _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
-            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
+            UpdateHealthEvent?.Invoke();
         }
 
         protected void FixedUpdate()
@@ -76,7 +102,7 @@ namespace PlayerScripts
             _input.Ingame.Disable();
         }
 
-        #endregion        
+        #endregion
 
         #region Helper Methods
 
@@ -88,7 +114,7 @@ namespace PlayerScripts
             {
                 return hitInfo.point;
             }
-            
+
             return GetBackupPointInWorld(ray);
         }
 
@@ -109,7 +135,7 @@ namespace PlayerScripts
             //Setup Plane
             Plane plane = new Plane();
             plane.SetNormalAndPosition(Vector3.up, Vector3.zero);
-            
+
             // Cast ray on plane
             if (plane.Raycast(ray, out float enter))
             {
@@ -167,7 +193,7 @@ namespace PlayerScripts
 
         private void UseItem()
         {
-            IUsable usableObject = (IUsable)_activeItem;
+            IUsable usableObject = (IUsable) _activeItem;
 
             usableObject.Use();
         }
@@ -185,15 +211,17 @@ namespace PlayerScripts
 
             inputVector.Normalize();
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
-            
-            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier), ForceMode.VelocityChange);
+
+            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier),
+                ForceMode.VelocityChange);
         }
 
         private void LookDirection()
         {
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
 
-            if (GameManager.Instance?.LevelManager?.CurrentRoom && GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
+            if (GameManager.Instance?.LevelManager?.CurrentRoom &&
+                GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
             {
                 Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.green);
             }
@@ -245,7 +273,7 @@ namespace PlayerScripts
             _input.Ingame.CastSpell.performed += PerformSpellCast;
             _input.Ingame.Teleport.performed += PerformTeleport;
             _input.Ingame.Interact.performed += PerformInteract;
-            _input.Ingame.ActiveItem.performed += PerformActiveItem;            
+            _input.Ingame.ActiveItem.performed += PerformActiveItem;
         }
 
         #endregion
@@ -258,13 +286,16 @@ namespace PlayerScripts
         {
             base.HealEntity(amount);
 
-            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
+            UpdateHealthEvent?.Invoke();
         }
+
         public override void DamageEntity(float amount)
         {
             base.DamageEntity(amount);
-            UserInterface.InGameUI.Instance.HealthDisplayBar.fillAmount = Health / 100;
+
+            UpdateHealthEvent?.Invoke();
         }
+
         #endregion
     }
 }

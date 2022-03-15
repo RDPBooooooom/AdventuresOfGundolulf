@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class HelloDarkness : Scroll
+namespace Scrolls.StandardScrolls
 {
-    public HelloDarkness()
+    public class HelloDarkness : StandardScroll
     {
-        Weighting = 3;
+        public HelloDarkness()
+        {
+            Cost = 3;
+        }
+
+        protected override void ApplyEffect()
+        {
+            Debug.Log("Activated " + GetType().Name);
+        }
     }
 }

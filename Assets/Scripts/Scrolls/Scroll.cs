@@ -1,24 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Scroll : MonoBehaviour
+namespace Scrolls
 {
-    #region Properties
-
-    public int Weighting { get; protected set; }
-
-    #endregion
-
-    // Start is called before the first frame update
-    void Start()
+    public abstract class Scroll
     {
-        
-    }
+        #region Properties
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //TODO Likly needs to be a Scriptable Object
+        public int Cost { get; protected set; }
+
+        #endregion
+
+        #region Delegates
+
+        public delegate void ScrollActivateEventHandler(Scroll scroll);
+
+        #endregion
+
+        #region Events
+
+        public event ScrollActivateEventHandler ActivateEvent;
+
+        #endregion
+
+        public void Activate()
+        {
+            ActivateEvent?.Invoke(this);
+            ApplyEffect();
+        }
+
+        protected abstract void ApplyEffect();
+
     }
 }

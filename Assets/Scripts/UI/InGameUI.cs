@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
+using Managers;
+using PlayerScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace UserInterface
+namespace UI
 {
     public class InGameUI : MonoBehaviour
     {
         #region Declaring Variables
 
         public static InGameUI Instance;
-        PlayerScripts.Player player;
+        private Player _player;
         private PlayerInput _input;
 
         [SerializeField] private string _mainMenuSceneName;
@@ -21,8 +21,8 @@ namespace UserInterface
         [SerializeField] private GameObject _ingamePanel;
 
         [Header("Displays")]
-        public Image HealthDisplayBar;
-        public Text GoldAmount;
+        [SerializeField] private Image HealthDisplayBar;
+        [SerializeField] private Text GoldAmount;
 
         [Header("Stats")]
         [SerializeField] private Text _attackValue;
@@ -32,7 +32,7 @@ namespace UserInterface
         [SerializeField] private Text _speedValue;
 
         [Header("Items")]
-        public Image Item;
+        [SerializeField] private Image Item;
 
         #endregion
 
@@ -45,22 +45,23 @@ namespace UserInterface
                 Instance = this;
             else
                 Destroy(this);
-
-            player = FindObjectOfType<PlayerScripts.Player>();
-
+            
             _input = new PlayerInput();
             SubscribeToEvents();
         }
 
         private void Start()
         {
+            _player = GameManager.Instance.Player;
+            _player.UpdateHealthEvent += UpdateHealthbar;
+            _player.UpdateGoldEvent += UpdateGold;
             _input.UI.Enable();
 
-            _attackValue.text = "ATT: " + player.Attack.ToString();
-            _intelligenceValue.text = "INT: " + player.Intelligence.ToString();
-            _rangeValue.text = "RA: " + player.Range.ToString();
-            _hasteValue.text = "HA: " + player.Haste.ToString();
-            _speedValue.text = "SPE: " + player.Speed.ToString();
+            _attackValue.text = "ATT: " + _player.Attack.ToString();
+            _intelligenceValue.text = "INT: " + _player.Intelligence.ToString();
+            _rangeValue.text = "RA: " + _player.Range.ToString();
+            _hasteValue.text = "HA: " + _player.Haste.ToString();
+            _speedValue.text = "SPE: " + _player.Speed.ToString();
         }
 
         // Update is called once per frame
@@ -99,6 +100,16 @@ namespace UserInterface
         public void MainMenu()
         {
             SceneManager.LoadScene(_mainMenuSceneName);
+        }
+
+        public void UpdateHealthbar()
+        {
+            HealthDisplayBar.fillAmount = _player.Health / 100;
+        }
+
+        public void UpdateGold()
+        {
+            GoldAmount.text = _player.Gold.ToString();
         }
 
         #endregion

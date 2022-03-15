@@ -1,6 +1,6 @@
 ﻿namespace Scrolls.BossScrolls
 {
-    public class BossScroll
+    public abstract class BossScroll : Scroll
     {
         
     }

@@ -1,11 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BroughtASwordToAMagicFight : Scroll
+namespace Scrolls.StandardScrolls
 {
-    public BroughtASwordToAMagicFight()
+    public class BroughtASwordToAMagicFight : StandardScroll
     {
-        Weighting = 1;
+        public BroughtASwordToAMagicFight()
+        {
+            Cost = 1;
+        }
+
+        protected override void ApplyEffect()
+        {
+            Debug.Log("Activated " + GetType().Name);
+        }
     }
 }

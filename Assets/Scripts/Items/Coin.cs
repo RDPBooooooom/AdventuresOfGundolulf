@@ -1,27 +1,27 @@
 using PlayerScripts;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
+namespace Items
 {
-    private Player _player;
-
-    // Start is called before the first frame update
-    void Start()
+    public class Coin : MonoBehaviour
     {
-        _player = FindObjectOfType<Player>();
-    }
+        private Player _player;
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        // Start is called before the first frame update
+        void Start()
         {
-            _player.Gold += 1;
-            UserInterface.InGameUI.Instance.GoldAmount.text = _player.Gold.ToString();
-            Destroy(gameObject);
+            _player = FindObjectOfType<Player>();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                _player.Gold += 1;
+                Destroy(gameObject);
+            }
+
         }
 
     }
-
 }
