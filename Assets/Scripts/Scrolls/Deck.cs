@@ -79,7 +79,7 @@ namespace Scrolls
 
         public List<T> Draw(int numberToDraw)
         {
-            if (_deckPile.Count == 0) Shuffle();
+            if (_deckPile.Count == 0) ResetDeckPile();
             if (_deckPile.Count < numberToDraw) numberToDraw = _deckPile.Count;
 
             return _deckPile.GetRange(0, numberToDraw);

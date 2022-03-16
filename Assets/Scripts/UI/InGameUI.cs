@@ -11,7 +11,6 @@ namespace UI
     {
         #region Declaring Variables
 
-        public static InGameUI Instance;
         private Player _player;
         private PlayerInput _input;
 
@@ -20,19 +19,16 @@ namespace UI
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private GameObject _ingamePanel;
 
-        [Header("Displays")]
-        [SerializeField] private Image HealthDisplayBar;
+        [Header("Displays")] [SerializeField] private Image HealthDisplayBar;
         [SerializeField] private Text GoldAmount;
 
-        [Header("Stats")]
-        [SerializeField] private Text _attackValue;
+        [Header("Stats")] [SerializeField] private Text _attackValue;
         [SerializeField] private Text _intelligenceValue;
         [SerializeField] private Text _rangeValue;
         [SerializeField] private Text _hasteValue;
         [SerializeField] private Text _speedValue;
 
-        [Header("Items")]
-        [SerializeField] private Image Item;
+        [Header("Items")] [SerializeField] private Image Item;
 
         #endregion
 
@@ -41,11 +37,6 @@ namespace UI
         // Start is called before the first frame update
         void Awake()
         {
-            if (Instance == null)
-                Instance = this;
-            else
-                Destroy(this);
-            
             _input = new PlayerInput();
             SubscribeToEvents();
         }
@@ -67,7 +58,6 @@ namespace UI
         // Update is called once per frame
         void Update()
         {
-
         }
 
         #endregion
@@ -76,25 +66,25 @@ namespace UI
 
         public void PauseUnPause()
         {
-            if(!_pauseMenu.activeSelf)
+            if (!_pauseMenu.activeSelf)
             {
                 _pauseMenu.SetActive(true);
                 _ingamePanel.SetActive(false);
                 Time.timeScale = 0;
             }
-            else if(_pauseMenu.activeSelf)
+            else if (_pauseMenu.activeSelf)
             {
                 _pauseMenu.SetActive(false);
                 _ingamePanel.SetActive(true);
                 Time.timeScale = 1;
             }
         }
+
         public void Restart()
         {
             AudioListener.pause = false;
             Time.timeScale = 1;
             SceneManager.LoadScene(_currentSceneName);
-
         }
 
         public void MainMenu()

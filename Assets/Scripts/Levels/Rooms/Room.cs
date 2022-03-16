@@ -68,7 +68,7 @@ namespace Levels.Rooms
         protected void Start()
         {
             _roomBounds = _floorPlane.GetComponent<MeshFilter>().mesh.bounds;
-            _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.95f);
+            _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
             _roomBounds.extents += new Vector3(0, 5, 0);
             _roomBounds.center = _floorPlane.transform.position;
         }
@@ -110,7 +110,6 @@ namespace Levels.Rooms
                 _wasVisited = true;
                 Room toEnter = GetRoomByDirection(_doors[door]);
                 LeaveRoom?.Invoke(this, toEnter);
-                Debug.Log("Leaving " + name);
             }
         }
 
@@ -150,9 +149,7 @@ namespace Levels.Rooms
 
         public Vector3 GetClosestPositionOnGround(Vector3 position)
         {
-            Debug.Log("Got Pos: " + position);
             Vector3 pos = GetClosestPositionInRoom(position);
-            Debug.Log("Found Pos: " + pos);
             
             return new Vector3(pos.x, 0, pos.z);
 

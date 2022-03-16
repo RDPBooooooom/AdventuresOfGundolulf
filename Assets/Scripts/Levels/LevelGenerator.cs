@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Levels.Rooms;
 using UnityEngine;
+using Utils;
 using Object = UnityEngine.Object;
 using Random = System.Random;
 
@@ -52,14 +53,44 @@ namespace Levels
         {
             List<Room> rooms = new List<Room>();
             List<Cell> cells = DepthFirstSearch();
+            
+           
+
+            Dictionary<Cell, CellTypes> roomDefinitions = GetRoomDefinitions(cells);
 
             GameObject levelParent = new GameObject("Level");
 
-            foreach (Cell cell in cells)
+            foreach (KeyValuePair<Cell, CellTypes> kvp in roomDefinitions)
             {
+                Cell cell = kvp.Key;
                 try
                 {
-                    Room roomPrefab = GetRandomRoom<CombatRoom>(cell.DoorDirections);
+                    Room roomPrefab = null;
+
+                    switch (kvp.Value)
+                    {
+                        case CellTypes.Boss:
+                            roomPrefab = GetRandomRoom<BossRoom>(cell.DoorDirections);
+                            break;
+                        case CellTypes.Combat:
+                            roomPrefab = GetRandomRoom<CombatRoom>(cell.DoorDirections);
+                            break;
+                        case CellTypes.Shop:
+                            roomPrefab = GetRandomRoom<ShopRoom>(cell.DoorDirections);
+                            break;
+                        case CellTypes.Treasure:
+                            roomPrefab = GetRandomRoom<TreasureRoom>(cell.DoorDirections);
+                            break;
+                        case CellTypes.Start:
+                            roomPrefab = GetRandomRoom<StartRoom>(cell.DoorDirections);
+                            break;
+                        default:
+                            Debug.LogWarning("No type found for CellType: " + kvp.Value);
+                            break;
+                    }
+
+                    if (roomPrefab == null) throw new NoRoomFoundException();
+
                     Room room = Object.Instantiate(roomPrefab, cell.WorldPos, Quaternion.identity,
                         levelParent.transform);
                     room.name = cell.Name;
@@ -67,10 +98,15 @@ namespace Levels
                 }
                 catch (NoRoomFoundException)
                 {
-                    Debug.LogWarning("No room was found for " + cell.DoorDirections + ". Skiping room");
+                    Debug.LogWarning("No room was found for " + cell.DoorDirections + ". Skipping room");
                 }
             }
 
+            return SetRoomConnections(rooms);
+        }
+
+        private List<Room> SetRoomConnections(List<Room> rooms)
+        {
             // Set Connected Rooms
             for (int i = 0; i < rooms.Count; i++)
             {
@@ -114,9 +150,10 @@ namespace Levels
                     cellGrid.Add(new Cell());
                     cellGrid.Last().WorldPos = new Vector3(worldPosX, 0, worldPosZ);
                     cellGrid.Last().Name = "Cell [" + i + "," + j + "]";
+                    cellGrid.Last().CellId = cellGrid.Count - 1;
                 }
             }
-
+           
             if (_drawDebug)
             {
                 for (int i = 0; i < cellGrid.Count; i++)
@@ -125,17 +162,16 @@ namespace Levels
                 }
             }
 
-            int currentCell = NumberOfRooms / 2;
-            Stack<int> path = new Stack<int>();
+            Cell currentCell = cellGrid[NumberOfRooms / 2];
+            Stack<Cell> path = new Stack<Cell>();
             int visitedCells = 0;
 
             while (visitedCells <= NumberOfRooms)
             {
-                Cell current = cellGrid[currentCell];
-                current.Visited = true;
-                current.Neighbours = GetNeighbours(currentCell, cellGrid);
+                currentCell.Visited = true;
+                currentCell.Neighbours = GetNeighbours(currentCell, cellGrid);
 
-                if (current.Neighbours.Count == 0)
+                if (currentCell.Neighbours.Count == 0)
                 {
                     if (path.Count == 0) break;
 
@@ -147,57 +183,158 @@ namespace Levels
                     visitedCells++;
 
                     Random rand = new Random();
-
-                    int newCell = current.Neighbours[rand.Next(0, current.Neighbours.Count - 1)];
-
-                    if (newCell > currentCell)
+                    
+                    Cell newCell = currentCell.Neighbours[rand.Next(0, currentCell.Neighbours.Count - 1)];
+                    
+                    if (newCell.CellId > currentCell.CellId)
                     {
                         // Is top or right
-                        if (newCell - 1 == currentCell)
+                        if (newCell.CellId - 1 == currentCell.CellId)
                         {
-                            current.DoorDirections |= DoorDirections.Right;
-                            currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.Left;
+                            currentCell.DoorDirections |= DoorDirections.Right;
 
-                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
+                            DrawDebugLine(currentCell.WorldPos, newCell.WorldPos, Color.magenta);
+
+                            currentCell = newCell;
+                            currentCell.DoorDirections |= DoorDirections.Left;
                         }
                         else
                         {
-                            current.DoorDirections |= DoorDirections.Top;
-                            currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.Bottom;
+                            currentCell.DoorDirections |= DoorDirections.Top;
 
-                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
+                            DrawDebugLine(currentCell.WorldPos, newCell.WorldPos, Color.magenta);
+
+                            currentCell = newCell;
+                            currentCell.DoorDirections |= DoorDirections.Bottom;
                         }
                     }
                     else
                     {
                         // Is down or left
-                        if (newCell + 1 == currentCell)
+                        if (newCell.CellId + 1 == currentCell.CellId)
                         {
-                            current.DoorDirections |= DoorDirections.Left;
-                            currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.Right;
+                            currentCell.DoorDirections |= DoorDirections.Left;
 
-                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
+                            DrawDebugLine(currentCell.WorldPos, newCell.WorldPos, Color.magenta);
+
+                            currentCell = newCell;
+                            currentCell.DoorDirections |= DoorDirections.Right;
                         }
                         else
                         {
-                            current.DoorDirections |= DoorDirections.Bottom;
-                            currentCell = newCell;
-                            cellGrid[newCell].DoorDirections |= DoorDirections.Top;
+                            currentCell.DoorDirections |= DoorDirections.Bottom;
 
-                            DrawDebugLine(current.WorldPos, cellGrid[newCell].WorldPos, Color.magenta);
+                            DrawDebugLine(currentCell.WorldPos, newCell.WorldPos, Color.magenta);
+
+                            currentCell = newCell;
+                            currentCell.DoorDirections |= DoorDirections.Top;
                         }
                     }
                 }
             }
-
+            cellGrid.ForEach(cell => cell.Neighbours = LoadNeighbours(cell, cellGrid));
             return cellGrid;
         }
 
         #endregion
 
+        #region Room definitions
+
+        private Dictionary<Cell, CellTypes> GetRoomDefinitions(List<Cell> cells)
+        {
+            Dictionary<Cell, CellTypes> roomDefinitions = new Dictionary<Cell, CellTypes>();
+
+            foreach (Cell cell in cells)
+            {
+                roomDefinitions.Add(cell, CellTypes.Combat);
+            }
+
+            // Place Boss Room
+            PlaceBossRoom(roomDefinitions);
+            //Place Treasure room
+            PlaceTreasureRoom(roomDefinitions);
+            //Place Shop room
+            PlaceShopRoom(roomDefinitions);
+            //Place Start room
+            PlaceStartRoom(roomDefinitions);
+
+            return roomDefinitions;
+        }
+
+        #region Room placement
+
+        private void PlaceBossRoom(Dictionary<Cell, CellTypes> roomDefinitions)
+        {
+            List<Cell> possibleCells = new List<Cell>();
+
+            // Am Anfang sind alle Räume Combat Räume. Nur diese dürfen in andere Räume umgewandelt werden. Der Bossraum darf nur an einem Ende des Levels spawnen. Also nur 1 Direction.
+            foreach (KeyValuePair<Cell, CellTypes> kvp in roomDefinitions.Where(kvp =>
+                         kvp.Value == CellTypes.Combat && kvp.Key.GetNumberOfDirections() == 1))
+            {
+                possibleCells.Add(kvp.Key);
+            }
+
+            Cell cell = ListUtils.GetRandomElement(possibleCells);
+            roomDefinitions[cell] = CellTypes.Boss;
+        }
+
+        private void PlaceTreasureRoom(Dictionary<Cell, CellTypes> roomDefinitions)
+        {
+            List<Cell> possibleCells = new List<Cell>();
+
+            // Am Anfang sind alle Räume Combat Räume. Nur diese dürfen in andere Räume umgewandelt werden.
+            foreach (KeyValuePair<Cell, CellTypes> kvp in roomDefinitions.Where(kvp => kvp.Value == CellTypes.Combat))
+            {
+                possibleCells.Add(kvp.Key);
+            }
+
+            List<Cell> cells = ListUtils.GetRandomElements(possibleCells, NumberOfTreasureRooms);
+
+            cells.ForEach(cell => roomDefinitions[cell] = CellTypes.Treasure);
+        }
+
+        private void PlaceShopRoom(Dictionary<Cell, CellTypes> roomDefinitions)
+        {
+            List<Cell> possibleCells = new List<Cell>();
+
+            // Am Anfang sind alle Räume Combat Räume. Nur diese dürfen in andere Räume umgewandelt werden.
+            foreach (KeyValuePair<Cell, CellTypes> kvp in roomDefinitions.Where(kvp => kvp.Value == CellTypes.Combat))
+            {
+                possibleCells.Add(kvp.Key);
+            }
+
+            List<Cell> cells = ListUtils.GetRandomElements(possibleCells, NumberOfShopRooms);
+
+            cells.ForEach(cell => roomDefinitions[cell] = CellTypes.Shop);
+        }
+
+        private void PlaceStartRoom(Dictionary<Cell, CellTypes> roomDefinitions)
+        {
+            List<Cell> possibleCells = new List<Cell>();
+
+            Cell bossRoom = roomDefinitions.First(kvp => kvp.Value == CellTypes.Boss).Key;
+
+            // Am Anfang sind alle Räume Combat Räume. Nur diese dürfen in andere Räume umgewandelt werden.
+            foreach (KeyValuePair<Cell, CellTypes> kvp in roomDefinitions.Where(kvp => kvp.Value == CellTypes.Combat))
+            {
+                List<Cell> pathToBoss = AStar.FindPath(kvp.Key, bossRoom);
+
+                if(pathToBoss == null) continue;
+                
+                // Wenn Pfad - 2 (Boss und Start Raum ausgeschlossen) grösser als DistanceToBossRoom sind kann die Cell als Start verwendet werden
+                if (pathToBoss.Count - 2 > DistanceToBossRoom) possibleCells.Add(kvp.Key);
+            }
+
+            Cell cell = ListUtils.GetRandomElement(possibleCells);
+
+            if (cell == null) return;
+            
+            roomDefinitions[cell] = CellTypes.Start;
+        }
+
+        #endregion
+
+        #endregion
 
         #region Debugs
 
@@ -247,16 +384,34 @@ namespace Levels
             return randomRooms[roomIndex];
         }
 
-        private List<int> GetNeighbours(int cell, List<Cell> cellGrid)
+        private List<Cell> GetNeighbours(Cell cell, List<Cell> cellGrid)
         {
-            List<int> neighbours = new List<int>();
+            List<Cell> neighbours = new List<Cell>();
 
-            if (cell - _numberOfRoomsSqr >= 0 && !cellGrid[cell - _numberOfRoomsSqr].Visited)
-                neighbours.Add(cell - _numberOfRoomsSqr); // Top
-            if (cell + _numberOfRoomsSqr < cellGrid.Count && !cellGrid[cell + _numberOfRoomsSqr].Visited)
-                neighbours.Add(cell + _numberOfRoomsSqr); //Bot
-            if ((cell + 1) % _numberOfRoomsSqr != 0 && !cellGrid[cell + 1].Visited) neighbours.Add(cell + 1); // Right
-            if (cell % _numberOfRoomsSqr != 0 && !cellGrid[cell - 1].Visited) neighbours.Add(cell - 1); // Left
+            if (cell.CellId - _numberOfRoomsSqr >= 0 && !cellGrid[cell.CellId - _numberOfRoomsSqr].Visited)
+                neighbours.Add(cellGrid[cell.CellId - _numberOfRoomsSqr]); // Bot
+            if (cell.CellId + _numberOfRoomsSqr < cellGrid.Count && !cellGrid[cell.CellId + _numberOfRoomsSqr].Visited)
+                neighbours.Add(cellGrid[cell.CellId + _numberOfRoomsSqr]); //Top
+            if ((cell.CellId + 1) % _numberOfRoomsSqr != 0 && !cellGrid[cell.CellId + 1].Visited)
+                neighbours.Add(cellGrid[cell.CellId + 1]); // Right
+            if (cell.CellId % _numberOfRoomsSqr != 0 && !cellGrid[cell.CellId - 1].Visited)
+                neighbours.Add(cellGrid[cell.CellId - 1]); // Left
+
+            return neighbours;
+        }
+
+        private List<Cell> LoadNeighbours(Cell cell, List<Cell> cellGrid)
+        {
+            List<Cell> neighbours = new List<Cell>();
+
+            if ((cell.DoorDirections & DoorDirections.Bottom) != 0)
+                neighbours.Add(cellGrid[cell.CellId - _numberOfRoomsSqr]); // Bot
+            if ((cell.DoorDirections & DoorDirections.Top) != 0)
+                neighbours.Add(cellGrid[cell.CellId + _numberOfRoomsSqr]); //Top
+            if ((cell.DoorDirections & DoorDirections.Right) != 0)
+                neighbours.Add(cellGrid[cell.CellId + 1]); // Right
+            if ((cell.DoorDirections & DoorDirections.Left) != 0)
+                neighbours.Add(cellGrid[cell.CellId - 1]); // Left
 
             return neighbours;
         }
@@ -266,13 +421,91 @@ namespace Levels
 
     #region Helper Classes
 
-    internal class Cell
+    internal class Cell : IComparable<Cell>
     {
         public String Name;
+        public int CellId;
         public bool Visited;
         public DoorDirections DoorDirections;
         public Vector3 WorldPos;
-        public List<int> Neighbours;
+        public List<Cell> Neighbours;
+        public float Weight;
+
+        public int GetNumberOfDirections()
+        {
+            int numberOfDirections = 0;
+            if ((DoorDirections & DoorDirections.Bottom) != 0) numberOfDirections++;
+            if ((DoorDirections & DoorDirections.Top) != 0) numberOfDirections++;
+            if ((DoorDirections & DoorDirections.Left) != 0) numberOfDirections++;
+            if ((DoorDirections & DoorDirections.Right) != 0) numberOfDirections++;
+
+            return numberOfDirections;
+        }
+
+        public int CompareTo(Cell other)
+        {
+            if (Weight > other.Weight) return 1;
+            if (Weight < other.Weight) return -1;
+            return 0;
+        }
+    }
+
+
+    internal static class AStar
+    {
+        public static List<Cell> FindPath(Cell start, Cell end)
+        {
+            PriorityQueue<Cell> priorityQueue = new PriorityQueue<Cell>();
+            Dictionary<Cell, Cell> directionMap = new Dictionary<Cell, Cell>();
+
+            priorityQueue.Enqueue(start);
+            directionMap.Add(start, null);
+
+            while (priorityQueue.Count > 0)
+            {
+                Cell currentCell = priorityQueue.Dequeue();
+
+                Debug.Log(currentCell.Name + " Neighbours: " + currentCell.Neighbours.Count);
+                
+                foreach (Cell neighbour in currentCell.Neighbours.Where(neighbour => !directionMap.ContainsKey(neighbour)))
+                {
+                    // Cost & Weight is always 1 since there is no difficulty in passing Terrain and all Nodes have the same distance between each other
+                    
+                    neighbour.Weight = 1 + Vector3.Distance(neighbour.WorldPos, end.WorldPos);;
+                    directionMap.Add(neighbour, currentCell);
+                    priorityQueue.Enqueue(neighbour);
+                }
+            }
+
+            if (directionMap.Count <= 1 || !directionMap.TryGetValue(end, out Cell value))
+            {
+                Debug.LogError("Unable to resolve Path");
+                return null;
+            }
+
+            Cell nextCell = end;
+            List<Cell> path = new List<Cell>();
+            while (nextCell != null)
+            {
+                path.Add(nextCell);
+                if (!directionMap.TryGetValue(nextCell, out nextCell))
+                {
+                    Debug.LogError("Well.. Shit");
+                }
+            }
+
+            path.Reverse();
+            return path;
+        }
+    }
+
+    internal enum CellTypes
+    {
+        Boss,
+        Combat,
+        Shop,
+        Treasure,
+        Start
     }
 
     public class NoRoomFoundException : Exception

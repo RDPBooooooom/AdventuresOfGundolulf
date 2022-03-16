@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Levels.Rooms;
 using Managers;
 using PlayerScripts;
@@ -14,12 +15,16 @@ namespace Levels
         [SerializeField] private List<Room> _roomPrefabs;
         [SerializeField] int _numberOfRooms;
         [SerializeField] private bool _showDebug;
+        [SerializeField] private int _numberOfShopRooms = 1;
+        [SerializeField] private int _numberIfTreasureRooms = 1;
+        [SerializeField] private int _distanceToBossRoom = 4;
 
         private LevelGenerator _levelGenerator;
 
         #endregion
 
         #region Properties
+
         public List<Room> Rooms { get; private set; }
         public Room CurrentRoom { get; private set; }
         public Camera PlayerCam { get; set; }
@@ -29,14 +34,25 @@ namespace Levels
 
         private void Awake()
         {
-            _levelGenerator = new LevelGenerator(_roomPrefabs, _numberOfRooms, _showDebug);
+            _levelGenerator = new LevelGenerator(_roomPrefabs, _numberOfRooms, _showDebug, _numberOfShopRooms,
+                _numberIfTreasureRooms, _distanceToBossRoom);
         }
 
         public void GenerateLevel()
         {
             Rooms = _levelGenerator.GenerateLevel();
-            CurrentRoom = Rooms[Mathf.CeilToInt(Mathf.Sqrt(_numberOfRooms))];
-            
+
+            Room[] startRooms = Rooms.Where(r => r.GetType() == typeof(StartRoom)).ToArray();
+
+            if (startRooms.Length > 0)
+            {
+                CurrentRoom = startRooms[0];
+            }
+            else
+            {
+                CurrentRoom = Rooms[0];
+            }
+
             RoomSetup();
         }
 
@@ -45,13 +61,16 @@ namespace Levels
             ClearSetup();
             CurrentRoom = toEnter;
 
-            //TODO Move Character and Cam in a good way, This is WIP
-            FindObjectOfType<Player>().transform.position = toEnter.transform.position;
+
+            Player player = GameManager.Instance.Player;
+            player.transform.position = toEnter.GetClosestPositionOnGround(player.transform.position);
+
+            //TODO Move Cam in a good way, This is WIP
+
             Vector3 pos1 = leaving.transform.position;
             Vector3 pos2 = toEnter.transform.position;
-            Camera.main.transform.position += new Vector3(pos2.x - pos1.x, 0, pos2.z - pos1.z );
-            
-            
+            Camera.main.transform.position += new Vector3(pos2.x - pos1.x, 0, pos2.z - pos1.z);
+
             RoomSetup();
         }
 
@@ -65,7 +84,5 @@ namespace Levels
         {
             CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
-
-
     }
 }

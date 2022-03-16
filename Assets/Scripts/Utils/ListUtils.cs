@@ -15,6 +15,8 @@ namespace Utils
         /// <returns>Random element from the list</returns>
         public static T GetRandomElement<T>(List<T> list)
         {
+            if (list.Count == 0) return default(T);
+            
             Random rand = new Random();
             return list[rand.Next(0, list.Count - 1)];
         }

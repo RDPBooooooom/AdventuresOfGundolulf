@@ -37,7 +37,6 @@ public class Teleport : Ability
     public Teleport(LivingEntity owner, LivingEntity targetEntity) : base(owner)
     {
         Cooldown = 2f;
-        IsReady = true;
         _targetEntity = targetEntity;
     }
 

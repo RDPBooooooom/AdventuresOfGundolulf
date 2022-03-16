@@ -10,7 +10,6 @@ public class Melee : Ability
     public Melee(LivingEntity owner) : base(owner)
     {
         Cooldown = 100 / owner.Haste;
-        IsReady = true;
     }
 
     public override void Use()

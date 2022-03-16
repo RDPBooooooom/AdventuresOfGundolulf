@@ -2,43 +2,48 @@ using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 public abstract class Ability
 {
     #region Fields
 
     protected LivingEntity _owner;
+    protected Timer _cooldownTimer;
+    private float _cooldown;
 
     #endregion
 
     #region Properties
 
-    public float Cooldown { get; protected set; }
-    public bool IsReady { get; set; }
+    public float Cooldown
+    {
+        get => _cooldown;
+        protected set
+        {
+            _cooldown = value;
+            if(_cooldownTimer != null)  _cooldownTimer.Time = value;
+        }
+        
+    }
+
+    public bool IsReady => _cooldownTimer.IsReady;
 
     #endregion
 
     public abstract void Use();
 
-    public Ability(LivingEntity owner)
+    protected Ability(LivingEntity owner)
     {
         _owner = owner;
+        _cooldownTimer = new Timer(_owner, Cooldown);
     }
 
     #region Cooldown
 
     protected void StartCooldown()
     {
-        _owner.StartCoroutine(CooldownTimer());
-    }
-
-    protected IEnumerator CooldownTimer()
-    {
-        IsReady = false;
-
-        yield return new WaitForSeconds(Cooldown);
-
-        IsReady = true;
+       _cooldownTimer.Start();
     }
 
     #endregion
