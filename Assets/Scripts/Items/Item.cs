@@ -7,11 +7,27 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour, IInteractable
 {
     // Class that all items will inherit from
-    #region Declaring Variables
+    #region Fields
 
-    public int Value { get; protected set; }
-    public Sprite uiImage;
-    
+    [SerializeField] private Sprite _uIImage;
+    private int _value;
+
+    #endregion
+
+    #region Properties
+
+    public int Value 
+    {
+        get => _value; 
+        protected set => _value = value; 
+    }
+
+    public Sprite UIImage
+    {
+        get => _uIImage;
+        protected set => _uIImage = value;
+    }
+
     #endregion
 
     void PickUpItem()

@@ -4,12 +4,16 @@ using UnityEngine;
 using Assets.Scripts;
 using PlayerScripts;
 using UserInterface;
+using Managers;
 
 public class ShopGerald : MonoBehaviour, IInteractable
 {
     #region Fields
 
+    [SerializeField] private ShopUI _shopPanelPrefab;
+
     private Player _player;
+    private ShopUI _shopUI;
 
     private int _merchantMoney = 250; // Depends on difficulty?
     private int _amountOfItems = 4;
@@ -25,7 +29,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
     #endregion
     private void Awake()
     {
-        _player = FindObjectOfType<Player>();
+        _player = GameManager.Instance.Player;
     }
 
     public void SellToPlayer(Item item)
@@ -35,7 +39,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
         _player.EquippedItems.Add(item);
 
-        ItemManager.Instance.ItemEquipped(item);
+        GameManager.Instance.ItemManager.ItemEquipped(item);
     }
 
     public void BuyFromPlayer(Item item)
@@ -50,7 +54,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
             _player.Gold += price;
             _player.EquippedItems.Remove(item);
 
-            ItemManager.Instance.ItemSold(item);
+            GameManager.Instance.ItemManager.ItemSold(item);
         }
         else
         {
@@ -63,11 +67,21 @@ public class ShopGerald : MonoBehaviour, IInteractable
     {
         if (Assortment == null)
         {
-            Assortment = ItemManager.Instance.RandomItem(_amountOfItems);
-            Assortment.Add((Item)Resources.Load(_potionPath));
+            Assortment = GameManager.Instance.ItemManager.RandomItem(_amountOfItems);
+            Assortment.Add(Resources.Load<Item>(_potionPath));
+
+            foreach (Item item in Assortment)
+            {
+                Debug.Log(item.name);
+                Debug.Log(item.Value);
+            }
         }
 
-        ShopUI.Instance.AssortmentUI();
+        if (_shopUI == null)
+        {
+            _shopUI = Instantiate(_shopPanelPrefab, GameManager.Instance.UIManager.MainCanvas.transform);
+            _shopUI.ShopGerald = this;
+        }
     }
 
     public void Interact()

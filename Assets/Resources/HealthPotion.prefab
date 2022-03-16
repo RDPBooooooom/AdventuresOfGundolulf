@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2734679551879905678}
   - component: {fileID: 2734679551878776278}
   - component: {fileID: 5595171386424112444}
+  - component: {fileID: -2612874288226880884}
   m_Layer: 0
   m_Name: HealthPotion
   m_TagString: Untagged
@@ -95,3 +96,16 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0.000023245811, y: 0.18508512, z: -0.000014834106}
+--- !u!114 &-2612874288226880884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2734679551880928092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccc51852c94346743932ed6f5c30ef24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiImage: {fileID: 0}

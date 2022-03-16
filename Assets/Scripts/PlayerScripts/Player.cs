@@ -182,6 +182,7 @@ namespace PlayerScripts
             // ToDo: Display Text if you can interact with something
 
             IInteractable interactableObject = GetInteractableObject();
+            Debug.LogWarning(interactableObject);
 
             if (interactableObject == null)
             {
@@ -193,9 +194,12 @@ namespace PlayerScripts
 
         private void UseItem()
         {
-            IUsable usableObject = (IUsable) _activeItem;
+            if (_activeItem != null)
+            {
+                IUsable usableObject = (IUsable)_activeItem;
 
-            usableObject.Use();
+                usableObject.Use();
+            }
         }
 
         #endregion

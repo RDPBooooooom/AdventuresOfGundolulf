@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b57fcf2a121e7541a7f88aef6d30e66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiImage: {fileID: 21300000, guid: b65d4c8bfe78d53428c1ed1c1ea169ad, type: 3}
+  _uIImage: {fileID: 21300000, guid: b65d4c8bfe78d53428c1ed1c1ea169ad, type: 3}
 --- !u!33 &3814062488583941526
 MeshFilter:
   m_ObjectHideFlags: 0

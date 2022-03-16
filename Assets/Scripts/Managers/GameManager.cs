@@ -11,8 +11,10 @@ namespace Managers
 
         [SerializeField] private LevelManager _levelManagerPrefab;
         [SerializeField] private EnemyManager _enemyManagerPrefab;
+        [SerializeField] private UIManager _uIManagerPrefab;
+        [SerializeField] private ItemManager _itemManagerPrefab;
         [SerializeField] private Player _playerPrefab;
-        [SerializeField] private Camera _playerCamPrefab;
+        [SerializeField] private Camera _playerCamPrefab;        
 
         #endregion
 
@@ -23,6 +25,10 @@ namespace Managers
         public LevelManager LevelManager { get; private set; }
 
         public EnemyManager EnemyManager { get; private set; }
+
+        public UIManager UIManager { get; private set; }
+
+        public ItemManager ItemManager { get; private set; }
 
         public DeckManager DeckManager { get; private set; }
 
@@ -45,10 +51,14 @@ namespace Managers
 
         private void Start()
         {
-            EnemyManager = Instantiate(_enemyManagerPrefab, this.transform);
+            EnemyManager = Instantiate(_enemyManagerPrefab, transform);
 
-            LevelManager = Instantiate(_levelManagerPrefab, this.transform);
+            LevelManager = Instantiate(_levelManagerPrefab, transform);
             LevelManager.GenerateLevel();
+
+            UIManager = Instantiate(_uIManagerPrefab, transform);
+
+            ItemManager = Instantiate(_itemManagerPrefab, transform);
 
             Vector3 roomPosition = LevelManager.CurrentRoom.transform.position;
 

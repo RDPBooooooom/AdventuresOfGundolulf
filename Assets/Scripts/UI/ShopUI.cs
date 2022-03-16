@@ -1,10 +1,13 @@
+using Managers;
 using PlayerScripts;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 namespace UserInterface
 {
@@ -12,23 +15,20 @@ namespace UserInterface
     {
         #region Fields
 
-        [SerializeField] private GameObject _shopPanel;
         [SerializeField] private Button _buyButton;
         [SerializeField] private Button _sellButton;
-        [SerializeField] private RawImage[] _images;
-
-        private ShopGerald _shopGerald;
+        
         private Player _player;
-        private List<Texture2D> _itemTextures;
+        private Image[] _images;
+        private List<Sprite> _itemSprites;
+        private List<string> _itemValues;
         private Item _selectedItem;
-
-        //private Dictionary<Item, Texture2D> _previews;
 
         #endregion
 
         #region Properties
 
-        public static ShopUI Instance { get; private set; }
+        public ShopGerald ShopGerald { get; set; }
 
         #endregion
 
@@ -36,8 +36,11 @@ namespace UserInterface
 
         private void Start()
         {
-            _shopGerald = FindObjectOfType<ShopGerald>();
-            _player = FindObjectOfType<Player>();
+            _player = GameManager.Instance.Player;
+            _images = GetComponentsInChildren<Image>().Where(go => go.gameObject != gameObject).ToArray();
+
+            _itemSprites = new List<Sprite>();
+            _itemValues = new List<string>();
         }
 
         private void Update()
@@ -47,14 +50,13 @@ namespace UserInterface
                 _buyButton.interactable = false;
                 _sellButton.interactable = false;
             }
-
-            /*
-            if (_itemTextures.Count != _shopGerald.Assortment.Count)
+                        
+            if (_itemSprites.Count != ShopGerald.Assortment.Count)
             {
                 GeneratePreviews();
                 DisplayItems();
             }
-            */
+            
         }
         #endregion
 
@@ -63,28 +65,23 @@ namespace UserInterface
         
         public void Buy()
         {
-            _shopGerald.SellToPlayer(_selectedItem);
+            ShopGerald.SellToPlayer(_selectedItem);
             _selectedItem = null;
         }
 
         public void Sell()
         {
-            _shopGerald.BuyFromPlayer(_selectedItem);
-        }
-
-        public void AssortmentUI()
-        {
-            _shopPanel.SetActive(true);
+            ShopGerald.BuyFromPlayer(_selectedItem);
         }
 
         public void Back()
         {
-            _shopPanel.SetActive(false);
+            Destroy(gameObject);
         }
 
         public void SelectItemToBuy(int index)
         {
-            _selectedItem = _shopGerald.Assortment[index];
+            _selectedItem = ShopGerald.Assortment[index];
 
             _buyButton.interactable = true;
         }
@@ -103,29 +100,25 @@ namespace UserInterface
 
         private void GeneratePreviews()
         {
-            foreach (Item item in _shopGerald.Assortment)
+            foreach (Item item in ShopGerald.Assortment)
             {
-                Texture2D preview = AssetPreview.GetAssetPreview(item.gameObject);
-                _itemTextures.Add(preview);
+                Sprite preview = item.UIImage;
+                _itemSprites.Add(preview);
 
-                /*
-                if (!_previews.ContainsKey(item))
-                {
-                    Texture2D preview = AssetPreview.GetAssetPreview(item.gameObject);
-
-                    if (preview != null)
-                    {
-                        _previews.Add(item, preview);
-                    }
-                }*/
+                string value = item.Value.ToString();
+                _itemValues.Add(value);
             }
         }
 
         public void DisplayItems()
         {
-            for (int i = 0; i < _itemTextures.Count; i++)
+            for (int i = 0; i < _itemSprites.Count; i++)
             {
-                _images[i].GetComponent<RawImage>().texture = _itemTextures[i];
+                if (_images[i].transform.parent != null)
+                {
+                    _images[i].GetComponent<Image>().sprite = _itemSprites[i];
+                    _images[i].GetComponentInChildren<Text>().text = _itemValues[i];
+                }
             }
         }
 

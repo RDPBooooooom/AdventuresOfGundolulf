@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using System.Linq;
 
 public class ItemManager : MonoBehaviour
 {
     #region Fields
 
-    private string _itemsPath = "/Items";
+    private string _itemsPath = "Items";
 
     #endregion
 
     #region Properties
 
-    public static ItemManager Instance { get; private set; }
     public List<Item> AllItems { get; private set; }
     public List<Item> NotEquippedItems { get; set; }
 
@@ -21,20 +21,12 @@ public class ItemManager : MonoBehaviour
 
     #region Unity Methods
 
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(this);
-        }
-
-        Instance = this;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
-        AllItems = new List<Item>((IEnumerable<Item>)Resources.LoadAll(_itemsPath));
+        AllItems = new List<Item>();
+        AllItems = Resources.LoadAll(_itemsPath, typeof(Item)).Cast<Item>().ToList();
+
         NotEquippedItems = AllItems;
     }
 
