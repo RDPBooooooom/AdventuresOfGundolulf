@@ -465,8 +465,6 @@ namespace Levels
             {
                 Cell currentCell = priorityQueue.Dequeue();
 
-                Debug.Log(currentCell.Name + " Neighbours: " + currentCell.Neighbours.Count);
-                
                 foreach (Cell neighbour in currentCell.Neighbours.Where(neighbour => !directionMap.ContainsKey(neighbour)))
                 {
                     // Cost & Weight is always 1 since there is no difficulty in passing Terrain and all Nodes have the same distance between each other

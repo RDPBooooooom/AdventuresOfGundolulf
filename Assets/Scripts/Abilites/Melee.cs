@@ -16,7 +16,6 @@ public class Melee : Ability
     {
         if (IsReady)
         {
-            Debug.Log(Cooldown);
             DoMeele();
             StartCooldown();
         }
