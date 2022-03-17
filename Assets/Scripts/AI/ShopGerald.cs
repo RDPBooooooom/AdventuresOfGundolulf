@@ -69,12 +69,6 @@ public class ShopGerald : MonoBehaviour, IInteractable
         {
             Assortment = GameManager.Instance.ItemManager.RandomItem(_amountOfItems);
             Assortment.Add(Resources.Load<Item>(_potionPath));
-
-            foreach (Item item in Assortment)
-            {
-                Debug.Log(item.name);
-                Debug.Log(item.Value);
-            }
         }
 
         if (_shopUI == null)

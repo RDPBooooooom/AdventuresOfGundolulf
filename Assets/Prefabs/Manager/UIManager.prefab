@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCanvasPrefab: {fileID: 6735586431983175237, guid: 2fad93b491957ff40b89e57aebbdff4a, type: 3}
+  castScrollUI: {fileID: 8308132591452696100, guid: e41c3c490f70888479f0b413999997a2, type: 3}

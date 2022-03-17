@@ -6,6 +6,7 @@ namespace Scrolls
 
         //TODO Likly needs to be a Scriptable Object
         public int Cost { get; protected set; }
+        public string Description { get; protected set; }
 
         #endregion
 
