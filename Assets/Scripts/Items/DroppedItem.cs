@@ -1,38 +1,22 @@
 using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 
-public class DroppedItem : MonoBehaviour, IInteractable
+namespace Items
 {
-    #region Fields
-
-    [SerializeField] private Sprite _uIImage;
-    [SerializeField] private Item _item;
-
-    #endregion
-
-    #region Properties
-
-    public Item Item { get; set; }
-
-    #endregion
-
-    // Start is called before the first frame update
-    void Start()
+    public class DroppedItem : MonoBehaviour, IInteractable
     {
+        #region Properties
 
-    }
+        public Item Item { get; set; }
 
-    // Update is called once per frame
-    void Update()
-    {
+        #endregion
 
-    }
-
-    public void Interact()
-    {
-
+        public void Interact()
+        {
+            GameManager.Instance.Player.Equip(Item);
+            Destroy(gameObject);
+        }
     }
 }
 

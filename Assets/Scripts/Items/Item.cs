@@ -1,14 +1,12 @@
-using Assets.Scripts;
-using System.Collections;
-using System.Collections.Generic;
+using LivingEntities;
 using UnityEngine;
-using UnityEngine.UI;
 using Managers;
 using PlayerScripts;
 
 public class Item
 {
     // Class that all items will inherit from
+
     #region Fields
 
     private Sprite _uIImage;
@@ -33,28 +31,38 @@ public class Item
 
     #endregion
 
-    #region Unity Methods
+    #region Delegates
 
-    public Item()
-    {
+    public delegate void EquipHandler(LivingEntity equipOn);
 
-    }
+    public delegate void UnequipHandler(LivingEntity unequipFrom);
 
-    protected virtual void Start()
+    #endregion
+
+    #region Events
+
+    public event EquipHandler EquipEvent;
+    public event UnequipHandler UnequipEvent;
+
+    #endregion
+
+    #region Constructor
+
+    protected Item()
     {
         _player = GameManager.Instance.Player;
+        _uIImage = Resources.Load<Sprite>("UI/Items/" + GetType().Name);
     }
 
     #endregion
 
-    void PickUpItem()
+    public virtual void Equip(LivingEntity equipOn)
     {
-        if (!_player.EquippedItems.Contains(this))
-        {
-            _player.EquippedItems.Add(this);
-        }
+        EquipEvent?.Invoke(equipOn);
     }
 
-
+    public virtual void Unequip(LivingEntity unequipFrom)
+    {
+        UnequipEvent?.Invoke(unequipFrom);
+    }
 }
-

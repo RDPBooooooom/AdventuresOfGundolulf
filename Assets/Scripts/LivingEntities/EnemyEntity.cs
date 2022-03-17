@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Items;
+using Managers;
 using PlayerScripts;
 using UnityEngine;
 using Utils;
@@ -17,7 +19,6 @@ namespace LivingEntities
         protected Animator _animator;
         protected Rigidbody _rigidbody;
         [SerializeField] GameObject _coin;
-        private string _itemPath = "Items";
 
         [Header("Item Prefabs")]
         List<DroppedItem> _items = new List<DroppedItem>();
@@ -32,8 +33,6 @@ namespace LivingEntities
             _player = FindObjectOfType<Player>();
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
-
-            _items = Resources.LoadAll(_itemPath, typeof(DroppedItem)).Cast<DroppedItem>().ToList();
         }
 
         protected void FixedUpdate()
@@ -97,9 +96,12 @@ namespace LivingEntities
 
         protected virtual void DropItem()
         {
-            Random random = new Random();
-            int item = random.Next(0, 8);
-            Instantiate(_items[item], new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity);
+            DroppedItem item = GameManager.Instance.ItemManager.GetRandomDroppedItem();
+
+            if (item == null) return;
+
+            Vector3 position = transform.position;
+            item.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
         }
 
         #endregion

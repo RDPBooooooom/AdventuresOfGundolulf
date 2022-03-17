@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,10 +16,11 @@ public class ShopGerald : MonoBehaviour, IInteractable
     private Player _player;
     private ShopUI _shopUI;
 
+    private ItemManager _itemManager;
+
     private int _merchantMoney = 250; // Depends on difficulty?
     private int _amountOfItems = 4;
     private int _valueLossFactor = 2;
-    private string _potionPath = "HealthPotion";
 
     #endregion
 
@@ -29,7 +31,13 @@ public class ShopGerald : MonoBehaviour, IInteractable
     #endregion
     private void Awake()
     {
+        
+    }
+
+    private void Start()
+    {
         _player = GameManager.Instance.Player;
+        _itemManager = GameManager.Instance.ItemManager;
     }
 
     public void SellToPlayer(Item item)
@@ -37,9 +45,9 @@ public class ShopGerald : MonoBehaviour, IInteractable
         _merchantMoney += item.Value;
         Assortment.Remove(item);
 
-        _player.EquippedItems.Add(item);
+        _player.Equip(item);
 
-        GameManager.Instance.ItemManager.ItemEquipped(item);
+        _itemManager.ItemEquipped(item);
     }
 
     public void BuyFromPlayer(Item item)
@@ -52,9 +60,9 @@ public class ShopGerald : MonoBehaviour, IInteractable
             Assortment.Add(item);
 
             _player.Gold += price;
-            _player.EquippedItems.Remove(item);
+            _player.Unequip(item);
 
-            GameManager.Instance.ItemManager.ItemSold(item);
+            _itemManager.ItemSold(item);
         }
         else
         {
@@ -67,8 +75,8 @@ public class ShopGerald : MonoBehaviour, IInteractable
     {
         if (Assortment == null)
         {
-            Assortment = GameManager.Instance.ItemManager.RandomItem(_amountOfItems);
-            Assortment.Add(Resources.Load<DroppedItem>(_potionPath).Item);
+            Assortment = _itemManager.GetRandomItems(_amountOfItems);
+            Assortment.Add(_itemManager.GetSpecificItem(typeof(HealthPotion)));
         }
 
         if (_shopUI == null)

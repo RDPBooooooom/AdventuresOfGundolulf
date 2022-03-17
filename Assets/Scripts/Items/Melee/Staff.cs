@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Staff : MeleeItem
+namespace Items.Melee
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class Staff : MeleeItem
     {
-        base.Start();
-        Value = 5;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Staff() : base()
+        {
+            Value = 5;
+        }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace LivingEntities
@@ -114,6 +115,8 @@ namespace LivingEntities
             get => _projectileForce;
             protected set => _projectileForce = value;
         }
+        
+        private List<Item> EquippedItems {  get; set; }
 
         #endregion
 
@@ -137,7 +140,8 @@ namespace LivingEntities
 
             IsAlive = true;
             Health = _maxHealth;
-        
+            
+            EquippedItems = new List<Item>();
         }
     
         #endregion
@@ -174,6 +178,18 @@ namespace LivingEntities
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
+        }
+
+        public void Equip(Item item)
+        {
+            EquippedItems.Add(item);
+            item.Equip(this);
+        }
+
+        public void Unequip(Item item)
+        {
+            EquippedItems.Remove(item);
+            item.Unequip(this);
         }
 
     }

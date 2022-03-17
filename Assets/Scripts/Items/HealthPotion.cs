@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class HealthPotion : Item
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public HealthPotion() : base()
     {
-        base.Start();
         Value = 10; 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

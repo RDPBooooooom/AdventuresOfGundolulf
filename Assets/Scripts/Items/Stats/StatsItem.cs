@@ -1,18 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class StatsItem : Item
+namespace Items.Stats
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public abstract class StatsItem : Item
     {
-        base.Start();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected StatsItem() : base()
+        {
+        }
     }
 }

@@ -1,19 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Pickaxe : MeleeItem
+namespace Items.Melee
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class Pickaxe : MeleeItem
     {
-        base.Start();
-        Value = 10;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Pickaxe() : base()
+        {
+            Value = 10;
+        }
+        // Start is called before the first frame update
     }
 }

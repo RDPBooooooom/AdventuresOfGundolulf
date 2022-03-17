@@ -1,3 +1,4 @@
+using Items;
 using Levels;
 using PlayerScripts;
 using Scrolls;
@@ -14,7 +15,7 @@ namespace Managers
         [SerializeField] private UIManager _uIManagerPrefab;
         [SerializeField] private ItemManager _itemManagerPrefab;
         [SerializeField] private Player _playerPrefab;
-        [SerializeField] private Camera _playerCamPrefab;        
+        [SerializeField] private Camera _playerCamPrefab;
 
         #endregion
 
@@ -61,8 +62,6 @@ namespace Managers
         private void Start()
         {
             EnemyManager = Instantiate(_enemyManagerPrefab, transform);
-
-            
 
             UIManager = Instantiate(_uIManagerPrefab, transform);
 

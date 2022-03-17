@@ -93,7 +93,8 @@ namespace UserInterface
         public void SelectItemToSell(int index)
         {
             // ToDo: Assign an index to each item of the player
-            _selectedItem = _player.EquippedItems[index];
+           
+           // _selectedItem = _player.EquippedItems[index];
 
             _sellButton.interactable = true;
         }

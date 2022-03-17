@@ -1,68 +1,85 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using Items;
 using UnityEngine;
 using Utils;
-using System.Linq;
 
-public class ItemManager : MonoBehaviour
+namespace Managers
 {
-    #region Fields
-
-    private string _itemsPath = "Items";
-
-    #endregion
-
-    #region Properties
-
-    public List<Item> AllItems { get; private set; }
-    public List<Item> NotEquippedItems { get; set; }
-
-    #endregion
-
-    #region Unity Methods
-
-    // Start is called before the first frame update
-    void Start()
+    public class ItemManager : MonoBehaviour
     {
-        AllItems = new List<Item>();
-        AllItems = Resources.LoadAll(_itemsPath, typeof(Item)).Cast<Item>().ToList();
+        #region Fields
 
-        NotEquippedItems = AllItems;
-    }
+        private ItemFactory _itemFactory;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        private List<Type> _availableItemTypes;
+        private List<Type> _usedItemTypes;
 
-    #endregion
+        #endregion
 
-    #region Methods
+        #region Properties
 
-    public void ItemEquipped(Item item)
-    {
-        NotEquippedItems.Remove(item);
-    }
+        #endregion
 
-    public void ItemSold(Item item)
-    {
-        NotEquippedItems.Add(item);
-    }
+        #region Unity Methods
 
-    public List<Item> RandomItem(int amount)
-    {
-        if (NotEquippedItems.Count > amount)
+        private void Awake()
         {
-            List<Item> randomItems = ListUtils.GetRandomElements(NotEquippedItems, amount);
+            _itemFactory = new ItemFactory();
+            _availableItemTypes = _itemFactory.AllItemTypes;
+            _usedItemTypes = new List<Type>();
+        }
 
-            return randomItems;
-        }
-        else
+        #endregion
+
+        #region Methods
+
+        public void ItemEquipped(Item item)
         {
-            return NotEquippedItems;
+            Type type = item.GetType();
+            _usedItemTypes.Add(type);
+            _availableItemTypes.Remove(type);
         }
+
+        public void ItemSold(Item item)
+        {
+            Type type = item.GetType();
+            _availableItemTypes.Remove(type);
+            _usedItemTypes.Remove(type);
+        }
+
+        public Item GetRandomItem()
+        {
+            Type type = ListUtils.GetRandomElement(_availableItemTypes);
+            return _itemFactory.CreateInstanceOfItem(type);
+        }
+
+        public List<Item> GetRandomItems(int amount)
+        {
+            List<Type> randomItems = ListUtils.GetRandomElements(_availableItemTypes, amount);
+            return _itemFactory.CreateInstanceOfItems(randomItems);
+        }
+
+        public Item GetSpecificItem(Type itemType)
+        {
+            return _itemFactory.CreateInstanceOfItem(itemType);
+        }
+
+        public DroppedItem GetRandomDroppedItem()
+        {
+            Item item = GetRandomItem();
+
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/" + item.GetType().Name);
+
+            if (prefab == null) return null;
+
+            GameObject go = Instantiate(prefab);
+            DroppedItem droppedItem = go.AddComponent<DroppedItem>();
+            droppedItem.Item = item;
+
+            return droppedItem;
+        }
+
+        #endregion
     }
-    
-    #endregion
 }

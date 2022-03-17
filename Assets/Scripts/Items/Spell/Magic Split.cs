@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MagicSplit : SpellItem
+namespace Items.Spell
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class MagicSplit : SpellItem
     {
-        base.Start();
-        Value = 20;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public MagicSplit() : base()
+        {
+            Value = 20;
+        }
     }
 }

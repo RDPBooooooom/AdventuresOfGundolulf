@@ -1,31 +1,54 @@
 using System.Collections;
-using System.Collections.Generic;
+using LivingEntities;
 using UnityEngine;
+using Utils;
 
-public class ActiveItem : Item
+namespace Items.Active
 {
-    #region Properties
-
-    public float Cooldown { get; protected set; }
-    public bool IsReady { get; set; }
-
-    #endregion
-
-    #region Cooldown
-
-    protected void StartCooldown()
+    public abstract class ActiveItem : Item
     {
-        //StartCoroutine(CooldownTimer());
+        #region Fields
+
+        protected Timer _cooldown;
+        private float _cooldownTime;
+
+        #endregion
+
+        #region Properties
+
+        public float Cooldown
+        {
+            get => _cooldownTime;
+            protected set
+            {
+                _cooldownTime = value;
+                if (_cooldown != null) _cooldown.Time = _cooldownTime;
+            }
+        }
+        #endregion
+        
+        protected ActiveItem() : base()
+        {
+        }
+
+        public override void Equip(LivingEntity equipOn)
+        {
+            base.Equip(equipOn);
+            _cooldown = new Timer(equipOn, Cooldown);
+        }
+
+        public override void Unequip(LivingEntity unequipFrom)
+        {
+            base.Unequip(unequipFrom);
+            _cooldown = null;
+        }
+        
+        public void Use()
+        {
+            if (!_cooldown.IsReady) return;
+            Effect();
+        }
+
+        protected abstract void Effect();
     }
-
-    protected IEnumerator CooldownTimer()
-    {
-        IsReady = false;
-
-        yield return new WaitForSeconds(Cooldown);
-
-        IsReady = true;
-    }
-
-    #endregion
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Assets.Scripts;
 using Assets.Scripts.Interfaces;
+using Items.Active;
 using LivingEntities;
 using Managers;
 using UI;
@@ -44,8 +45,6 @@ namespace PlayerScripts
             }
         }
 
-        public List<Item> EquippedItems { get; set; }
-
         #endregion
 
         #region Delegates
@@ -76,7 +75,6 @@ namespace PlayerScripts
             _activeItem = null;
 
             _groundLayer = LayerMask.GetMask("Floor");
-            EquippedItems = new List<Item>();
 
             SubscribeToEvents();
         }
@@ -183,7 +181,6 @@ namespace PlayerScripts
             // ToDo: Display Text if you can interact with something
 
             IInteractable interactableObject = GetInteractableObject();
-            Debug.LogWarning(interactableObject);
 
             if (interactableObject == null)
             {

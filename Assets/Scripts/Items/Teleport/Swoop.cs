@@ -1,19 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Swoop : TeleportItem
+namespace Items.Teleport
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class Swoop : TeleportItem
     {
-        base.Start();
-        Value = 10;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Swoop() : base()
+        {
+            Value = 10;
+        }
+
     }
 }

@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class MagicMilk : StatsItem
+namespace Items.Stats
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class MagicMilk : StatsItem
     {
-        base.Start();
-        Value = 5;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public MagicMilk() : base()
+        {
+            Value = 5;
+        }
     }
 }

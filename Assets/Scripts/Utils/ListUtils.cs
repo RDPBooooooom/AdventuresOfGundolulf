@@ -34,6 +34,8 @@ namespace Utils
             List<T> toReturn = new List<T>();
             List<T> tempList = new List<T>(list);
 
+            if (!duplicatesAllowed && numberOfElements > list.Count) numberOfElements = list.Count;
+            
             for (int i = 0; i < numberOfElements; i++)
             {
                 T randomElement = GetRandomElement<T>(tempList);

@@ -57,7 +57,7 @@ namespace Scrolls
             if (!entering.WasVisited && entering is CombatRoom)
             {
                 DisplayStandardDeck();
-            }
+            } 
         }
     }
 }

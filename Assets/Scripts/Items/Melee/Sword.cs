@@ -1,19 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Sword : MeleeItem
+namespace Items.Melee
 {
-    // Start is called before the first frame update
-    protected override void Start()
+    public class Sword : MeleeItem
     {
-        base.Start();
-        Value = 10;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Sword() : base()
+        {
+            Value = 10;
+        }
     }
 }

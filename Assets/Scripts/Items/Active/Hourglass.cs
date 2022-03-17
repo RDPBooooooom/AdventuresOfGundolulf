@@ -1,33 +1,20 @@
 using Assets.Scripts.Interfaces;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Hourglass : ActiveItem, IUsable
+namespace Items.Active
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Hourglass : ActiveItem, IUsable
     {
-        Value = 15;
-        Cooldown = 30;
-        IsReady = true; // Be careful not to be able to abuse -> switch active item and use instantly
-    }
+        public Hourglass() : base()
+        {
+            Value = 15;
+            Cooldown = 30;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+        protected override void Effect()
+        {
+            // Do effect
 
-    void Effect()
-    {
-        // Do effect
-
-        StartCooldown();
-    }
-
-    public void Use()
-    {
-        Effect();
+            _cooldown.Start();
+        }
     }
 }
