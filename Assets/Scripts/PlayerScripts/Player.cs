@@ -76,6 +76,7 @@ namespace PlayerScripts
             _activeItem = null;
 
             _groundLayer = LayerMask.GetMask("Floor");
+            EquippedItems = new List<Item>();
 
             SubscribeToEvents();
         }

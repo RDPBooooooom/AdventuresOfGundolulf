@@ -15,11 +15,11 @@ namespace UserInterface
     {
         #region Fields
 
+        [SerializeField] private Image[] _images;
         [SerializeField] private Button _buyButton;
         [SerializeField] private Button _sellButton;
         
         private Player _player;
-        private Image[] _images;
         private List<Sprite> _itemSprites;
         private List<string> _itemValues;
         private Item _selectedItem;
@@ -37,10 +37,13 @@ namespace UserInterface
         private void Start()
         {
             _player = GameManager.Instance.Player;
-            _images = GetComponentsInChildren<Image>().Where(go => go.gameObject != gameObject).ToArray();
+            //_images = GetComponentsInChildren<Image>().Where(go => go.gameObject != gameObject).ToArray();
 
             _itemSprites = new List<Sprite>();
             _itemValues = new List<string>();
+
+            GeneratePreviews();
+            DisplayItems();
         }
 
         private void Update()
@@ -50,12 +53,13 @@ namespace UserInterface
                 _buyButton.interactable = false;
                 _sellButton.interactable = false;
             }
-                        
+
+            /*            
             if (_itemSprites.Count != ShopGerald.Assortment.Count)
             {
                 GeneratePreviews();
                 DisplayItems();
-            }
+            }*/
             
         }
         #endregion
@@ -100,6 +104,9 @@ namespace UserInterface
 
         private void GeneratePreviews()
         {
+            _itemSprites.Clear();
+            _itemValues.Clear();
+
             foreach (Item item in ShopGerald.Assortment)
             {
                 Sprite preview = item.UIImage;
@@ -114,11 +121,8 @@ namespace UserInterface
         {
             for (int i = 0; i < _itemSprites.Count; i++)
             {
-                if (_images[i].transform.parent != null)
-                {
-                    _images[i].GetComponent<Image>().sprite = _itemSprites[i];
-                    _images[i].GetComponentInChildren<Text>().text = _itemValues[i];
-                }
+                _images[i].GetComponent<Image>().sprite = _itemSprites[i];
+                _images[i].GetComponentInChildren<Text>().text = _itemValues[i];
             }
         }
 

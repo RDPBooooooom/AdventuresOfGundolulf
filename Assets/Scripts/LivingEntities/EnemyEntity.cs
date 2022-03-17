@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using PlayerScripts;
 using UnityEngine;
 using Utils;
@@ -16,9 +17,10 @@ namespace LivingEntities
         protected Animator _animator;
         protected Rigidbody _rigidbody;
         [SerializeField] GameObject _coin;
+        private string _itemPath = "Items";
 
         [Header("Item Prefabs")]
-        List<GameObject> _items = new List<GameObject>();
+        List<DroppedItem> _items = new List<DroppedItem>();
 
         #endregion
 
@@ -31,19 +33,7 @@ namespace LivingEntities
             _animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
 
-            _items.Add(Resources.Load<GameObject>("Items/AmulettofRegeneration"));
-            _items.Add(Resources.Load<GameObject>("Items/HealthPotion"));
-            //items.Add(Resources.Load<GameObject>("Items/HourGlass"));
-            _items.Add(Resources.Load<GameObject>("Items/MagicMilk"));
-            //items.Add(Resources.Load<GameObject>("Items/MagicSplit"));
-            _items.Add(Resources.Load<GameObject>("Items/PickAxe"));
-            //items.Add(Resources.Load<GameObject>("Items/ReverseEye"));
-            _items.Add(Resources.Load<GameObject>("Items/RingOfResting"));
-            _items.Add(Resources.Load<GameObject>("Items/Shield"));
-            _items.Add(Resources.Load<GameObject>("Items/Staff"));
-            //items.Add(Resources.Load<GameObject>("Items/Swoop"));
-            _items.Add(Resources.Load<GameObject>("Items/Sword"));
-            //items.Add(Resources.Load<GameObject>("Items/ToxicPaper"));
+            _items = Resources.LoadAll(_itemPath, typeof(DroppedItem)).Cast<DroppedItem>().ToList();
         }
 
         protected void FixedUpdate()
@@ -91,7 +81,7 @@ namespace LivingEntities
             {
                 amount = 5;
             }
-            else if (chance <= 63)
+            else if (chance <= 100) //63
             {
                 DropItem();
             }

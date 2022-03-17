@@ -5,8 +5,9 @@ using UnityEngine;
 public class Pickaxe : MeleeItem
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         Value = 10;
     }
 

@@ -47,24 +47,26 @@ namespace Managers
             }
 
             Instance = this;
+
+            LevelManager = Instantiate(_levelManagerPrefab, transform);
+            LevelManager.GenerateLevel();
+
+            Vector3 roomPosition = LevelManager.CurrentRoom.transform.position;
+            Player = Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
+
+            LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
+            LevelManager.PlayerCam.transform.position += roomPosition;
         }
 
         private void Start()
         {
             EnemyManager = Instantiate(_enemyManagerPrefab, transform);
 
-            LevelManager = Instantiate(_levelManagerPrefab, transform);
-            LevelManager.GenerateLevel();
+            
 
             UIManager = Instantiate(_uIManagerPrefab, transform);
 
             ItemManager = Instantiate(_itemManagerPrefab, transform);
-
-            Vector3 roomPosition = LevelManager.CurrentRoom.transform.position;
-
-            Player = Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
-            LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
-            LevelManager.PlayerCam.transform.position += roomPosition;
 
             DeckManager = new DeckManager();
             DeckManager.LoadDecks();

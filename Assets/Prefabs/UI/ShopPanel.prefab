@@ -568,6 +568,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e811daec46d89794a9cd75698fee2998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _images:
+  - {fileID: 6964134013671603489}
+  - {fileID: 662332318132133437}
+  - {fileID: 550634117026127850}
+  - {fileID: 5477379361255269858}
+  - {fileID: 6393780029095179378}
   _buyButton: {fileID: 4456223605409802756}
   _sellButton: {fileID: 4456223604404543260}
 --- !u!1 &4456223604282604484

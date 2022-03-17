@@ -15,7 +15,7 @@ public class ActiveItem : Item
 
     protected void StartCooldown()
     {
-        StartCoroutine(CooldownTimer());
+        //StartCoroutine(CooldownTimer());
     }
 
     protected IEnumerator CooldownTimer()
