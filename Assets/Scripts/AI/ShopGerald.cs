@@ -77,6 +77,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
         {
             Assortment = _itemManager.GetRandomItems(_amountOfItems);
             Assortment.Add(_itemManager.GetSpecificItem(typeof(HealthPotion)));
+
         }
 
         if (_shopUI == null)

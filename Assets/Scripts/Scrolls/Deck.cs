@@ -11,7 +11,6 @@ namespace Scrolls
     {
         #region Fields
 
-        private List<T> _scrolls;
         private List<T> _deckPile;
         private List<T> _discardPile;
 
@@ -19,20 +18,22 @@ namespace Scrolls
 
         #region Properties
 
+        public List<T> Scrolls { get; private set; }
+
         #endregion
 
         #region Constructor
 
         public Deck()
         {
-            _scrolls = new List<T>();
+            Scrolls = new List<T>();
             _deckPile = new List<T>();
             _discardPile = new List<T>();
         }
 
         public Deck(List<T> scrolls)
         {
-            _scrolls = scrolls;
+            Scrolls = scrolls;
             _deckPile = new List<T>();
             _discardPile = new List<T>();
         }
@@ -45,25 +46,25 @@ namespace Scrolls
 
         public void AddScroll(T scroll)
         {
-            _scrolls.Add(scroll);
+            Scrolls.Add(scroll);
             scroll.ActivateEvent += OnScrollActivation;
         }
 
         public void AddScroll(List<T> scrolls)
         {
-            _scrolls.AddRange(scrolls);
-            _scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollActivation);
+            Scrolls.AddRange(scrolls);
+            Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollActivation);
         }
 
         public void RemoveScroll(T scroll)
         {
-            _scrolls.Remove(scroll);
+            Scrolls.Remove(scroll);
             scroll.ActivateEvent -= OnScrollActivation;
         }
 
         public void InitDeck()
         {
-            _deckPile.AddRange(_scrolls);
+            _deckPile.AddRange(Scrolls);
         }
 
         #endregion
