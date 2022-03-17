@@ -49,7 +49,10 @@ namespace UI
         {
             // Use Scroll
             _selectedScroll.Activate();
+
+            DrawnScrolls.Remove(_selectedScroll);
             _selectedScroll = null;
+
 
             gameObject.SetActive(false);
         }
