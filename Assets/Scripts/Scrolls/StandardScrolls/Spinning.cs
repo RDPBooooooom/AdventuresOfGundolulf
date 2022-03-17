@@ -22,6 +22,7 @@ namespace Scrolls.StandardScrolls
             Debug.Log("Activated " + GetType().Name);
             SpinCamera();
         }
+
         void SpinCamera()
         {
             cam.transform.rotation = Quaternion.Euler(0, 0, cam.transform.rotation.z + 1);
