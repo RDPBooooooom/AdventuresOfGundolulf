@@ -14,11 +14,6 @@ namespace Items
         public ItemFactory()
         {
             AllItemTypes = ReflectiveEnumerator.GetAllItemTypes<Item>().ToList();
-            
-            foreach (Type item in AllItemTypes)
-            {
-                Debug.Log("Got " + item.Name);
-            }
         }
 
         public Item CreateInstanceOfItem(Type type)

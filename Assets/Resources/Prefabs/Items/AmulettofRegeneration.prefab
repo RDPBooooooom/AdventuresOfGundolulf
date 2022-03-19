@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7241839445127784248}
   - component: {fileID: 7241839445129250130}
   - component: {fileID: 3993397754849457189}
+  - component: {fileID: -1253515699891689708}
   m_Layer: 0
   m_Name: AmulettofRegeneration
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7241839445130941422}
   m_LocalRotation: {x: -0.2206974, y: 0, z: 0, w: 0.9753424}
   m_LocalPosition: {x: 0.175, y: 1, z: 0.09}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_Children:
   - {fileID: 959276058702129000}
   m_Father: {fileID: 0}
@@ -91,11 +92,27 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7241839445130941422}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: -0.6437931, y: -0.45918554, z: -0.0000038146973}
+--- !u!114 &-1253515699891689708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7241839445130941422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836604dff08ad7f4a934b2441e412ed4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upDownDifference: 0.5
+  _groundOffset: 1.25
+  _upDownSpeed: 0.25
+  _rotationSpeed: 30
 --- !u!1001 &959276058702363742
 PrefabInstance:
   m_ObjectHideFlags: 0

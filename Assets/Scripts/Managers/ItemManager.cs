@@ -74,7 +74,7 @@ namespace Managers
             if (prefab == null) return null;
 
             GameObject go = Instantiate(prefab);
-            DroppedItem droppedItem = go.AddComponent<DroppedItem>();
+            DroppedItem droppedItem = go.GetComponent<DroppedItem>();
             droppedItem.Item = item;
 
             return droppedItem;

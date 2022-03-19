@@ -1,3 +1,4 @@
+using System;
 using Assets.Scripts;
 using Managers;
 using UnityEngine;
@@ -6,6 +7,22 @@ namespace Items
 {
     public class DroppedItem : MonoBehaviour, IInteractable
     {
+        #region Fields
+
+        [SerializeField] private float _upDownDifference = 0.5f;
+        [SerializeField] private float _groundOffset = 0.5f;
+        [SerializeField] private float _upDownSpeed = 0.25f;
+        private float _maxUpDownPos;
+        private float _minUpDownPos;
+
+        [SerializeField] private float _rotationSpeed = 30;
+
+        private bool _isUp = true;
+        
+        #endregion
+
+        
+
         #region Properties
 
         public Item Item { get; set; }
@@ -17,6 +34,40 @@ namespace Items
             GameManager.Instance.Player.Equip(Item);
             Destroy(gameObject);
         }
+
+        private void Start()
+        {
+            if(Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit, LayerMask.GetMask("Floor")))
+            {
+                _minUpDownPos = hit.point.y + _groundOffset;
+                _maxUpDownPos = _minUpDownPos + _upDownDifference;
+            }
+        }
+
+        private void Update()
+        {
+            UpDownAnimation();
+            SpinningAnimation();
+        }
+
+        private void UpDownAnimation()
+        {
+            if (_isUp)
+            {
+                if (transform.position.y > _maxUpDownPos) _isUp = false;
+                transform.position += new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
+            }
+            else
+            {
+                if (transform.position.y < _minUpDownPos) _isUp = true;
+                transform.position -= new Vector3(0, _upDownSpeed * Time.deltaTime, 0);
+            }
+
+        }
+
+        private void SpinningAnimation()
+        {
+            transform.Rotate(Vector3.up, _rotationSpeed * Time.deltaTime, Space.World);
+        }
     }
 }
-

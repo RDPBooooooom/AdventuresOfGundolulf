@@ -1,6 +1,6 @@
 namespace Items.Spell
 {
-    public class SpellItem : Item
+    public abstract class SpellItem : Item
     {
         protected SpellItem() : base()
         {
