@@ -29,6 +29,8 @@ namespace LivingEntities
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private float _projectileForce;
 
+        private Animator _animator;
+
         #endregion
 
         #region Properties
@@ -116,7 +118,13 @@ namespace LivingEntities
             get => _projectileForce;
             protected set => _projectileForce = value;
         }
-        
+
+        public Animator Animator
+        {
+            get => _animator;
+            protected set => _animator = value;
+        }
+
         private List<Item> EquippedItems {  get; set; }
 
         #endregion
@@ -162,6 +170,8 @@ namespace LivingEntities
 
         public virtual void DamageEntity(float amount)
         {
+            _animator.SetTrigger(AnimatorStrings.GetHitString);
+
             Health -= amount;
             if (Health <= 0)
             {
@@ -172,8 +182,13 @@ namespace LivingEntities
         protected virtual void OnDeath()
         {
             IsAlive = false;
-            Debug.Log("Entity died [" + GetType().Name + "]");
-            Destroy(gameObject);
+            Animator.SetTrigger(AnimatorStrings.DeathString);
+
+            // Disabing all colliders if the entity died to prevent blocking the player while death animation
+            foreach (Collider collider in GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
         }
 
         private void OnDrawGizmosSelected()
@@ -193,5 +208,12 @@ namespace LivingEntities
             item.Unequip(this);
         }
 
+        /// <summary>
+        /// Gets called after the death animation is finished
+        /// </summary>
+        private void DestroyOnDeath()
+        {
+            Destroy(gameObject);
+        }
     }
 }

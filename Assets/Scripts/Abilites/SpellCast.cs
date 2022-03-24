@@ -29,6 +29,8 @@ public class SpellCast : Ability
 
     public void Projectile()
     {
+        _owner.Animator.SetTrigger(AnimatorStrings.MagicString);
+
         _projectile = Object.Instantiate(_owner.ProjectilePrefab, _owner.SpellCastAttackPoint.position, _owner.SpellCastAttackPoint.rotation);
         Projectile projectile = _projectile.GetComponent<Projectile>();
         projectile.Owner = this;

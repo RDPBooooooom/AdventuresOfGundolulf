@@ -19,7 +19,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     private ItemManager _itemManager;
 
-    private int _merchantMoney = 250; // Depends on difficulty?
+    private int _merchantMoney = 50; // Depends on difficulty?
     private int _amountOfItems = 4;
     private int _valueLossFactor = 2;
 

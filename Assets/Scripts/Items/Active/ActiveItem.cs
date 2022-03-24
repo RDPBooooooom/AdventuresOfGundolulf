@@ -1,5 +1,6 @@
 using System.Collections;
 using LivingEntities;
+using Managers;
 using UnityEngine;
 using Utils;
 
@@ -46,6 +47,7 @@ namespace Items.Active
         public void Use()
         {
             if (!_cooldown.IsReady) return;
+            GameManager.Instance.Player.Animator.SetTrigger(AnimatorStrings.MagicString);
             Effect();
         }
 

@@ -50,6 +50,8 @@ public class Teleport : Ability
 
     public void DoTeleport()
     {
+        _owner.Animator.SetTrigger(AnimatorStrings.MagicString);
+
         TrimTargetPos();
         if(GameManager.Instance?.LevelManager?.CurrentRoom)
             TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);

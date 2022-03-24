@@ -17,7 +17,6 @@ namespace PlayerScripts
         #region Fields
 
         private PlayerInput _input;
-        private Animator _animator;
         private Camera _camera;
         private Rigidbody _rigidbody;
 
@@ -27,7 +26,9 @@ namespace PlayerScripts
         private ActiveItem _activeItem;
 
         private int _groundLayer;
+
         [SerializeField] private float _interactRange;
+        private bool _stopMovement = false;
         
         private int _gold;
 
@@ -43,6 +44,12 @@ namespace PlayerScripts
                 _gold = value;
                 UpdateGoldEvent?.Invoke();
             }
+        }
+
+        public bool StopMovement 
+        {   
+            get => _stopMovement; 
+            set => _stopMovement = value; 
         }
 
         #endregion
@@ -82,7 +89,7 @@ namespace PlayerScripts
         protected void Start()
         {
             _camera = Camera.main;
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
@@ -91,9 +98,15 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            Movement();
-            LookDirection();
-            GetInteractableObject();
+            if (IsAlive)
+            {
+                if (!StopMovement)
+                {
+                    Movement();
+                }
+                LookDirection();
+                GetInteractableObject();
+            }
         }
 
         private void OnDestroy()
@@ -172,6 +185,14 @@ namespace PlayerScripts
             return closestInteractable;
         }
 
+        /// <summary>
+        /// Gets called if the animation for picking up an item is finished
+        /// </summary>
+        private void PickingUpFinished()
+        {
+            _stopMovement = false;
+        }
+
         #endregion
 
         #region Character actions
@@ -208,8 +229,8 @@ namespace PlayerScripts
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
 
-            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
-            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
+            Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
+            Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
 
             inputVector.Normalize();
             Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);

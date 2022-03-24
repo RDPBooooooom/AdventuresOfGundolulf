@@ -16,7 +16,7 @@ namespace LivingEntities
 
         protected Melee _melee;
         protected Player _player;
-        protected Animator _animator;
+        //protected Animator _animator;
         protected Rigidbody _rigidbody;
         [SerializeField] GameObject _coin;
 
@@ -31,17 +31,20 @@ namespace LivingEntities
         {
             _melee = new Melee(this);
             _player = FindObjectOfType<Player>();
-            _animator = GetComponent<Animator>();
+            Animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
         }
 
         protected void FixedUpdate()
-        {            
-            if (PlayerInRange())
-                _melee.Use();
-        
-            else
-                FollowPlayer();
+        {
+            if (IsAlive)
+            {
+                if (PlayerInRange())
+                    _melee.Use();
+
+                else
+                    FollowPlayer();
+            }
         }
         #endregion
 
@@ -50,8 +53,8 @@ namespace LivingEntities
         {
             Vector2 targetVector = new Vector2(_player.transform.position.x - transform.position.x, _player.transform.position.z - transform.position.z).normalized;
 
-            _animator.SetFloat(Animator.StringToHash("MoveX"), targetVector.x, 0.1f, Time.fixedDeltaTime);
-            _animator.SetFloat(Animator.StringToHash("MoveZ"), targetVector.x, 0.1f, Time.fixedDeltaTime);
+            Animator.SetFloat(Animator.StringToHash("MoveX"), targetVector.x, 0.1f, Time.fixedDeltaTime);
+            Animator.SetFloat(Animator.StringToHash("MoveZ"), targetVector.x, 0.1f, Time.fixedDeltaTime);
 
             Vector3 direction = new Vector3(targetVector.x * Speed, 0, targetVector.y * Speed);
 
@@ -61,8 +64,10 @@ namespace LivingEntities
 
         protected virtual bool PlayerInRange()
         {
-            //Debug.Log(Vector3.Distance(transform.position, player.transform.position));// <= MeleeAttackRange);
-            return Vector3.Distance(transform.position, _player.transform.position) <= MeleeAttackRange;
+            // ToDo: Calculate more accurate!!
+
+            //Debug.Log(Vector3.Distance(transform.position, _player.transform.position));// <= MeleeAttackRange);
+            return Vector3.Distance(MeleeAttackPoint.transform.position, _player.transform.position) - 0.5f <= MeleeAttackRange;
         }
 
         protected virtual void Drop()
