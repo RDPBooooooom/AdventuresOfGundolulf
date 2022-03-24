@@ -19,7 +19,6 @@ namespace PlayerScripts
         private PlayerInput _input;
         private Animator _animator;
         private Camera _camera;
-        private Rigidbody _rigidbody;
 
         private Teleport _teleport;
         private Melee _melee;
@@ -27,6 +26,8 @@ namespace PlayerScripts
         private ActiveItem _activeItem;
 
         private int _groundLayer;
+        
+        [Header("Player")]
         [SerializeField] private float _interactRange;
         
         private int _gold;
@@ -81,9 +82,10 @@ namespace PlayerScripts
 
         protected void Start()
         {
+            base.Start();
+            _steeringBehaviour.SeekOn();
             _camera = Camera.main;
             _animator = GetComponent<Animator>();
-            _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
             UpdateHealthEvent?.Invoke();
@@ -91,7 +93,8 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            Movement();
+            UpdateVelocity();
+            MoveEntity();
             LookDirection();
             GetInteractableObject();
         }
@@ -204,18 +207,31 @@ namespace PlayerScripts
 
         #region Input
 
-        private void Movement()
+        public override void UpdateVelocity()
         {
+            ResetVelocity();
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
-
+            
             _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
             _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
 
             inputVector.Normalize();
-            Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
+            Vector3 direction = new Vector3(inputVector.x * 1000, 0, inputVector.y * 1000);
+            
+            Debug.DrawLine(transform.position, transform.position + direction, Color.red);
+            
+            Vector3 steeringForce = _steeringBehaviour.Calculate(transform.position + direction);
 
-            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier),
-                ForceMode.VelocityChange);
+            Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
+
+            Velocity += accel * Time.deltaTime;
+
+            Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+        }
+
+        public override void MoveEntity()
+        {
+            transform.Translate(Velocity * Time.deltaTime, Space.World);
         }
 
         private void LookDirection()

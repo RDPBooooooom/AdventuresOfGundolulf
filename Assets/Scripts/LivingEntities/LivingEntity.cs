@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using AI.FSM;
 using Items;
 using UnityEngine;
+using Utils;
 
 namespace LivingEntities
 {
@@ -28,7 +30,10 @@ namespace LivingEntities
         [SerializeField] private Transform _spellCastAttackPoint;
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private float _projectileForce;
-
+        
+        [Header("Obstacle Avoidance")]
+        [SerializeField] private LayerMask _obstacleAvoidanceMask;
+        protected SteeringBehaviour _steeringBehaviour;
         #endregion
 
         #region Properties
@@ -116,8 +121,28 @@ namespace LivingEntities
             get => _projectileForce;
             protected set => _projectileForce = value;
         }
+
+        public LayerMask CollisionDetectionMask
+        {
+            get => _obstacleAvoidanceMask;
+            private set => _obstacleAvoidanceMask = value;
+        }
         
         private List<Item> EquippedItems {  get; set; }
+        public LivingEntity Target { get; set; }
+        
+        
+        
+        public Vector3 Velocity { get; protected set; }
+        public Vector3 HeadingDirection { get; protected set; }
+        public Vector3 HeadingSide { get; protected set; }
+        
+
+        // Sollten nur wenn nötig geändert werden
+        public float MaxSpeed => Speed;
+        public float Mass { get; protected set; }
+        public float MaxForce { get; set; }
+        public float MaxTurnRate { get; set; }
 
         #endregion
 
@@ -144,7 +169,17 @@ namespace LivingEntities
             
             EquippedItems = new List<Item>();
         }
-    
+
+        protected virtual void Start()
+        {
+            _steeringBehaviour = new SteeringBehaviour(this);
+            
+            Velocity = Vector3.zero;
+            MaxForce = Speed;
+            MaxTurnRate = 10f;
+            Mass = 1f;
+        }
+
         #endregion
 
         public virtual void HealEntity(float amount)
@@ -193,5 +228,14 @@ namespace LivingEntities
             item.Unequip(this);
         }
 
+        public abstract void MoveEntity();
+
+        public abstract void UpdateVelocity();
+
+        public void ResetVelocity()
+        {
+            Velocity = Vector3.zero;
+        }
+        
     }
 }

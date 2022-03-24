@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using AI.FSM;
+using AI.FSM.EnemyStates.Orc;
 using Items;
 using Managers;
 using PlayerScripts;
@@ -15,54 +17,66 @@ namespace LivingEntities
         #region Declaring Variables
 
         protected Melee _melee;
-        protected Player _player;
         protected Animator _animator;
-        protected Rigidbody _rigidbody;
-        [SerializeField] GameObject _coin;
 
-        [Header("Item Prefabs")]
-        List<DroppedItem> _items = new List<DroppedItem>();
+        [SerializeField] GameObject _coin;
 
         #endregion
 
         #region Unity Methods
         // Start is called before the first frame update
-        protected void Start()
+        protected override void Start()
         {
+            base.Start();
             _melee = new Melee(this);
-            _player = FindObjectOfType<Player>();
             _animator = GetComponent<Animator>();
-            _rigidbody = GetComponent<Rigidbody>();
         }
 
         protected void FixedUpdate()
         {            
-            if (PlayerInRange())
-                _melee.Use();
+           // if (PlayerInRange())
+             //   _melee.Use();
         
-            else
-                FollowPlayer();
+           // else
+                //FollowPlayer();
         }
         #endregion
 
         #region Methods
-        protected virtual void FollowPlayer()
+       /* protected virtual void FollowPlayer()
         {
-            Vector2 targetVector = new Vector2(_player.transform.position.x - transform.position.x, _player.transform.position.z - transform.position.z).normalized;
+            Vector2 targetVector = new Vector2(Target.transform.position.x - transform.position.x, Target.transform.position.z - transform.position.z).normalized;
 
             _animator.SetFloat(Animator.StringToHash("MoveX"), targetVector.x, 0.1f, Time.fixedDeltaTime);
             _animator.SetFloat(Animator.StringToHash("MoveZ"), targetVector.x, 0.1f, Time.fixedDeltaTime);
 
             Vector3 direction = new Vector3(targetVector.x * Speed, 0, targetVector.y * Speed);
 
-            transform.LookAt(_player.transform.position);
+            transform.LookAt(Target.transform.position);
             _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier), ForceMode.VelocityChange);
-        }
+        }*/
 
-        protected virtual bool PlayerInRange()
+       public override void UpdateVelocity()
+       {
+           Vector3 steeringForce = _steeringBehaviour.Calculate(Target.transform.position);
+
+           Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
+
+           Velocity += accel * Time.deltaTime;
+
+           Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+       }
+       
+       public override void MoveEntity()
+       {
+           transform.Translate(Velocity * Time.deltaTime, Space.World);
+           transform.rotation = Quaternion.LookRotation(Velocity);
+       }
+
+       protected virtual bool PlayerInRange()
         {
             //Debug.Log(Vector3.Distance(transform.position, player.transform.position));// <= MeleeAttackRange);
-            return Vector3.Distance(transform.position, _player.transform.position) <= MeleeAttackRange;
+            return Vector3.Distance(transform.position, Target.transform.position) <= MeleeAttackRange;
         }
 
         protected virtual void Drop()
