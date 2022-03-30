@@ -62,7 +62,7 @@ namespace LivingEntities
 
            Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
 
-           Velocity += accel * Time.deltaTime;
+           Velocity += accel;
 
            Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
        }

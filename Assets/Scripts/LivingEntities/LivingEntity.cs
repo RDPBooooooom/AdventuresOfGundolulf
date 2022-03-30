@@ -135,8 +135,6 @@ namespace LivingEntities
         
         public Vector3 Velocity { get; protected set; }
         public Vector3 HeadingDirection { get; protected set; }
-        public Vector3 HeadingSide { get; protected set; }
-        
 
         // Sollten nur wenn nötig geändert werden
         public float MaxSpeed => Speed;
@@ -175,7 +173,7 @@ namespace LivingEntities
             _steeringBehaviour = new SteeringBehaviour(this);
             
             Velocity = Vector3.zero;
-            MaxForce = Speed;
+            MaxForce = Speed * GameConstants.SpeedMultiplier;
             MaxTurnRate = 10f;
             Mass = 1f;
         }

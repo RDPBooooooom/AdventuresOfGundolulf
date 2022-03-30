@@ -80,7 +80,7 @@ namespace PlayerScripts
             SubscribeToEvents();
         }
 
-        protected void Start()
+        protected override void Start()
         {
             base.Start();
             _steeringBehaviour.SeekOn();
@@ -217,14 +217,14 @@ namespace PlayerScripts
 
             inputVector.Normalize();
             Vector3 direction = new Vector3(inputVector.x * 1000, 0, inputVector.y * 1000);
-            
-            Debug.DrawLine(transform.position, transform.position + direction, Color.red);
-            
-            Vector3 steeringForce = _steeringBehaviour.Calculate(transform.position + direction);
+
+            Vector3 position = transform.position;
+
+            Vector3 steeringForce = _steeringBehaviour.Calculate(position + direction);
 
             Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
 
-            Velocity += accel * Time.deltaTime;
+            Velocity += accel;
 
             Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
         }
