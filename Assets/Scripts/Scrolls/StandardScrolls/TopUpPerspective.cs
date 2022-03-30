@@ -19,14 +19,14 @@ namespace Scrolls.StandardScrolls
             FlipCamera();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
-        void FlipCamera()// Currently gives an error because it breaks calculations with rays from the camera in Player
+        void FlipCamera()
         {
-            cam.transform.rotation = Quaternion.Euler(0, 0, 180);
+            cam.transform.rotation = Quaternion.Euler(60, 0, 180);
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            cam.transform.rotation = Quaternion.Euler(0, 0, 0);
+            cam.transform.rotation = Quaternion.Euler(60, 0, 0);
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
     }
