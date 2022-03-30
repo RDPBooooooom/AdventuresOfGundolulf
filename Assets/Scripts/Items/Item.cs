@@ -11,6 +11,7 @@ namespace Items
 
         private Sprite _uIImage;
         private int _value;
+        protected PlayerScripts.Player player;
 
         #endregion
 
@@ -50,6 +51,7 @@ namespace Items
         protected Item()
         {
             _uIImage = Resources.Load<Sprite>("UI/Items/" + GetType().Name);
+            player = Managers.GameManager.Instance.Player;
         }
 
         #endregion

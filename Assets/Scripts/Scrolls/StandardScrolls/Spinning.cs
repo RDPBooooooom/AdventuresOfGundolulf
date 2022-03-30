@@ -7,6 +7,7 @@ namespace Scrolls.StandardScrolls
     public class Spinning : StandardScroll
     {
         Camera cam;
+        float i = 0.5f;
         public Spinning()
         {
             Cost = 3;
@@ -19,19 +20,38 @@ namespace Scrolls.StandardScrolls
             Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinCamera());
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
-        IEnumerator SpinCamera() // Currently gives an error because it breaks calculations with rays from the camera in Player
+        IEnumerator SpinCamera()
         {
-            cam.transform.rotation = Quaternion.Euler(0, 0, cam.transform.rotation.z + 1);
-            yield return new WaitForSeconds(0.5f);
+            cam.transform.rotation = Quaternion.Euler(60, 0, cam.transform.rotation.z + i);
+            i+= 0.5f;
+            yield return new WaitForSeconds(0);
 
             Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinCamera());
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            Utils.MonoBehaviourDummy.Dummy.StopCoroutine(SpinCamera());
-            cam.transform.rotation = Quaternion.Euler(0, 0, 0);
+            Utils.MonoBehaviourDummy.Dummy.StopAllCoroutines();
+            //SpinOut();
+            Debug.Log(cam.transform.eulerAngles.z);
+            Debug.Log(cam.transform.rotation.eulerAngles.z);
+            i = 0.5f;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
+        }
+
+        void SpinOut()
+        {
+            for (float i = cam.transform.rotation.eulerAngles.z; cam.transform.rotation.eulerAngles.z > 0.5f; i-= 0.5f)
+            {
+                Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinBack());
+            }
+            //cam.transform.rotation = Quaternion.Euler(60, 0, 0);
+        }
+
+        IEnumerator SpinBack()
+        {
+            cam.transform.rotation = Quaternion.Euler(60, 0, cam.transform.rotation.z - i);
+            yield return new WaitForSeconds(0);
         }
     }
 }

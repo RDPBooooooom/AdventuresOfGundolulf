@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Levels;
 using Levels.Rooms;
-using Managers;
 using PlayerScripts;
 using UnityEngine;
 
-namespace Levels
+namespace Managers
 {
     public class LevelManager : MonoBehaviour
     {
@@ -15,7 +14,7 @@ namespace Levels
         [SerializeField] private List<Room> _roomPrefabs;
         [SerializeField] int _numberOfRooms;
         [SerializeField] private bool _showDebug;
-        [SerializeField] private int _numberOfShopRooms = 1;
+        [SerializeField] private int _numberOfShopRooms = 20;
         [SerializeField] private int _numberIfTreasureRooms = 1;
         [SerializeField] private int _distanceToBossRoom = 4;
 
