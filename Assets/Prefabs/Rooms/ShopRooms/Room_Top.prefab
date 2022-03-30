@@ -49,6 +49,7 @@ MonoBehaviour:
   _wasVisited: 0
   _data: {fileID: 11400000, guid: 03a38b54f416db345b46cc971f3d7fca, type: 2}
   _floorPlane: {fileID: 1271146542545166978}
+  _shopkeeperPrefab: {fileID: 7954078574310639866, guid: fb9f800da737a5f449f4547c48c923e0, type: 3}
 --- !u!1 &1271146542545166978
 GameObject:
   m_ObjectHideFlags: 0

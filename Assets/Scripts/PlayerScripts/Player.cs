@@ -30,6 +30,7 @@ namespace PlayerScripts
         [SerializeField] private float _interactRange;
         private bool _stopMovement = false;
         
+        [SerializeField]
         private int _gold;
 
         #endregion

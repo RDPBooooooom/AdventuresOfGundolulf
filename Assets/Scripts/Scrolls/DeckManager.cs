@@ -44,8 +44,8 @@ namespace Scrolls
             _standardDeck.AddScroll(new HelloDarkness());
             _standardDeck.AddScroll(new PoisonGas());
             _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
-            _standardDeck.AddScroll(new Spinning());
-            _standardDeck.AddScroll(new TopUpPerspective());
+           // _standardDeck.AddScroll(new Spinning());
+           // _standardDeck.AddScroll(new TopUpPerspective());
             
             _standardDeck.InitDeck();
             //_bossDeck.AddScroll();

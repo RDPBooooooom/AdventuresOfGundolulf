@@ -47,5 +47,5 @@ MonoBehaviour:
   _enemyManagerPrefab: {fileID: 5116666014069587135, guid: ec64cc1c8472b42449dcd0f585270b5e, type: 3}
   _uIManagerPrefab: {fileID: 6212782583552264524, guid: 7cf67ae4e7c4c2a43bdbfc736f903f7c, type: 3}
   _itemManagerPrefab: {fileID: 3767352335793629356, guid: aa86d5a7238e739408420ce1d79dc4d6, type: 3}
-  _playerPrefab: {fileID: 7832949159022310946, guid: 661f777ddd3e19849a4fa8f77bb56df2, type: 3}
+  _playerPrefab: {fileID: 7832949159022310946, guid: b571ce2c15422ae4d9f9f94436d656c8, type: 3}
   _playerCamPrefab: {fileID: 2942475869213709779, guid: 250055e064aa95a40afe7ed763ddbba7, type: 3}

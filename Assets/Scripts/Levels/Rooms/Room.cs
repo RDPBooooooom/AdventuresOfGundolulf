@@ -65,7 +65,7 @@ namespace Levels.Rooms
             _doors = new Dictionary<Door, DoorDirections>();
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
             _roomBounds = _floorPlane.GetComponent<MeshFilter>().mesh.bounds;
             _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
