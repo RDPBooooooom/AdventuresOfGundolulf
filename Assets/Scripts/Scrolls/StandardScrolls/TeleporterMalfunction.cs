@@ -18,7 +18,7 @@ namespace Scrolls.StandardScrolls
         {
             Debug.Log("Activated " + GetType().Name);
             currentRoomCenter = Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position;
-            Utils.MonoBehaviourDummy.dummy.StartCoroutine(Teleport());
+            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(Teleport());
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
@@ -28,12 +28,12 @@ namespace Scrolls.StandardScrolls
             Debug.Log("Did the telepoo");
             yield return new WaitForSeconds(7);
 
-            Utils.MonoBehaviourDummy.dummy.StartCoroutine(Teleport());
+            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(Teleport());
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            Utils.MonoBehaviourDummy.dummy.StopAllCoroutines();
+            Utils.MonoBehaviourDummy.Dummy.StopAllCoroutines();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
 

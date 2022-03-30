@@ -85,7 +85,7 @@ namespace LivingEntities
             {
                 amount = 5;
             }
-            else if (chance <= 100) //63
+            else if (chance <= 63)
             {
                 DropItem();
             }

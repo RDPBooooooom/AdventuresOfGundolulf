@@ -14,6 +14,7 @@ namespace Items.Active
         {
             // Do effect
 
+            
             _cooldown.Start();
         }
     }

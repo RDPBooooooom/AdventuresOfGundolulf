@@ -16,7 +16,7 @@ namespace Scrolls.StandardScrolls
         {
             Debug.Log("Activated " + GetType().Name);
             cam = Camera.main;
-            Utils.MonoBehaviourDummy.dummy.StartCoroutine(SpinCamera());
+            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinCamera());
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
         IEnumerator SpinCamera() // Currently gives an error because it breaks calculations with rays from the camera in Player
@@ -24,12 +24,12 @@ namespace Scrolls.StandardScrolls
             cam.transform.rotation = Quaternion.Euler(0, 0, cam.transform.rotation.z + 1);
             yield return new WaitForSeconds(0.5f);
 
-            Utils.MonoBehaviourDummy.dummy.StartCoroutine(SpinCamera());
+            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinCamera());
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            Utils.MonoBehaviourDummy.dummy.StopCoroutine(SpinCamera());
+            Utils.MonoBehaviourDummy.Dummy.StopCoroutine(SpinCamera());
             cam.transform.rotation = Quaternion.Euler(0, 0, 0);
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }

@@ -8,12 +8,13 @@ namespace Utils
 
     public class MonoBehaviourDummy : MonoBehaviour
     {
-        public static MonoBehaviourDummy dummy;
+        public static MonoBehaviourDummy Dummy { get; private set; }
         Camera cam;
 
-        private void Start()
+        private void Awake()
         {
-            dummy = this;
+            Dummy = this;
+            Debug.Log("Dummy");
         }
     }
 }

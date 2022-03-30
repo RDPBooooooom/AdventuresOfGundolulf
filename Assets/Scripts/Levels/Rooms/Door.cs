@@ -5,6 +5,7 @@ using Levels.Rooms;
 using PlayerScripts;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
+using UnityEngine.SceneManagement;
 using Utils;
 
 public class Door : MonoBehaviour
@@ -26,17 +27,16 @@ public class Door : MonoBehaviour
 
     #region Unity Methods
 
-    private void Awake()
-    {
-        _doorTimer ??= new Timer(this, 1);
-    }
-
     void Start()
     {
+        _doorTimer ??= new Timer(MonoBehaviourDummy.Dummy, 1);
+
         _room = GetComponentInParent<Room>();
         _room.RegisterDoor(this);
         _room.RoomCleared += OpenDoors;
         _room.RoomCleared += SetupCleared;
+
+        SceneManager.activeSceneChanged += CleanUp;
     }
     
     #endregion
@@ -80,5 +80,11 @@ public class Door : MonoBehaviour
     private void CloseDoors()
     {
         transform.GetChild(0).Rotate(0, -90, 0);
+    }
+
+    private void CleanUp(Scene current, Scene next)
+    {
+        _doorTimer = null;
+        SceneManager.activeSceneChanged -= CleanUp;
     }
 }

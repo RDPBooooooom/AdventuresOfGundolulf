@@ -9,15 +9,13 @@ namespace UI
 {
     public class InGameUI : MonoBehaviour
     {
-        #region Declaring Variables
+        #region Fields
 
         private Player _player;
         private PlayerInput _input;
 
         [SerializeField] private string _mainMenuSceneName;
         [SerializeField] private string _currentSceneName;
-        [SerializeField] private GameObject _pauseMenu;
-        [SerializeField] private GameObject _ingamePanel;
 
         [Header("Displays")] [SerializeField] private Image HealthDisplayBar;
         [SerializeField] private Text GoldAmount;
@@ -29,6 +27,14 @@ namespace UI
         [SerializeField] private Text _speedValue;
 
         [Header("Items")] [SerializeField] private Image Item;
+
+        #endregion
+
+        #region Properties
+
+        [SerializeField] public GameObject IngamePanel;
+        [SerializeField] public GameObject PausePanel;
+        [SerializeField] public GameObject DeathPanel;
 
         #endregion
 
@@ -66,16 +72,16 @@ namespace UI
 
         public void PauseUnPause()
         {
-            if (!_pauseMenu.activeSelf)
+            if (!PausePanel.activeSelf)
             {
-                _pauseMenu.SetActive(true);
-                _ingamePanel.SetActive(false);
+                PausePanel.SetActive(true);
+                IngamePanel.SetActive(false);
                 Time.timeScale = 0;
             }
-            else if (_pauseMenu.activeSelf)
+            else if (PausePanel.activeSelf)
             {
-                _pauseMenu.SetActive(false);
-                _ingamePanel.SetActive(true);
+                PausePanel.SetActive(false);
+                IngamePanel.SetActive(true);
                 Time.timeScale = 1;
             }
         }
@@ -90,6 +96,7 @@ namespace UI
         public void MainMenu()
         {
             SceneManager.LoadScene(_mainMenuSceneName);
+            Time.timeScale = 1;
         }
 
         public void UpdateHealthbar()

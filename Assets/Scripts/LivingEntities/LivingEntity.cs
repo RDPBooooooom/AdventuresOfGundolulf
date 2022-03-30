@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Items;
+using PlayerScripts;
 using UnityEngine;
+using Managers;
+using UI;
 
 namespace LivingEntities
 {
@@ -30,6 +33,7 @@ namespace LivingEntities
         [SerializeField] private float _projectileForce;
 
         private Animator _animator;
+        private InGameUI _inGameUI;
 
         #endregion
 
@@ -152,7 +156,12 @@ namespace LivingEntities
             
             EquippedItems = new List<Item>();
         }
-    
+
+        private void Start()
+        {
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
+        }
+
         #endregion
 
         public virtual void HealEntity(float amount)
@@ -213,7 +222,17 @@ namespace LivingEntities
         /// </summary>
         private void DestroyOnDeath()
         {
-            Destroy(gameObject);
+            if (this is Player)
+            {
+                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().IngamePanel.SetActive(false);
+                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().DeathPanel.SetActive(true);
+
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
