@@ -54,13 +54,13 @@ namespace LivingEntities
         public int Attack
         {
             get => _attack;
-            protected set => _attack = value;  
+            set => _attack = value;  
         }
 
         public int Intelligence
         {
             get => _intelligence;
-            protected set => _intelligence = value;
+            set => _intelligence = value;
         }
 
         public float Range

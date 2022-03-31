@@ -1,3 +1,5 @@
+using LivingEntities;
+
 namespace Items.Melee
 {
     public class Pickaxe : MeleeItem
@@ -7,6 +9,14 @@ namespace Items.Melee
         {
             Value = 10;
         }
-        // Start is called before the first frame update
+        public override void Equip(LivingEntity equipOn)
+        {
+            base.Equip(equipOn);
+        }
+
+        public override void Unequip(LivingEntity unequipFrom)
+        {
+            base.Unequip(unequipFrom);
+        }
     }
 }

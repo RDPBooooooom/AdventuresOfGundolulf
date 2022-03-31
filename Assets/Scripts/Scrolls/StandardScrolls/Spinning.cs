@@ -52,7 +52,7 @@ namespace Scrolls.StandardScrolls
             //float spinValue = 0.5f;
             //while(_cam.transform.rotation.z > 0)
             //{
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0);
             //    Debug.Log(_cam.transform.rotation.z);
             //    _cam.transform.rotation = Quaternion.Euler(60,0,_cam.transform.rotation.z -spinValue);
             //    Debug.Log("SpanBack");

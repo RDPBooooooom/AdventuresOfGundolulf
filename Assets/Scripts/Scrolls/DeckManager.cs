@@ -40,13 +40,26 @@ namespace Scrolls
         public void LoadDecks()
         {
             //TODO: Load deck from MainMenu(or where ever)
+
+            _standardDeck.AddScroll(new UnkownPotion());
+            _standardDeck.AddScroll(new AttackDown());
+            _standardDeck.AddScroll(new AttackUp());
+            _standardDeck.AddScroll(new HealingWord());
+            _standardDeck.AddScroll(new IntelligenceDown());
+            _standardDeck.AddScroll(new IntelligenceUp());
+            _standardDeck.AddScroll(new SpeedDown());
+            _standardDeck.AddScroll(new SpeedUp());
+
+            _standardDeck.AddScroll(new BülrögsTaxes());
+            _standardDeck.AddScroll(new Casino());
+            _standardDeck.AddScroll(new NoHitChallenge());
+            
             _standardDeck.AddScroll(new Spinning());
             _standardDeck.AddScroll(new TopUpPerspective());
             _standardDeck.AddScroll(new TeleporterMalfunction());
             _standardDeck.AddScroll(new HelloDarkness());
             _standardDeck.AddScroll(new PoisonGas());
             _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
-            
             _standardDeck.InitDeck();
             //_bossDeck.AddScroll();
 
