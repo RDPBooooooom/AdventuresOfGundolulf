@@ -61,28 +61,30 @@ namespace UI
             _speedValue.text = "SPE: " + _player.Speed.ToString();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
-
         #endregion
 
         #region UI Methods
 
         public void PauseUnPause()
         {
-            if (!PausePanel.activeSelf)
+            if (!GameManager.Instance.UIManager.DisablePausePanel)
             {
-                PausePanel.SetActive(true);
-                IngamePanel.SetActive(false);
-                Time.timeScale = 0;
-            }
-            else if (PausePanel.activeSelf)
-            {
-                PausePanel.SetActive(false);
-                IngamePanel.SetActive(true);
-                Time.timeScale = 1;
+                if (!PausePanel.activeSelf)
+                {
+                    PausePanel.SetActive(true);
+                    IngamePanel.SetActive(false);
+
+                    _player.Input.Disable();
+                    Time.timeScale = 0;
+                }
+                else
+                {
+                    PausePanel.SetActive(false);
+                    IngamePanel.SetActive(true);
+
+                    _player.Input.Enable();
+                    Time.timeScale = 1;
+                }
             }
         }
 

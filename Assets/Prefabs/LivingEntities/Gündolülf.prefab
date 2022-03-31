@@ -896,10 +896,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c016bcf77eaa49d08999ab0b70c7fee1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
+  _maxHealth: 100
   _health: 0
   _attack: 100
-  _intelligence: 15
+  _intelligence: 100
   _range: 300
   _haste: 100
   _speed: 10
@@ -913,6 +913,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 4063637104488778814, guid: 55e0e82dbaa0b7e4892708c310edf924, type: 3}
   _projectileForce: 20
   _interactRange: 5
+  _gold: 0
 --- !u!136 &5263268419993395426
 CapsuleCollider:
   m_ObjectHideFlags: 0
