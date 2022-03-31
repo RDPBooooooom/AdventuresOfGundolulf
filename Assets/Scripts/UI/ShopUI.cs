@@ -77,6 +77,10 @@ namespace UserInterface
         public void Back()
         {
             Destroy(gameObject);
+
+            Time.timeScale = 1;
+            _player.Input.Enable();
+            GameManager.Instance.UIManager.DisablePausePanel = false;
         }
 
         public void SelectItemToBuy(int index)

@@ -52,6 +52,17 @@ namespace PlayerScripts
             get => _stopMovement; 
             set => _stopMovement = value; 
         }
+        public Teleport Teleport 
+        {   
+            get => _teleport; 
+            set => _teleport = value; 
+        }
+
+        public PlayerInput Input
+        {
+            get => _input;
+            set => _input = value;
+        }
 
         #endregion
 
@@ -99,12 +110,9 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            if (IsAlive)
+            if (IsAlive && !StopMovement)
             {
-                if (!StopMovement)
-                {
-                    Movement();
-                }
+                Movement();
                 LookDirection();
                 GetInteractableObject();
             }
@@ -228,7 +236,9 @@ namespace PlayerScripts
 
         private void Movement()
         {
+            Debug.Log(Input.Ingame.enabled);
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
+            Debug.Log(inputVector);
 
             Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
             Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
@@ -256,7 +266,6 @@ namespace PlayerScripts
 
             transform.LookAt(worldPoint);
         }
-
 
         private void PerformMelee(InputAction.CallbackContext context)
         {

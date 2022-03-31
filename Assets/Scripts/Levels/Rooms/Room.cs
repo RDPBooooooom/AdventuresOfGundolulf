@@ -34,6 +34,10 @@ namespace Levels.Rooms
             set => _data = value;
         }
 
+        public Bounds RoomBounds
+        {
+            get => _roomBounds;
+        }
 
         public RoomConnections RoomConnections { get; set; }
 

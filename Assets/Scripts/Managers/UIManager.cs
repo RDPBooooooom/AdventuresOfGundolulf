@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     public Canvas MainCanvas { get; private set; }
     public CastScrollUI CastScrollUI { get; private set; }
+    public bool DisablePausePanel { get; set; } = false;
 
     #endregion
 
