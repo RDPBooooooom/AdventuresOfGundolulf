@@ -98,19 +98,18 @@ namespace Levels.Rooms
             EnterRoom?.Invoke(this);
         }
 
-        public virtual void OnRoomCleared()
+        protected virtual void OnRoomCleared()
         {
             RoomCleared?.Invoke();
         }
 
         public void TryLeave(Door door)
         {
-            if (CanLeave())
-            {
-                _wasVisited = true;
-                Room toEnter = GetRoomByDirection(_doors[door]);
-                LeaveRoom?.Invoke(this, toEnter);
-            }
+            if (!CanLeave()) return;
+            
+            _wasVisited = true;
+            Room toEnter = GetRoomByDirection(_doors[door]);
+            LeaveRoom?.Invoke(this, toEnter);
         }
 
         protected virtual bool CanLeave()
@@ -124,7 +123,6 @@ namespace Levels.Rooms
 
         private Room GetRoomByDirection(DoorDirections direction)
         {
-            Debug.Log(direction);
             switch (direction)
             {
                 case DoorDirections.Top:
