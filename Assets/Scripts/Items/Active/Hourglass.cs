@@ -12,7 +12,7 @@ namespace Items.Active
 
         protected override void Effect()
         {
-
+            // Do effect
             
             _cooldown.Start();
         }

@@ -4,7 +4,7 @@ namespace Items.Melee
     {
         public MeleeItem() : base()
         {
-        
+            
         }
     }
 }
