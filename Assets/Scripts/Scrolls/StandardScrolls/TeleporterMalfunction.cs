@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 using Random = System.Random;
 
 namespace Scrolls.StandardScrolls
 {
     public class TeleporterMalfunction : StandardScroll
     {
-        Vector3 currentRoomCenter;
+        private Vector3 _currentRoomCenter;
+        private IEnumerator _teleportCoroutine;
+        private MonoBehaviourDummy _monoDummy;
 
         public TeleporterMalfunction()
         {
@@ -17,23 +20,25 @@ namespace Scrolls.StandardScrolls
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            currentRoomCenter = Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position;
-            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(Teleport());
+            _currentRoomCenter = Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position;
+            _teleportCoroutine = Teleport();
+            _monoDummy = Utils.MonoBehaviourDummy.Dummy;
+            _monoDummy.StartCoroutine(_teleportCoroutine);
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
         public IEnumerator Teleport()
         {
-            Managers.GameManager.Instance.Player.transform.position = GetRandomPointInRoom();
-            Debug.Log("Did the telepoo");
-            yield return new WaitForSeconds(7);
-
-            Utils.MonoBehaviourDummy.Dummy.StartCoroutine(Teleport());
+            while (true)
+            {
+                yield return new WaitForSeconds(7);
+                Managers.GameManager.Instance.Player.transform.position = GetRandomPointInRoom();
+            }
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            Utils.MonoBehaviourDummy.Dummy.StopAllCoroutines();
+            _monoDummy.StopCoroutine(_teleportCoroutine);
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
 
@@ -45,7 +50,7 @@ namespace Scrolls.StandardScrolls
             int x = random.Next(-16, 16);
             int z = random.Next(-11, 11);
 
-            return new Vector3(currentRoomCenter.x + x, 0, currentRoomCenter.z + z);
+            return new Vector3(_currentRoomCenter.x + x, 0, _currentRoomCenter.z + z);
         }
     }
 }
