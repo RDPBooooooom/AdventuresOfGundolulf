@@ -90,6 +90,10 @@ public class ShopGerald : MonoBehaviour, IInteractable
             _shopUI = Instantiate(_shopPanelPrefab, GameManager.Instance.UIManager.MainCanvas.transform);
             _shopUI.ShopGerald = this;
         }
+
+        Time.timeScale = 0;
+        _player.Input.Disable();
+        GameManager.Instance.UIManager.DisablePausePanel = true;
     }
 
     public void Interact()

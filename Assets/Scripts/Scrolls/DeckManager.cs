@@ -58,15 +58,19 @@ namespace Scrolls
             //TODO Get amount to draw from Difficulty manager or something like this
             _castScrollUI.DrawnScrolls = _standardDeck.Draw(3).Cast<Scroll>().ToList();
 
-            _castScrollUI.gameObject.SetActive(true);
             Time.timeScale = 0;
+            GameManager.Instance.Player.Input.Disable();
+            GameManager.Instance.UIManager.DisablePausePanel = true;
+            _castScrollUI.gameObject.SetActive(true);
         }
 
         #endregion
 
         private void OnScrollCast(Scroll scroll)
         {
+            GameManager.Instance.Player.Input.Enable();
             Time.timeScale = 1;
+            GameManager.Instance.UIManager.DisablePausePanel = false;
         }
         
         public void OnRoomEnter(Room entering)

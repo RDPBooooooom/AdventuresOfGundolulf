@@ -1,3 +1,4 @@
+using Managers;
 using Scrolls;
 using Scrolls.StandardScrolls;
 using System.Collections;
@@ -52,7 +53,6 @@ namespace UI
 
             DrawnScrolls.Remove(_selectedScroll);
             _selectedScroll = null;
-
 
             gameObject.SetActive(false);
         }
