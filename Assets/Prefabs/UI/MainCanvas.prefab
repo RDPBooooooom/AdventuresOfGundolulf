@@ -166,7 +166,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7235016644240650701}
   - component: {fileID: 809737123598988436}
-  - component: {fileID: 3161818239946974363}
+  - component: {fileID: 8677958850198962810}
   m_Layer: 5
   m_Name: Item
   m_TagString: Untagged
@@ -201,7 +201,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3744935137553944873}
   m_CullTransparentMesh: 1
---- !u!114 &3161818239946974363
+--- !u!114 &8677958850198962810
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b65d4c8bfe78d53428c1ed1c1ea169ad, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1957,11 +1957,10 @@ MonoBehaviour:
   _rangeValue: {fileID: 6735586431366323094}
   _hasteValue: {fileID: 6735586431332383006}
   _speedValue: {fileID: 6735586432565252715}
-  Item: {fileID: 3161818239946974363}
+  ItemDisplay: {fileID: 8677958850198962810}
   IngamePanel: {fileID: 6735586431681317198}
   PausePanel: {fileID: 6735586432121442333}
   DeathPanel: {fileID: 1607697202}
-  ItemDisplay: {fileID: 3161818239946974363}
 --- !u!1 &6735586431988257060
 GameObject:
   m_ObjectHideFlags: 0

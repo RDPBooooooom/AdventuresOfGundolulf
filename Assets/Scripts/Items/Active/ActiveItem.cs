@@ -37,15 +37,14 @@ namespace Items.Active
         {
             base.Equip(equipOn);
             _cooldown = new Timer(equipOn, Cooldown);
-            Debug.Log(ToString().Remove(0, 13));
-            inGameUI.UpdateActiveItem(ToString().Remove(0, 13));
+            inGameUI.UpdateActiveItem(UIImage);
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             _cooldown = null;
-            inGameUI.UpdateActiveItem("");
+            inGameUI.UpdateActiveItem(null);
         }
         
         public void Use()

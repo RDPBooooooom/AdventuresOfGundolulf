@@ -43,19 +43,21 @@ namespace Scrolls.StandardScrolls
             _monoDummy.StopCoroutine(_spinCameraCoroutine);
             Debug.Log(_cam.transform.eulerAngles.z);
             _angleChangeNextStep = 0.5f;
-            SpinBack();
+            _monoDummy.StartCoroutine(SpinBack());
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
 
-        void SpinBack()
+        IEnumerator SpinBack()
         {
-            float value = 0.5f;
-            while(_cam.transform.rotation.z > 0)
-            {
-                _cam.transform.rotation = Quaternion.Euler(60,0,_cam.transform.rotation.z -value);
-                Debug.Log("SpanBack");
-                value += 0.5f;
-            }
+            //float spinValue = 0.5f;
+            //while(_cam.transform.rotation.z > 0)
+            //{
+                yield return new WaitForSeconds(0.1f);
+            //    Debug.Log(_cam.transform.rotation.z);
+            //    _cam.transform.rotation = Quaternion.Euler(60,0,_cam.transform.rotation.z -spinValue);
+            //    Debug.Log("SpanBack");
+            //    spinValue += 0.5f;
+            //}
             _cam.transform.rotation = _defaultRotation;
         }
     }

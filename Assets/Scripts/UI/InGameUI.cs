@@ -111,13 +111,9 @@ namespace UI
             GoldAmount.text = _player.Gold.ToString();
         }
 
-        public void UpdateActiveItem(string itemName)
+        public void UpdateActiveItem(Sprite item)
         {
-            if (itemName != "" && itemName != null)
-                ItemDisplay = Resources.Load<Image>("UI/Items/" + itemName);
-            else
-                ItemDisplay = null;
-            Debug.Log(itemName);
+            ItemDisplay.sprite = item;
         }
 
         #endregion
