@@ -52,6 +52,11 @@ namespace PlayerScripts
             get => _stopMovement; 
             set => _stopMovement = value; 
         }
+        public Teleport Teleport 
+        {   
+            get => _teleport; 
+            set => _teleport = value; 
+        }
 
         #endregion
 

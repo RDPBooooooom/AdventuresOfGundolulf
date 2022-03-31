@@ -26,7 +26,7 @@ namespace UI
         [SerializeField] private Text _hasteValue;
         [SerializeField] private Text _speedValue;
 
-        [Header("Items")] [SerializeField] private Image Item;
+        [Header("Items")] [SerializeField] private Image ItemDisplay;
 
         #endregion
 
@@ -107,6 +107,15 @@ namespace UI
         public void UpdateGold()
         {
             GoldAmount.text = _player.Gold.ToString();
+        }
+
+        public void UpdateActiveItem(string itemName)
+        {
+            if (itemName != "" && itemName != null)
+                ItemDisplay = Resources.Load<Image>("UI/Items/" + itemName);
+            else
+                ItemDisplay = null;
+            Debug.Log(itemName);
         }
 
         #endregion

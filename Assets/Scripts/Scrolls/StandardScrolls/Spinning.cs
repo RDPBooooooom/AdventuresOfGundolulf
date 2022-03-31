@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -11,7 +10,9 @@ namespace Scrolls.StandardScrolls
         private float _angleChangeNextStep = 1f;
         private IEnumerator _spinCameraCoroutine;
         private MonoBehaviourDummy _monoDummy;
-        
+
+
+        Quaternion _defaultRotation = Quaternion.Euler(60, 0, 0);
         public Spinning()
         {
             Cost = 3;
@@ -40,26 +41,22 @@ namespace Scrolls.StandardScrolls
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
             _monoDummy.StopCoroutine(_spinCameraCoroutine);
-            //SpinOut();
             Debug.Log(_cam.transform.eulerAngles.z);
-            Debug.Log(_cam.transform.rotation.eulerAngles.z);
             _angleChangeNextStep = 0.5f;
+            SpinBack();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
 
-        void SpinOut()
+        void SpinBack()
         {
-            for (float i = _cam.transform.rotation.eulerAngles.z; _cam.transform.rotation.eulerAngles.z > 0.5f; i-= 0.5f)
+            float value = 0.5f;
+            while(_cam.transform.rotation.z > 0)
             {
-                Utils.MonoBehaviourDummy.Dummy.StartCoroutine(SpinBack());
+                _cam.transform.rotation = Quaternion.Euler(60,0,_cam.transform.rotation.z -value);
+                Debug.Log("SpanBack");
+                value += 0.5f;
             }
-            //cam.transform.rotation = Quaternion.Euler(60, 0, 0);
-        }
-
-        IEnumerator SpinBack()
-        {
-            _cam.transform.rotation = Quaternion.Euler(60, 0, _cam.transform.rotation.z - _angleChangeNextStep);
-            yield return new WaitForSeconds(0);
+            _cam.transform.rotation = _defaultRotation;
         }
     }
 }

@@ -8,9 +8,14 @@ namespace Scrolls.StandardScrolls
 {
     public class TeleporterMalfunction : StandardScroll
     {
+
         private Vector3 _currentRoomCenter;
+
         private IEnumerator _teleportCoroutine;
         private MonoBehaviourDummy _monoDummy;
+
+        Bounds _roomBounds;
+        Teleport _teleport;
 
         public TeleporterMalfunction()
         {
@@ -20,10 +25,12 @@ namespace Scrolls.StandardScrolls
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            _currentRoomCenter = Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position;
+            _roomBounds = Managers.GameManager.Instance.LevelManager.CurrentRoom.RoomBounds;
             _teleportCoroutine = Teleport();
+            _teleport = Managers.GameManager.Instance.Player.Teleport;
             _monoDummy = Utils.MonoBehaviourDummy.Dummy;
             _monoDummy.StartCoroutine(_teleportCoroutine);
+
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
@@ -32,7 +39,8 @@ namespace Scrolls.StandardScrolls
             while (true)
             {
                 yield return new WaitForSeconds(7);
-                Managers.GameManager.Instance.Player.transform.position = GetRandomPointInRoom();
+                _teleport.TargetPos = GetRandomPointInRoom();
+                _teleport.Use();
             }
         }
 
@@ -47,10 +55,11 @@ namespace Scrolls.StandardScrolls
             // Room x length = 33, z length 23. Calculating with diameter of 16 and 11
 
             Random random = new Random();
-            int x = random.Next(-16, 16);
-            int z = random.Next(-11, 11);
 
-            return new Vector3(_currentRoomCenter.x + x, 0, _currentRoomCenter.z + z);
+            float x = ((float)(random.NextDouble() * (_roomBounds.max.x - _roomBounds.min.x) + _roomBounds.min.x));
+            float z = ((float)(random.NextDouble() * (_roomBounds.max.z - _roomBounds.min.z) + _roomBounds.min.z));
+
+            return new Vector3(_roomBounds.center.x + x, 0, _roomBounds.center.z + z);
         }
     }
 }
