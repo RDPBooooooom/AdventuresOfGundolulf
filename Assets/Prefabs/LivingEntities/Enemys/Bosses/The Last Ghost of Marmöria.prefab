@@ -306,13 +306,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e53c214fce477a8208489469134c54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 2000
+  _maxHealth: 750
   _health: 25
-  _attack: 10
+  _attack: 12
   _intelligence: 0
   _range: 0
   _haste: 100
-  _speed: 12
+  _speed: 11
   _isAlive: 1
   _meleeAttackPoint: {fileID: 7361203426901613519}
   _meleeAttackRange: 2

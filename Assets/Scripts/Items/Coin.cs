@@ -5,13 +5,7 @@ namespace Items
 {
     public class Coin : MonoBehaviour
     {
-        private Player _player;
-
-        // Start is called before the first frame update
-        void Start()
-        {
-            _player = FindObjectOfType<Player>();
-        }
+        private Player _player = Managers.GameManager.Instance.Player;
 
         private void OnCollisionEnter(Collision collision)
         {

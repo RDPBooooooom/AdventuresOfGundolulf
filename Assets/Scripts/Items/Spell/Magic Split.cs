@@ -1,4 +1,5 @@
 using Interfaces;
+
 using LivingEntities;
 
 namespace Items.Spell
@@ -18,8 +19,12 @@ namespace Items.Spell
 
             ISpellcaster spellcaster = (ISpellcaster) equipOn;
             equipOn.Range -= 175;
-            
+        }
 
+
+        public override void Unequip(LivingEntity unequipFrom)
+        {
+            base.Unequip(unequipFrom);
         }
     }
 }
