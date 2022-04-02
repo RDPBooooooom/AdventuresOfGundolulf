@@ -48,25 +48,25 @@ namespace LivingEntities
         public float Health
         {
             get => _health; 
-            protected set => _health = value;
+            set => _health = value;
         }
 
         public int Attack
         {
             get => _attack;
-            protected set => _attack = value;  
+            set => _attack = value;  
         }
 
         public int Intelligence
         {
             get => _intelligence;
-            protected set => _intelligence = value;
+            set => _intelligence = value;
         }
 
         public float Range
         {
             get => _range;
-            protected set => _range = value;
+            set => _range = value;
         }
 
         public float Haste

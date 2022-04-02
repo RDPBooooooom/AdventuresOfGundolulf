@@ -52,6 +52,7 @@ namespace PlayerScripts
             get => _stopMovement; 
             set => _stopMovement = value; 
         }
+        public SpellCast SpellCast { get => _spellCast; protected set => _spellCast = value; }
         public Teleport Teleport 
         {   
             get => _teleport; 
@@ -110,9 +111,12 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            if (IsAlive && !StopMovement)
+            if (IsAlive)
             {
-                Movement();
+                if (!StopMovement)
+                {
+                    Movement();
+                }
                 LookDirection();
                 GetInteractableObject();
             }
@@ -236,9 +240,7 @@ namespace PlayerScripts
 
         private void Movement()
         {
-            Debug.Log(Input.Ingame.enabled);
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
-            Debug.Log(inputVector);
 
             Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
             Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
@@ -266,6 +268,7 @@ namespace PlayerScripts
 
             transform.LookAt(worldPoint);
         }
+
 
         private void PerformMelee(InputAction.CallbackContext context)
         {

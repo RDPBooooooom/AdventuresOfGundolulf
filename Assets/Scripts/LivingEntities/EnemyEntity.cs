@@ -16,12 +16,8 @@ namespace LivingEntities
 
         protected Melee _melee;
         protected Player _player;
-        //protected Animator _animator;
         protected Rigidbody _rigidbody;
-        [SerializeField] GameObject _coin;
-
-        [Header("Item Prefabs")]
-        List<DroppedItem> _items = new List<DroppedItem>();
+        [SerializeField] private GameObject _coin;
 
         #endregion
 

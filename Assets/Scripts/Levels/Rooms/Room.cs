@@ -71,7 +71,7 @@ namespace Levels.Rooms
 
         protected virtual void Start()
         {
-            _roomBounds = _floorPlane.GetComponent<MeshFilter>().mesh.bounds;
+            _roomBounds = GetTotalBounds(_floorPlane.GetComponentsInChildren<MeshFilter>());
             _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
             _roomBounds.extents += new Vector3(0, 5, 0);
             _roomBounds.center = _floorPlane.transform.position;
@@ -162,6 +162,17 @@ namespace Levels.Rooms
             return _roomBounds.Contains(position);
         }
 
+        private Bounds GetTotalBounds(MeshFilter[] meshFilters)
+        {
+            Bounds bounds = new Bounds();
+
+            foreach (MeshFilter meshFilter in meshFilters)
+            {
+                bounds.Encapsulate(meshFilter.mesh.bounds);
+            }
+
+            return bounds;
+        }
 
         #endregion
     }

@@ -6,10 +6,6 @@ namespace LivingEntities
 {
     public class OrcWarlordEntity : EnemyEntity
     {
-        // Update is called once per frame
-        void Update()
-        {
 
-        }
     }
 }

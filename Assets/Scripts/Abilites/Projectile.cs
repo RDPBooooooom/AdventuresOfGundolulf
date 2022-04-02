@@ -7,8 +7,8 @@ public class Projectile : MonoBehaviour
 {
     #region Fields
 
-    private Vector3 ownerPosition;
-    private float rangeDivisor = 20;
+    private Vector3 _ownerPosition;
+    private float _rangeDivisor = 20;
 
     //[SerializeField] private GameObject hitEffect;
 
@@ -20,11 +20,17 @@ public class Projectile : MonoBehaviour
 
     #endregion
 
+    #region Delegates
+
+    public delegate void ProjectileEndHandler(Projectile projectile);
+
+    #endregion
+
     #region Unity Methods
 
     void Start()
     {
-        ownerPosition = Owner.GetPosition();
+        _ownerPosition = Owner.GetPosition();
         IgnoreCollision();
     }
 
@@ -38,9 +44,9 @@ public class Projectile : MonoBehaviour
     #region Helper Methods
     private void DestroyProjectile()
     {
-        float distance = Vector3.Distance(ownerPosition, transform.position);
+        float distance = Vector3.Distance(_ownerPosition, transform.position);
 
-        if (distance >= Owner.GetRange() / rangeDivisor)
+        if (distance >= Owner.GetRange() / _rangeDivisor)
         {
             Destroy(gameObject);
         }
