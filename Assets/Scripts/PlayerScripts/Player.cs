@@ -71,7 +71,7 @@ namespace PlayerScripts
 
         public delegate void UpdateHealthHandler();
 
-        public delegate void UpdateGoldHandler(); 
+        public delegate void UpdateGoldHandler();
 
         #endregion
 

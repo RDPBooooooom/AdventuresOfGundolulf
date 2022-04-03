@@ -14,6 +14,7 @@ namespace Items
         private Sprite _uIImage;
         private int _value;
         protected Player _player;
+        protected UI.InGameUI inGameUI = Managers.GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
 
         #endregion
 

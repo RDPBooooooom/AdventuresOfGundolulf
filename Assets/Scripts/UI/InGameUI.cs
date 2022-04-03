@@ -101,6 +101,7 @@ namespace UI
             Time.timeScale = 1;
         }
 
+        #region UpdateDisplays
         public void UpdateHealthbar()
         {
             HealthDisplayBar.fillAmount = _player.Health / 100;
@@ -115,6 +116,32 @@ namespace UI
         {
             ItemDisplay.sprite = item;
         }
+
+        public void UpdateAttackDisplay()
+        {
+            _attackValue.text = "ATT: " + _player.Attack.ToString();
+        }
+
+        public void UpdateIntelligenceDisplay()
+        {
+            _intelligenceValue.text = "INT: " + _player.Intelligence.ToString();
+        }
+
+        public void UpdateRangeDisplay()
+        {
+            _rangeValue.text = "RA: " + _player.Range.ToString();
+        }
+        public void UpdateHasteDisplay()
+        {
+            _hasteValue.text = "HA: " + _player.Haste.ToString();
+        }
+        public void UpdateSpeedDisplay()
+        {
+            _speedValue.text = "SPE: " + _player.Speed.ToString();
+        }
+
+
+        #endregion
 
         #endregion
 

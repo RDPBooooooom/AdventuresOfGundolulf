@@ -14,15 +14,15 @@ namespace Items.Stats
         {
             base.Equip(equipOn);
             oldSpeed = _player.Speed;
-            _player.MaxHealth += 50;
-            _player.Speed = 0;
+            equipOn.MaxHealth += 50;
+            equipOn.Speed = 0;
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
-            _player.MaxHealth -= 50;
-            _player.Speed = oldSpeed;
+            unequipFrom.MaxHealth -= 50;
+            unequipFrom.Speed = oldSpeed;
         }
     }
 }

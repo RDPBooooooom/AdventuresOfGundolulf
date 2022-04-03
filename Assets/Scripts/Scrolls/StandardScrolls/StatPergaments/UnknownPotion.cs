@@ -28,7 +28,10 @@ namespace Scrolls.StandardScrolls
             if (chance <= 50)
                 player.HealEntity(healamount);
             else
+            {
                 player.MaxHealth %= 5; // should player also loose health down to 5% ? or just not regenerate anymore 
+                player.Health = player.MaxHealth;
+            }
         }
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {

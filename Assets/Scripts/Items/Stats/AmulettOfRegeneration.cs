@@ -21,30 +21,30 @@ namespace Items.Stats
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
-            oldHealth = _player.MaxHealth;
-            _player.MaxHealth /= 2;
+            oldHealth = equipOn.MaxHealth;
+            equipOn.MaxHealth /= 2;
             currentRoom.EnterRoom += OnEnterRoom;
             currentRoom.RoomCleared += OnRoomCleared;
-            dummy.StartCoroutine(Regenerate());
+            dummy.StartCoroutine(Regenerate(equipOn));
         }
 
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
-            _player.MaxHealth = oldHealth;
-            dummy.StopCoroutine(Regenerate());
+            unequipFrom.MaxHealth = oldHealth;
+            dummy.StopCoroutine(Regenerate(unequipFrom));
             currentRoom.EnterRoom -= OnEnterRoom;
             currentRoom.RoomCleared -= OnRoomCleared;
         }
 
 
-        IEnumerator Regenerate()
+        IEnumerator Regenerate(LivingEntity entityToHeal)
         {
             while (!inCombat)
             {
                 yield return new WaitForSeconds(1);
-                _player.HealEntity(regenerateValue);
+                entityToHeal.HealEntity(regenerateValue);
             }
         }
 
