@@ -56,17 +56,10 @@ public class Teleport : Ability
         if(GameManager.Instance?.LevelManager?.CurrentRoom)
             TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);
         
-        // TODO Implement cooldown
         Vector3 startPosition = _targetEntity.transform.position;
 
         OnTeleportStart?.Invoke(startPosition, TargetPos);
-        //TODO Play Teleport animation
-
-        // TODO Figure out a way to not teleport in to walls etc.
         _targetEntity.transform.position = TargetPos;
-
-        //TODO Play landing animation
-
         OnTeleportEnd?.Invoke(startPosition, _targetEntity.transform.position);
 
         StartCooldown();

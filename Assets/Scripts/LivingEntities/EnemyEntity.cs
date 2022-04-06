@@ -33,7 +33,7 @@ namespace LivingEntities
 
         protected void FixedUpdate()
         {
-            if (IsAlive)
+            if (IsAlive && !StopActions)
             {
                 if (PlayerInRange())
                     _melee.Use();

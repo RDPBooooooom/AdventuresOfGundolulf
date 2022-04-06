@@ -34,6 +34,8 @@ namespace LivingEntities
 
         private Animator _animator;
         private InGameUI _inGameUI;
+        private Immunities _immunity;
+        private bool _stopActions;
 
         #endregion
 
@@ -129,6 +131,18 @@ namespace LivingEntities
             protected set => _animator = value;
         }
 
+        public Immunities Immunity
+        {
+            get => _immunity;
+            protected set => _immunity = value;
+        }
+
+        public bool StopActions
+        {
+            get => _stopActions;
+            set => _stopActions = value;
+        }
+
         private List<Item> EquippedItems {  get; set; }
 
         #endregion
@@ -164,6 +178,7 @@ namespace LivingEntities
 
         #endregion
 
+        #region Damage Methods
         public virtual void HealEntity(float amount)
         {
             if (IsAlive)
@@ -188,6 +203,10 @@ namespace LivingEntities
             }
         }
 
+        #endregion
+
+        #region Death Methods
+
         protected virtual void OnDeath()
         {
             IsAlive = false;
@@ -198,23 +217,6 @@ namespace LivingEntities
             {
                 collider.enabled = false;
             }
-        }
-
-        private void OnDrawGizmosSelected()
-        {
-            Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
-        }
-
-        public void Equip(Item item)
-        {
-            EquippedItems.Add(item);
-            item.Equip(this);
-        }
-
-        public void Unequip(Item item)
-        {
-            EquippedItems.Remove(item);
-            item.Unequip(this);
         }
 
         /// <summary>
@@ -233,6 +235,38 @@ namespace LivingEntities
             {
                 Destroy(gameObject);
             }
+        }
+
+        #endregion
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
+        }
+
+        #region Equip Methods
+
+        public void Equip(Item item)
+        {
+            EquippedItems.Add(item);
+            item.Equip(this);
+        }
+
+        public void Unequip(Item item)
+        {
+            EquippedItems.Remove(item);
+            item.Unequip(this);
+        }
+
+        #endregion
+
+        [Flags]
+        public enum Immunities
+        {
+            ImmuneToBleeding = 1,
+            ImmuneToPoison = 2,
+            ImmuneToPetrification = 4,
+            ImmuneToMelee = 8
         }
     }
 }
