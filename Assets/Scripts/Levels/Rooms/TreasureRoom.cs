@@ -12,6 +12,8 @@ namespace Levels.Rooms
 
             if (WasVisited) return;
             
+            OnRoomCleared();
+            
             DroppedItem item = GameManager.Instance.ItemManager.GetRandomDroppedItem();
             item.transform.position = this.transform.position;
         }

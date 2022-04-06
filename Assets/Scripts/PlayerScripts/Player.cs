@@ -29,9 +29,8 @@ namespace PlayerScripts
 
         [SerializeField] private float _interactRange;
         private bool _stopMovement = false;
-        
-        [SerializeField]
-        private int _gold;
+
+        [SerializeField] private int _gold;
 
         #endregion
 
@@ -47,16 +46,22 @@ namespace PlayerScripts
             }
         }
 
-        public bool StopMovement 
-        {   
-            get => _stopMovement; 
-            set => _stopMovement = value; 
+        public bool StopMovement
+        {
+            get => _stopMovement;
+            set => _stopMovement = value;
         }
-        public SpellCast SpellCast { get => _spellCast; protected set => _spellCast = value; }
-        public Teleport Teleport 
-        {   
-            get => _teleport; 
-            set => _teleport = value; 
+
+        public SpellCast SpellCast
+        {
+            get => _spellCast;
+            protected set => _spellCast = value;
+        }
+
+        public Teleport Teleport
+        {
+            get => _teleport;
+            set => _teleport = value;
         }
 
         public PlayerInput Input
@@ -117,6 +122,7 @@ namespace PlayerScripts
                 {
                     Movement();
                 }
+
                 LookDirection();
                 GetInteractableObject();
             }
@@ -228,7 +234,7 @@ namespace PlayerScripts
         {
             if (_activeItem != null)
             {
-                IUsable usableObject = (IUsable)_activeItem;
+                IUsable usableObject = (IUsable) _activeItem;
 
                 usableObject.Use();
             }
@@ -255,15 +261,26 @@ namespace PlayerScripts
         private void LookDirection()
         {
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
+            worldPoint = new Vector3(worldPoint.x, 0.5f, worldPoint.z);
+
+            Vector3 pos = transform.position;
+
+            Vector3 direction = worldPoint - new Vector3(pos.x, 0.5f, pos.z);
+
+            if ((direction - Vector3.up).magnitude < 1.1f) return;
+            if (direction.magnitude < 7.5f)
+            {
+                worldPoint += direction.normalized * 3;
+            }
 
             if (GameManager.Instance?.LevelManager?.CurrentRoom &&
                 GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
             {
-                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.green);
+                Debug.DrawLine(transform.position, worldPoint, Color.cyan);
             }
             else
             {
-                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
+                Debug.DrawLine(transform.position, worldPoint, Color.red);
             }
 
             transform.LookAt(worldPoint);
