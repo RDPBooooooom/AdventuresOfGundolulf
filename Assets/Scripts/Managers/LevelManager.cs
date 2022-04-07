@@ -35,6 +35,7 @@ namespace Managers
         {
             _levelGenerator = new LevelGenerator(_roomPrefabs, _numberOfRooms, _showDebug, _numberOfShopRooms,
                 _numberIfTreasureRooms, _distanceToBossRoom);
+            PlayerCam = Camera.main;
         }
 
         public void GenerateLevel()
@@ -60,15 +61,12 @@ namespace Managers
             ClearSetup();
             CurrentRoom = toEnter;
 
-
             Player player = GameManager.Instance.Player;
             player.transform.position = toEnter.GetClosestPositionOnGround(player.transform.position);
 
-            //TODO Move Cam in a good way, This is WIP
-
             Vector3 pos1 = leaving.transform.position;
             Vector3 pos2 = toEnter.transform.position;
-            Camera.main.transform.position += new Vector3(pos2.x - pos1.x, 0, pos2.z - pos1.z);
+            PlayerCam.transform.position += new Vector3(pos2.x - pos1.x, 0, pos2.z - pos1.z);
 
             RoomSetup();
         }

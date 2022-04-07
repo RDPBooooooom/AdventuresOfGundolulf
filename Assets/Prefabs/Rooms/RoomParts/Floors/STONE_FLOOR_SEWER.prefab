@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 7136311048784028673}
   - component: {fileID: 7136311048784028678}
   m_Layer: 15
-  m_Name: STONE_FLOOR_STANDART 1
+  m_Name: STONE_FLOOR_SEWER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
