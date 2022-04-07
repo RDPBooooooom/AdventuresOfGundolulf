@@ -7,9 +7,7 @@ namespace Effects
 {
     public class Poison : Effect
     {
-        private float _timePassed;
-
-        public Poison()
+        public Poison(float effectChance, float effectDuration) : base(effectChance, effectDuration)
         {
             DPS = 10;
         }
@@ -22,19 +20,9 @@ namespace Effects
             }
         }
 
-        protected override void ApplyEffect(LivingEntity target, float duration)
+        protected override void ApplyEffect(LivingEntity target)
         {
-            do
-            {
-                _timePassed += Time.deltaTime;
-
-                if (IsReady)
-                {
-                    target.DamageEntity(DPS);
-                    // Show particles?
-                    target.StartCoroutine(TickRate());
-                }
-            } while (_timePassed <= duration);
+            target.DamageEntity(DPS);
         }
     }
 }

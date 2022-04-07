@@ -8,9 +8,7 @@ namespace Effects
 {
     public class Petrification : Effect
     {
-        float _timePassed;
-
-        public Petrification()
+        public Petrification(float effectChance, float effectDuration) : base(effectChance, effectDuration + 0.5f, effectDuration)
         {
             DPS = 0;
         }
@@ -23,20 +21,9 @@ namespace Effects
             }
         }
 
-        protected override void ApplyEffect(LivingEntity target, float duration)
+        protected override void ApplyEffect(LivingEntity target)
         {
-            _timePassed += Time.deltaTime;
-
-            if (_timePassed <= duration)
-            {
-                target.StopActions = true;
-                // Make the character look gray
-            }
-            else
-            {
-                target.StopActions = false;
-                // Reset character
-            }
+            target.StopActions = !target.StopActions;
         }
     }
 }

@@ -6,7 +6,7 @@ using Utils;
 
 namespace Effects
 {
-    public class Effect
+    public abstract class  Effect
     {
         private float _dps;
         protected Timer _tickRate;
@@ -22,12 +22,12 @@ namespace Effects
             set => _dps = value; 
         }
 
-        public Effect(float effectChance, float effectDuration)
+        public Effect(float effectChance, float effectDuration, float tickRate = 1)
         {
             EffectChance = effectChance;
             EffectDuration = effectDuration;
 
-            _tickRate = new Timer(MonoBehaviourDummy.Dummy, 1);
+            _tickRate = new Timer(MonoBehaviourDummy.Dummy, tickRate);
         }
 
         public virtual void TryApplyEffect(LivingEntity target)
@@ -38,10 +38,7 @@ namespace Effects
             }
         }
 
-        protected virtual void ApplyEffect(LivingEntity target)
-        {
-            
-        }
+        protected abstract void ApplyEffect(LivingEntity target);
 
         public bool CalculateChance(float chance)
         {
@@ -68,6 +65,7 @@ namespace Effects
 
                 _tickRate.Start();
             }
+            yield return null;
         }
     }
 }

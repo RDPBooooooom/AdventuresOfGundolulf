@@ -116,7 +116,7 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            if (IsAlive && !StopActions)
+            if (IsAlive)
             {
                 if (!StopMovement)
                 {

@@ -7,8 +7,6 @@ namespace Effects
 {
     public class Bleeding : Effect
     {
-        private float _timePassed;
-
         public Bleeding(float effectChance, float effectDuration) : base(effectChance, effectDuration)
         {
             DPS = 30;
@@ -22,9 +20,8 @@ namespace Effects
             }
         }
 
-        protected override void ApplyEffect(LivingEntity target, float duration)
+        protected override void ApplyEffect(LivingEntity target)
         {
-            // Start coroutine
             target.DamageEntity(DPS);
         }
     }
