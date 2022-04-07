@@ -8,32 +8,24 @@ namespace Effects
     public class Bleeding : Effect
     {
         private float _timePassed;
-        public Bleeding()
+
+        public Bleeding(float effectChance, float effectDuration) : base(effectChance, effectDuration)
         {
             DPS = 30;
         }
 
-        public override void TryApplyEffect(LivingEntity target, float effectChance, float effectDuration)
+        public override void TryApplyEffect(LivingEntity target)
         {
             if ((LivingEntity.Immunities.ImmuneToBleeding & target.Immunity) == 0)
             {
-                base.TryApplyEffect(target, effectChance, effectDuration);
+                base.TryApplyEffect(target);
             }
         }
 
         protected override void ApplyEffect(LivingEntity target, float duration)
         {
-            do
-            {
-                _timePassed += Time.deltaTime;
-
-                if (IsReady)
-                {
-                    target.DamageEntity(DPS);
-                    // Show Particles?
-                    target.StartCoroutine(TickRate());
-                }
-            } while (_timePassed <= duration);
+            // Start coroutine
+            target.DamageEntity(DPS);
         }
     }
 }

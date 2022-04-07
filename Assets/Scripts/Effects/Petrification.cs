@@ -15,11 +15,11 @@ namespace Effects
             DPS = 0;
         }
 
-        public override void TryApplyEffect(LivingEntity target, float effectChance, float effectDuration)
+        public override void TryApplyEffect(LivingEntity target)
         {
             if ((LivingEntity.Immunities.ImmuneToPetrification & target.Immunity) == 0)
             {
-                base.TryApplyEffect(target, effectChance, effectDuration);
+                base.TryApplyEffect(target);
             }
         }
 

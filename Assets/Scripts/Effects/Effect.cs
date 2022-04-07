@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LivingEntities;
+using Utils;
 
 namespace Effects
 {
     public class Effect
     {
         private float _dps;
+        protected Timer _tickRate;
 
         public bool IsReady { get; private set; } = true;
+
+        public float EffectChance { get; set; }
+        public float EffectDuration { get; set; }
 
         public float DPS 
         { 
@@ -17,15 +22,23 @@ namespace Effects
             set => _dps = value; 
         }
 
-        public virtual void TryApplyEffect(LivingEntity target, float effectChance, float effectDuration)
+        public Effect(float effectChance, float effectDuration)
         {
-            if (CalculateChance(effectChance))
+            EffectChance = effectChance;
+            EffectDuration = effectDuration;
+
+            _tickRate = new Timer(MonoBehaviourDummy.Dummy, 1);
+        }
+
+        public virtual void TryApplyEffect(LivingEntity target)
+        {
+            if (CalculateChance(EffectChance))
             {
-                ApplyEffect(target, effectDuration);
+                MonoBehaviourDummy.Dummy.StartCoroutine(EffectTick(target));
             }
         }
 
-        protected virtual void ApplyEffect(LivingEntity target, float duration)
+        protected virtual void ApplyEffect(LivingEntity target)
         {
             
         }
@@ -44,13 +57,17 @@ namespace Effects
             }
         }
 
-        protected IEnumerator TickRate()
+        protected IEnumerator EffectTick(LivingEntity target)
         {
-            IsReady = false;
+            float startTime = Time.time;
+            while (Time.time - startTime < EffectDuration)
+            {
+                if (!_tickRate.IsReady) continue;
 
-            yield return new WaitForSeconds(1);
+                ApplyEffect(target);
 
-            IsReady = true;
+                _tickRate.Start();
+            }
         }
     }
 }

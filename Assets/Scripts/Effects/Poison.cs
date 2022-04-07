@@ -14,11 +14,11 @@ namespace Effects
             DPS = 10;
         }
 
-        public override void TryApplyEffect(LivingEntity target, float effectChance, float effectDuration)
+        public override void TryApplyEffect(LivingEntity target)
         {
             if ((LivingEntity.Immunities.ImmuneToPoison & target.Immunity) == 0)
             {
-                base.TryApplyEffect(target, effectChance, effectDuration);
+                base.TryApplyEffect(target);
             }
         }
 
