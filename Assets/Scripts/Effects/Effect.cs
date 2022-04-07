@@ -5,7 +5,7 @@ using LivingEntities;
 
 namespace Effects
 {
-    public class Effect
+    public abstract class  Effect
     {
         private float _dps;
 
@@ -25,10 +25,7 @@ namespace Effects
             }
         }
 
-        protected virtual void ApplyEffect(LivingEntity target, float duration)
-        {
-            
-        }
+        protected abstract void ApplyEffect(LivingEntity target, float duration);
 
         public bool CalculateChance(float chance)
         {
