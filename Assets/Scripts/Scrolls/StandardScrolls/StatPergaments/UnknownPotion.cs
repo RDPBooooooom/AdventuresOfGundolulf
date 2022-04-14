@@ -7,10 +7,11 @@ namespace Scrolls.StandardScrolls
     {
         PlayerScripts.Player player;
         float previousMaxHealth;
-        public UnkownPotion()
+
+        public UnkownPotion() : base()
         {
-            Cost = 0;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);

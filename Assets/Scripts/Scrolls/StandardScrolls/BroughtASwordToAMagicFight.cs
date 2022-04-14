@@ -4,9 +4,8 @@ namespace Scrolls.StandardScrolls
 {
     public class BroughtASwordToAMagicFight : StandardScroll
     {
-        public BroughtASwordToAMagicFight()
+        public BroughtASwordToAMagicFight() : base()
         {
-            Cost = 1;
         }
 
         protected override void ApplyEffect()

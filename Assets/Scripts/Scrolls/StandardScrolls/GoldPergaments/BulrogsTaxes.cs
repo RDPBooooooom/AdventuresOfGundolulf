@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Scrolls.StandardScrolls
 {
-    public class BülrögsTaxes : StandardScroll
+    public class BulrogsTaxes : StandardScroll
     {
-        public BülrögsTaxes()
+        public BulrogsTaxes() : base()
         {
-            Cost = 1;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);

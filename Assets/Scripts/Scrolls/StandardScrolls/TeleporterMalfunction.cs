@@ -17,9 +17,8 @@ namespace Scrolls.StandardScrolls
         Bounds _roomBounds;
         Teleport _teleport;
 
-        public TeleporterMalfunction()
+        public TeleporterMalfunction() : base()
         {
-            Cost = 1;
         }
 
         protected override void ApplyEffect()

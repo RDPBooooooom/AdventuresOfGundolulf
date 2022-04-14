@@ -8,9 +8,8 @@ namespace Scrolls.StandardScrolls
     {
         PlayerScripts.Player player;
         int factor = 10;
-        public IntelligenceDown()
+        public IntelligenceDown() : base()
         {
-            Cost = 1;
         }
         protected override void ApplyEffect()
         {

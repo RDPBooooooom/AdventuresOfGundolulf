@@ -4,9 +4,8 @@ namespace Scrolls.StandardScrolls
 {
     public class HelloDarkness : StandardScroll
     {
-        public HelloDarkness()
+        public HelloDarkness() : base()
         {
-            Cost = 3;
         }
 
         protected override void ApplyEffect()

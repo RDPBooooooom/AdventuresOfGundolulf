@@ -7,9 +7,8 @@ namespace Scrolls.StandardScrolls
     {
         int currentGoldAmount;
         PlayerScripts.Player player = Managers.GameManager.Instance.Player;
-        public Casino()
+        public Casino() : base()
         {
-            Cost = 2;
         }
 
         protected override void ApplyEffect()

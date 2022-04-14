@@ -50,7 +50,7 @@ namespace Scrolls
             _standardDeck.AddScroll(new SpeedDown());
             _standardDeck.AddScroll(new SpeedUp());
 
-            _standardDeck.AddScroll(new BülrögsTaxes());
+            _standardDeck.AddScroll(new BulrogsTaxes());
             _standardDeck.AddScroll(new Casino());
             _standardDeck.AddScroll(new NoHitChallenge());
             
@@ -88,6 +88,7 @@ namespace Scrolls
         
         public void OnRoomEnter(Room entering)
         {
+            Debug.Log(ScrollLoader.GetDisplayName("PoisonGas"));
             if (!entering.WasVisited && entering is CombatRoom)
             {
                 DisplayStandardDeck();
