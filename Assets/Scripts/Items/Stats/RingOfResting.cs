@@ -15,10 +15,11 @@ namespace Items.Stats
             base.Equip(equipOn);
             oldSpeed = _player.Speed;
             equipOn.MaxHealth += 50;
-            //equipOn.Health += 50;
+            equipOn.HealEntity(50);
             inGameUI.UpdateHealthbar();
 
-            equipOn.Speed = 0;
+            //equipOn.Speed = 0;
+            equipOn.Speed = 0.25f;
             inGameUI.UpdateSpeedDisplay();
         }
 
