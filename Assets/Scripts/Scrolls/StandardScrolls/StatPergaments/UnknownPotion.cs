@@ -3,12 +3,12 @@ using Random = System.Random;
 
 namespace Scrolls.StandardScrolls
 {
-    public class UnkownPotion : StandardScroll
+    public class UnknownPotion : StandardScroll
     {
         PlayerScripts.Player player;
         float previousMaxHealth;
 
-        public UnkownPotion() : base()
+        public UnknownPotion() : base()
         {
         }
 

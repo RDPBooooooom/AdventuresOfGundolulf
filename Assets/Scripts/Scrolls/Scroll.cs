@@ -30,9 +30,11 @@ namespace Scrolls
 
         public Scroll()
         {
-            DisplayName = ScrollLoader.GetDisplayName("PoisonGas");
-            Description = ScrollLoader.GetDescription("NoHitChallenge");
-            //Cost = ScrollLoader.GetCost(GetType().Name);
+            string name = GetType().Name;
+
+            DisplayName = ScrollLoader.GetDisplayName(name);
+            Description = ScrollLoader.GetDescription(name);
+            Cost = ScrollLoader.GetCost(name);
         }
 
         public void Activate()

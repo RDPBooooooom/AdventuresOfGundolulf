@@ -41,7 +41,7 @@ namespace Scrolls
         {
             //TODO: Load deck from MainMenu(or where ever)
 
-            _standardDeck.AddScroll(new UnkownPotion());
+            _standardDeck.AddScroll(new UnknownPotion());
             _standardDeck.AddScroll(new AttackDown());
             _standardDeck.AddScroll(new AttackUp());
             _standardDeck.AddScroll(new HealingWord());
