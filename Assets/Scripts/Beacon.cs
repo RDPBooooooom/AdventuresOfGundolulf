@@ -6,19 +6,28 @@ using Levels.Rooms;
 public class Beacon : MonoBehaviour
 {
     Room currentRoom;
-    Room nextRoom;
+    [SerializeField] Room nextRoom;
     [SerializeField] Light fire;
 
-    Color defaultColor = new Color(30, 220, 210); // blue
-    Color bossRoom = new Color(255, 0, 0); //Red
-    Color treasureRoom = new Color(255, 255, 255); //White
-    Color shopRoom = new Color(0, 155, 20); //green
+    Color32 defaultColor = new Color32(30, 220, 210,255); // blue
+    Color32 bossRoom = new Color32(255, 0, 0, 255); //Red
+    Color32 treasureRoom = new Color32(255, 255, 255, 255); //White
+    Color32 shopRoom = new Color32(0, 155, 20, 255); //green
 
-    [ContextMenu("Test")]
-    void Start()
+    bool startUpCall = true;
+
+    private void Start()
     {
         currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
-        switch (transform.rotation.y)
+        UpdateColor(currentRoom);
+        startUpCall = false;
+    }
+
+    [ContextMenu("Test")]
+    void UpdateColor(Room room)
+    {
+        currentRoom = room;
+        switch (transform.eulerAngles.y)
         {
             case 180:
                 nextRoom = currentRoom.RoomConnections.Bottom;
@@ -45,13 +54,18 @@ public class Beacon : MonoBehaviour
         else
             fire.color = defaultColor;
 
-        Debug.Log(nextRoom is Levels.Rooms.TreasureRoom);
-        
-        nextRoom.RoomCleared += TurnOff;
+        if(!startUpCall)
+        {
+            nextRoom.EnterRoom += UpdateColor;
+            nextRoom.RoomCleared += TurnOff;
+        }
+        else{}
+
     }
 
     void TurnOff()
     {
+        Debug.Log("Room was cleared");
         fire.gameObject.SetActive(false);
     }
 }

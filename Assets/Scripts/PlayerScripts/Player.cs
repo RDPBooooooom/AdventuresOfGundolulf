@@ -32,6 +32,8 @@ namespace PlayerScripts
 
         [SerializeField] private int _gold;
 
+        private bool _invincible = false;
+
         #endregion
 
         #region Properties
@@ -68,6 +70,11 @@ namespace PlayerScripts
         {
             get => _input;
             set => _input = value;
+        }
+
+        public bool Invincible
+        {
+            set => _invincible = value;
         }
 
         #endregion
@@ -346,9 +353,12 @@ namespace PlayerScripts
 
         public override void DamageEntity(float amount)
         {
-            base.DamageEntity(amount);
+            if(!_invincible)
+            {
+                base.DamageEntity(amount);
+                UpdateHealthEvent?.Invoke();
+            }
 
-            UpdateHealthEvent?.Invoke();
         }
 
         #endregion

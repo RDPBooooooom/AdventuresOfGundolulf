@@ -1313,6 +1313,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 7245672363352837361, guid: 3a296e51da340434bad826fd8b116a61, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a296e51da340434bad826fd8b116a61, type: 3}
 --- !u!4 &6676970542399011080 stripped

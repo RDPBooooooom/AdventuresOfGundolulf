@@ -1,4 +1,5 @@
 using Assets.Scripts.Interfaces;
+using System.Collections;
 using UnityEngine;
 using Utils;
 
@@ -15,7 +16,15 @@ namespace Items.Active
         protected override void Effect()
         {
             // Do effect
+            MonoBehaviourDummy.Dummy.StartCoroutine(Invincibile());
+            _player.Invincible = false;
             _cooldown.Start();
+        }
+
+        private IEnumerator Invincibile()
+        {
+            _player.Invincible = true;
+            yield return new WaitForSeconds(3);
         }
 
         
