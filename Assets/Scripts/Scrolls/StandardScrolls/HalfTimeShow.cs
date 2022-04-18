@@ -1,15 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Scrolls.StandardScrolls
 {
-    public class BroughtASwordToAMagicFight : StandardScroll
+    public class HalfTimeShow : StandardScroll
     {
-        public BroughtASwordToAMagicFight() : base()
+        public HalfTimeShow() : base()
         {
+
         }
 
         protected override void ApplyEffect()
         {
+
             Debug.Log("Activated " + GetType().Name);
         }
     }

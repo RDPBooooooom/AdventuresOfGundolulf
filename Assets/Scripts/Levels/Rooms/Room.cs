@@ -116,7 +116,7 @@ namespace Levels.Rooms
             LeaveRoom?.Invoke(this, toEnter);
         }
 
-        protected virtual bool CanLeave()
+        public virtual bool CanLeave()
         {
             return true;
         }

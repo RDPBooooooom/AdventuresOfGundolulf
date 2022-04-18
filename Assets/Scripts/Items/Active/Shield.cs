@@ -17,7 +17,6 @@ namespace Items.Active
         {
             // Do effect
             MonoBehaviourDummy.Dummy.StartCoroutine(Invincibile());
-            _player.Invincible = false;
             _cooldown.Start();
         }
 
@@ -25,6 +24,7 @@ namespace Items.Active
         {
             _player.Invincible = true;
             yield return new WaitForSeconds(3);
+            _player.Invincible = false;
         }
 
         

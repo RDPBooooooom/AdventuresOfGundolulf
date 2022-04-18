@@ -33,6 +33,9 @@ namespace PlayerScripts
         [SerializeField] private int _gold;
 
         private bool _invincible = false;
+        private bool _pacifist = false;
+        private bool _weeny = false;
+        private bool _notWeeny = false;
 
         #endregion
 
@@ -75,6 +78,18 @@ namespace PlayerScripts
         public bool Invincible
         {
             set => _invincible = value;
+        }
+        public bool Pacifist
+        {
+            set => _pacifist = value;
+        }
+        public bool Weeny
+        {
+            set => _weeny = value;
+        }
+        public bool NotWeeny
+        {
+            set => _notWeeny = value;
         }
 
         #endregion
@@ -298,14 +313,20 @@ namespace PlayerScripts
 
         private void PerformMelee(InputAction.CallbackContext context)
         {
-            Debug.Log("Melee Input performed");
-            _melee.Use();
+            if(!_pacifist && !_weeny)
+            {
+                Debug.Log("Melee Input performed");
+                _melee.Use();
+            }
         }
 
         private void PerformSpellCast(InputAction.CallbackContext context)
         {
-            Debug.Log("Spell Cast Input performed");
-            _spellCast.Use();
+            if(!_pacifist && !_notWeeny)
+            {
+                Debug.Log("Spell Cast Input performed");
+                _spellCast.Use();
+            }
         }
 
         private void PerformTeleport(InputAction.CallbackContext context)

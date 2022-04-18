@@ -62,7 +62,7 @@ namespace Levels.Rooms
             _enemiesPrefabs = GameManager.Instance.EnemyManager.GetRandomEnemies();
         }
 
-        protected override bool CanLeave()
+        public override bool CanLeave()
         {
             if (!IsLeavable) return false;
 
