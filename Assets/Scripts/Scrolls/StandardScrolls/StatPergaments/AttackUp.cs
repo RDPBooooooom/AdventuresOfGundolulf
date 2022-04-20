@@ -8,10 +8,10 @@ namespace Scrolls.StandardScrolls
     {
         PlayerScripts.Player player;
         int factor = 10;
-        public AttackUp()
+        public AttackUp() : base()
         {
-            Cost = -1;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);

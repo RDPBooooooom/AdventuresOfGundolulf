@@ -61,7 +61,8 @@ namespace UI
         {
             for (int i = 0; i < _selectButtons.Length; i++)
             {
-                _selectButtons[i].GetComponentsInChildren<Text>()[0].text = DrawnScrolls[i].GetType().Name;
+                _selectButtons[i].GetComponentsInChildren<Text>()[0].text = DrawnScrolls[i].DisplayName;
+                _selectButtons[i].GetComponentsInChildren<Text>()[1].text = DrawnScrolls[i].Description;
             }
         }
 

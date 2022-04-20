@@ -32,6 +32,11 @@ namespace PlayerScripts
 
         [SerializeField] private int _gold;
 
+        private bool _invincible = false;
+        private bool _pacifist = false;
+        private bool _weeny = false;
+        private bool _notWeeny = false;
+
         #endregion
 
         #region Properties
@@ -68,6 +73,23 @@ namespace PlayerScripts
         {
             get => _input;
             set => _input = value;
+        }
+
+        public bool Invincible
+        {
+            set => _invincible = value;
+        }
+        public bool Pacifist
+        {
+            set => _pacifist = value;
+        }
+        public bool Weeny
+        {
+            set => _weeny = value;
+        }
+        public bool NotWeeny
+        {
+            set => _notWeeny = value;
         }
 
         #endregion
@@ -152,6 +174,7 @@ namespace PlayerScripts
         private Vector3 GetCurrentMousePosInWorldOnGround()
         {
             Vector2 mousePos = _input.Ingame.MousePosition.ReadValue<Vector2>();
+
             Ray ray = _camera.ScreenPointToRay(mousePos);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000, _groundLayer))
             {
@@ -247,6 +270,7 @@ namespace PlayerScripts
         private void Movement()
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
+            Debug.Log(_input.Ingame.Movement.ReadValue<Vector2>());
 
             Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
             Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
@@ -289,14 +313,20 @@ namespace PlayerScripts
 
         private void PerformMelee(InputAction.CallbackContext context)
         {
-            Debug.Log("Melee Input performed");
-            _melee.Use();
+            if(!_pacifist && !_weeny)
+            {
+                Debug.Log("Melee Input performed");
+                _melee.Use();
+            }
         }
 
         private void PerformSpellCast(InputAction.CallbackContext context)
         {
-            Debug.Log("Spell Cast Input performed");
-            _spellCast.Use();
+            if(!_pacifist && !_notWeeny)
+            {
+                Debug.Log("Spell Cast Input performed");
+                _spellCast.Use();
+            }
         }
 
         private void PerformTeleport(InputAction.CallbackContext context)
@@ -344,9 +374,12 @@ namespace PlayerScripts
 
         public override void DamageEntity(float amount)
         {
-            base.DamageEntity(amount);
+            if(!_invincible)
+            {
+                base.DamageEntity(amount);
+                UpdateHealthEvent?.Invoke();
+            }
 
-            UpdateHealthEvent?.Invoke();
         }
 
         #endregion

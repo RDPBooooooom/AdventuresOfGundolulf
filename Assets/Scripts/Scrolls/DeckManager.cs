@@ -40,9 +40,17 @@ namespace Scrolls
         public void LoadDecks()
         {
             //TODO: Load deck from MainMenu(or where ever)
+            _standardDeck.AddScroll(new HomedoorCompanion());
+            _standardDeck.AddScroll(new HelloDarkness());
+            _standardDeck.AddScroll(new UnknownPotion());
 
-            _standardDeck.AddScroll(new UnkownPotion());
+            _standardDeck.AddScroll(new Weeny());
+            _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
+            _standardDeck.AddScroll(new Pacifist());
             _standardDeck.AddScroll(new AttackDown());
+            _standardDeck.AddScroll(new Spinning());
+            _standardDeck.AddScroll(new PoisonGas());
+            _standardDeck.AddScroll(new HolyBlessing());
             _standardDeck.AddScroll(new AttackUp());
             _standardDeck.AddScroll(new HealingWord());
             _standardDeck.AddScroll(new IntelligenceDown());
@@ -50,16 +58,12 @@ namespace Scrolls
             _standardDeck.AddScroll(new SpeedDown());
             _standardDeck.AddScroll(new SpeedUp());
 
-            _standardDeck.AddScroll(new BülrögsTaxes());
+            _standardDeck.AddScroll(new BulrogsTaxes());
             _standardDeck.AddScroll(new Casino());
             _standardDeck.AddScroll(new NoHitChallenge());
             
-            _standardDeck.AddScroll(new Spinning());
             _standardDeck.AddScroll(new TopUpPerspective());
             _standardDeck.AddScroll(new TeleporterMalfunction());
-            _standardDeck.AddScroll(new HelloDarkness());
-            _standardDeck.AddScroll(new PoisonGas());
-            _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
             _standardDeck.InitDeck();
             //_bossDeck.AddScroll();
 
@@ -88,6 +92,7 @@ namespace Scrolls
         
         public void OnRoomEnter(Room entering)
         {
+            Debug.Log(ScrollLoader.GetDisplayName("PoisonGas"));
             if (!entering.WasVisited && entering is CombatRoom)
             {
                 DisplayStandardDeck();

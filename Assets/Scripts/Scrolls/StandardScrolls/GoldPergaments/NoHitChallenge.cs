@@ -12,9 +12,8 @@ namespace Scrolls.StandardScrolls
         float playerStartingHP;
         
 
-        public NoHitChallenge()
+        public NoHitChallenge() : base()
         {
-            Cost = 0;
         }
         protected override void ApplyEffect()
         {

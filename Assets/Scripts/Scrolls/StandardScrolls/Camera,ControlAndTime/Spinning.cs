@@ -13,9 +13,9 @@ namespace Scrolls.StandardScrolls
 
 
         Quaternion _defaultRotation = Quaternion.Euler(60, 0, 0);
-        public Spinning()
+
+        public Spinning() : base()
         {
-            Cost = 3;
         }
 
         protected override void ApplyEffect()

@@ -8,10 +8,11 @@ namespace Scrolls.StandardScrolls
     {
         PlayerScripts.Player player;
         int factor = 5;
-        public SpeedDown()
+
+        public SpeedDown() : base()
         {
-            Cost = 1;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);

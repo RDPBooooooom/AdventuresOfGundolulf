@@ -1,11 +1,17 @@
+using System.Xml;
+using System.Xml.Serialization;
+using UnityEngine;
+
 namespace Scrolls
 {
     public abstract class Scroll
     {
         #region Properties
 
-        //TODO Likly needs to be a Scriptable Object
+        public string DisplayName { get; protected set; }
+
         public int Cost { get; protected set; }
+
         public string Description { get; protected set; }
 
         #endregion
@@ -21,6 +27,15 @@ namespace Scrolls
         public event ScrollActivateEventHandler ActivateEvent;
 
         #endregion
+
+        public Scroll()
+        {
+            string name = GetType().Name;
+
+            DisplayName = ScrollLoader.GetDisplayName(name);
+            Description = ScrollLoader.GetDescription(name);
+            Cost = ScrollLoader.GetCost(name);
+        }
 
         public void Activate()
         {

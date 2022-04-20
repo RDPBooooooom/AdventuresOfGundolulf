@@ -7,9 +7,8 @@ namespace Scrolls.StandardScrolls
     public class TopUpPerspective : StandardScroll
     {
         Camera cam;
-        public TopUpPerspective()
+        public TopUpPerspective() : base()
         {
-            Cost = 2;
         }
 
         protected override void ApplyEffect()
