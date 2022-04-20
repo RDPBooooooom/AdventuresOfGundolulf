@@ -12,13 +12,10 @@ namespace Levels.Rooms
         [SerializeField] private bool _wasVisited;
         [SerializeField] private RoomData _data;
         [SerializeField] private GameObject _floorPlane;
-        [SerializeField] private GameObject _decorationParent;
 
         private Bounds _roomBounds;
 
         private Dictionary<Door, DoorDirections> _doors;
-
-        private Bounds[] _decorationBounds;
 
         #endregion
 
@@ -73,14 +70,11 @@ namespace Levels.Rooms
 
         protected virtual void Start()
         {
-            _roomBounds = GetTotalBounds(_floorPlane.GetComponentsInChildren<MeshFilter>());
-            _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
+            _roomBounds = GetTotalBounds(_floorPlane.GetComponentsInChildren<Renderer>());
+            _roomBounds.extents *= 0.95f;
             _roomBounds.extents += new Vector3(0, 5, 0);
-            _roomBounds.center = _floorPlane.transform.position;
-
-
         }
-
+        
         #endregion
 
         #region Door Management
@@ -114,7 +108,7 @@ namespace Levels.Rooms
         public void TryLeave(Door door)
         {
             if (!CanLeave()) return;
-            
+
             Leave(door);
         }
 
@@ -122,13 +116,13 @@ namespace Levels.Rooms
         {
             _wasVisited = true;
             Room toEnter = GetRoomByDirection(_doors[door]);
-            LeaveRoom?.Invoke(this, toEnter); 
+            LeaveRoom?.Invoke(this, toEnter);
         }
 
         public void Leave(Room toEnter)
         {
             _wasVisited = true;
-            LeaveRoom?.Invoke(this, toEnter); 
+            LeaveRoom?.Invoke(this, toEnter);
         }
 
         public virtual bool CanLeave()
@@ -168,6 +162,7 @@ namespace Levels.Rooms
         {
             Vector3 pos = GetClosestPositionInRoom(position);
 
+
             return new Vector3(pos.x, 0, pos.z);
         }
 
@@ -175,17 +170,45 @@ namespace Levels.Rooms
         {
             return _roomBounds.Contains(position);
         }
-        
-        private Bounds GetTotalBounds(MeshFilter[] meshFilters)
+
+        private Bounds GetTotalBounds(Renderer[] renderers)
         {
             Bounds bounds = new Bounds();
-
-            foreach (MeshFilter meshFilter in meshFilters)
+            bool isFirst = true;
+            
+            foreach (Renderer renderer in renderers)
             {
-                bounds.Encapsulate(meshFilter.mesh.bounds);
+                if (!renderer.gameObject.CompareTag("Floor"))
+                {
+                    Debug.Log("Skipped: " + renderer.gameObject.name);
+                    continue;
+                }
+
+                Bounds temp = renderer.bounds;
+                if (isFirst)
+                {
+                    bounds = temp;
+                    isFirst = false;
+                }
+                else
+                {
+                    bounds.Encapsulate(temp);
+                }
             }
 
             return bounds;
+        }
+
+        private Bounds[] GetBounds(MeshFilter[] meshFilters)
+        {
+            Bounds[] bounds = new Bounds[meshFilters.Length];
+
+            for (int i = 0; i < meshFilters.Length; i++)
+            {
+                //meshFilters[i].mesh.bounds;
+            }
+
+            return null;
         }
 
         #endregion
