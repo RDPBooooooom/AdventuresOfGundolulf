@@ -115,9 +115,20 @@ namespace Levels.Rooms
         {
             if (!CanLeave()) return;
             
+            Leave(door);
+        }
+
+        public void Leave(Door door)
+        {
             _wasVisited = true;
             Room toEnter = GetRoomByDirection(_doors[door]);
-            LeaveRoom?.Invoke(this, toEnter);
+            LeaveRoom?.Invoke(this, toEnter); 
+        }
+
+        public void Leave(Room toEnter)
+        {
+            _wasVisited = true;
+            LeaveRoom?.Invoke(this, toEnter); 
         }
 
         public virtual bool CanLeave()

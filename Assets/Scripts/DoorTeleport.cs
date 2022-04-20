@@ -1,39 +1,39 @@
-using Assets.Scripts;
 using Managers;
 using Levels.Rooms;
 using PlayerScripts;
 using UnityEngine;
 using Random = System.Random;
 using System.Collections.Generic;
+using Assets.Scripts;
 
 public class DoorTeleport : MonoBehaviour, IInteractable
 {
-    Player player;
-    Room currentRoom;
-    List<Room> Rooms;
+    private Player _player;
+    private LevelManager _levelManager;
+    private List<Room> _rooms;
     public void Interact()
     {
-        if(currentRoom.CanLeave())
+        if(_levelManager.CurrentRoom.CanLeave())
         {
+            
             Room newRoom = GetRandomRoom();
-            player.transform.position = newRoom.transform.position;
-            newRoom.Enter();
-            Destroy(this);
+            _levelManager.CurrentRoom.Leave(newRoom);
+            Destroy(this.gameObject);
         }
     }
 
     void Start()
     {
-        player = GameManager.Instance.Player;
-        currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
-        Rooms = GameManager.Instance.LevelManager.Rooms;
+        _player = GameManager.Instance.Player;
+        _levelManager = GameManager.Instance.LevelManager;
+        _rooms = GameManager.Instance.LevelManager.Rooms;
     }
 
     Room GetRandomRoom()
     {
         Random random = new Random();
-        Room randomRoom = Rooms[random.Next(0, Rooms.Count)];
-        if (randomRoom != currentRoom)
+        Room randomRoom = _rooms[random.Next(0, _rooms.Count)];
+        if (randomRoom != _levelManager.CurrentRoom)
             return randomRoom;
         else
             return GetRandomRoom();
