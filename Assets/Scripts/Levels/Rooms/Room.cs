@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Levels.Rooms
@@ -13,10 +12,13 @@ namespace Levels.Rooms
         [SerializeField] private bool _wasVisited;
         [SerializeField] private RoomData _data;
         [SerializeField] private GameObject _floorPlane;
+        [SerializeField] private GameObject _decorationParent;
 
         private Bounds _roomBounds;
 
         private Dictionary<Door, DoorDirections> _doors;
+
+        private Bounds[] _decorationBounds;
 
         #endregion
 
@@ -75,6 +77,8 @@ namespace Levels.Rooms
             _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
             _roomBounds.extents += new Vector3(0, 5, 0);
             _roomBounds.center = _floorPlane.transform.position;
+
+
         }
 
         #endregion
@@ -152,16 +156,15 @@ namespace Levels.Rooms
         public Vector3 GetClosestPositionOnGround(Vector3 position)
         {
             Vector3 pos = GetClosestPositionInRoom(position);
-            
-            return new Vector3(pos.x, 0, pos.z);
 
+            return new Vector3(pos.x, 0, pos.z);
         }
 
         public bool IsPositionInRoom(Vector3 position)
         {
             return _roomBounds.Contains(position);
         }
-
+        
         private Bounds GetTotalBounds(MeshFilter[] meshFilters)
         {
             Bounds bounds = new Bounds();

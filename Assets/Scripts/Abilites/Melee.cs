@@ -1,6 +1,7 @@
 using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
+using Effects;
 using UnityEngine;
 
 public class Melee : Ability
@@ -31,6 +32,10 @@ public class Melee : Ability
         {
             LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
             _targetEntity.DamageEntity(_owner.Attack);
+            foreach (Effect effect in _effects)
+            {
+                effect.TryApplyEffect(_targetEntity);
+            }
         }
     }
 
