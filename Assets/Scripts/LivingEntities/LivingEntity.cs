@@ -134,7 +134,7 @@ namespace LivingEntities
         public Immunities Immunity
         {
             get => _immunity;
-            protected set => _immunity = value;
+            set => _immunity = value;
         }
 
         public bool StopActions
@@ -263,10 +263,10 @@ namespace LivingEntities
         [Flags]
         public enum Immunities
         {
-            ImmuneToBleeding = 1,
-            ImmuneToPoison = 2,
-            ImmuneToPetrification = 4,
-            ImmuneToMelee = 8
+            ImmuneToBleeding = 1,           // 0001
+            ImmuneToPoison = 2,             // 0010
+            ImmuneToPetrification = 4,      // 0100
+            ImmuneToMelee = 8               // 1000
         }
     }
 }

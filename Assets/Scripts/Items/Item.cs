@@ -2,6 +2,8 @@ using LivingEntities;
 using UnityEngine;
 using PlayerScripts;
 using Managers;
+using Effects;
+using System.Collections.Generic;
 
 namespace Items
 {
@@ -13,6 +15,7 @@ namespace Items
 
         private Sprite _uIImage;
         private int _value;
+
         protected Player _player;
         protected UI.InGameUI inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
 
@@ -59,6 +62,8 @@ namespace Items
 
         #endregion
 
+        #region Equip
+
         public virtual void Equip(LivingEntity equipOn)
         {
             EquipEvent?.Invoke(equipOn);
@@ -68,5 +73,7 @@ namespace Items
         {
             UnequipEvent?.Invoke(unequipFrom);
         }
+
+        #endregion
     }
 }

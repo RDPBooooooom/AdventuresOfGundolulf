@@ -6,7 +6,7 @@ using Utils;
 
 namespace Effects
 {
-    public abstract class  Effect
+    public abstract class Effect
     {
         private float _dps;
         protected Timer _tickRate;
@@ -42,7 +42,7 @@ namespace Effects
 
         public bool CalculateChance(float chance)
         {
-            float random = Random.Range(0, 100);
+            float random = Random.Range(1, 101);
 
             if (random <= chance)
             {

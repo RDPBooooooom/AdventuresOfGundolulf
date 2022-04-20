@@ -1,4 +1,5 @@
 using LivingEntities;
+using Interfaces;
 
 namespace Items.Melee
 {
@@ -11,6 +12,8 @@ namespace Items.Melee
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
+
+            // Add effect
             equipOn.Attack += 10;
             //Add 20% chance for bleeding
             inGameUI.UpdateAttackDisplay();
@@ -19,6 +22,8 @@ namespace Items.Melee
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
+
+            // Remove effect
             unequipFrom.Attack -= 10;
             inGameUI.UpdateAttackDisplay();
         }
