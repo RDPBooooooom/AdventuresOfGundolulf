@@ -73,7 +73,6 @@ public class Teleport : Ability
 
         Vector3 direction = (TargetPos - _targetEntity.transform.position).normalized;
 
-
         TargetPos -= (direction * (teleportDistance - TeleportRange));
     }
 

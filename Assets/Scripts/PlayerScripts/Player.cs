@@ -270,7 +270,6 @@ namespace PlayerScripts
         private void Movement()
         {
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
-            Debug.Log(_input.Ingame.Movement.ReadValue<Vector2>());
 
             Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
             Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
