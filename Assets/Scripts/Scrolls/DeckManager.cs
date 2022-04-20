@@ -40,13 +40,30 @@ namespace Scrolls
         public void LoadDecks()
         {
             //TODO: Load deck from MainMenu(or where ever)
-            _standardDeck.AddScroll(new TeleporterMalfunction());
+            _standardDeck.AddScroll(new HomedoorCompanion());
             _standardDeck.AddScroll(new HelloDarkness());
-            _standardDeck.AddScroll(new PoisonGas());
+            _standardDeck.AddScroll(new UnknownPotion());
+
+            _standardDeck.AddScroll(new Weeny());
             _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
+            _standardDeck.AddScroll(new Pacifist());
+            _standardDeck.AddScroll(new AttackDown());
             _standardDeck.AddScroll(new Spinning());
-            _standardDeck.AddScroll(new TopUpPerspective());
+            _standardDeck.AddScroll(new PoisonGas());
+            _standardDeck.AddScroll(new HolyBlessing());
+            _standardDeck.AddScroll(new AttackUp());
+            _standardDeck.AddScroll(new HealingWord());
+            _standardDeck.AddScroll(new IntelligenceDown());
+            _standardDeck.AddScroll(new IntelligenceUp());
+            _standardDeck.AddScroll(new SpeedDown());
+            _standardDeck.AddScroll(new SpeedUp());
+
+            _standardDeck.AddScroll(new BulrogsTaxes());
+            _standardDeck.AddScroll(new Casino());
+            _standardDeck.AddScroll(new NoHitChallenge());
             
+            _standardDeck.AddScroll(new TopUpPerspective());
+            _standardDeck.AddScroll(new TeleporterMalfunction());
             _standardDeck.InitDeck();
             //_bossDeck.AddScroll();
 
@@ -58,15 +75,19 @@ namespace Scrolls
             //TODO Get amount to draw from Difficulty manager or something like this
             _castScrollUI.DrawnScrolls = _standardDeck.Draw(3).Cast<Scroll>().ToList();
 
-            _castScrollUI.gameObject.SetActive(true);
             Time.timeScale = 0;
+            GameManager.Instance.Player.Input.Disable();
+            GameManager.Instance.UIManager.DisablePausePanel = true;
+            _castScrollUI.gameObject.SetActive(true);
         }
 
         #endregion
 
         private void OnScrollCast(Scroll scroll)
         {
+            GameManager.Instance.Player.Input.Enable();
             Time.timeScale = 1;
+            GameManager.Instance.UIManager.DisablePausePanel = false;
         }
         
         public void OnRoomEnter(Room entering)

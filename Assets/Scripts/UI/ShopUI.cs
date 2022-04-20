@@ -21,9 +21,9 @@ namespace UserInterface
         [SerializeField] private Button _sellButton;
         
         private Player _player;
-        private List<Sprite> _itemSprites;
-        private List<string> _itemValues;
+        private List<Item> _items;
         private Item _selectedItem;
+        private int _selectedIndex;
 
         #endregion
 
@@ -35,33 +35,25 @@ namespace UserInterface
 
         #region Unity Methods
 
+        private void Awake()
+        {
+            _items = new List<Item>();
+        }
+
         private void Start()
         {
             _player = GameManager.Instance.Player;
-            //_images = GetComponentsInChildren<Image>().Where(go => go.gameObject != gameObject).ToArray();
-
-            _itemSprites = new List<Sprite>();
-            _itemValues = new List<string>();
 
             GeneratePreviews();
-            DisplayItems();
         }
 
         private void Update()
         {
-            if (_selectedItem == null)
-            {
-                _buyButton.interactable = false;
-                _sellButton.interactable = false;
-            }
-
-            /*            
-            if (_itemSprites.Count != ShopGerald.Assortment.Count)
-            {
-                GeneratePreviews();
-                DisplayItems();
-            }*/
+            if (_selectedItem != null) return;
             
+            _buyButton.interactable = false;
+            _sellButton.interactable = false;
+
         }
         #endregion
 
@@ -71,7 +63,10 @@ namespace UserInterface
         public void Buy()
         {
             ShopGerald.SellToPlayer(_selectedItem);
+            Destroy(_images[_selectedIndex].gameObject);
+                
             _selectedItem = null;
+            _selectedIndex = -1;
         }
 
         public void Sell()
@@ -82,13 +77,25 @@ namespace UserInterface
         public void Back()
         {
             Destroy(gameObject);
+
+            Time.timeScale = 1;
+            _player.Input.Enable();
+            GameManager.Instance.UIManager.DisablePausePanel = false;
         }
 
         public void SelectItemToBuy(int index)
         {
-            _selectedItem = ShopGerald.Assortment[index];
+            _selectedItem = _items[index];
+            _selectedIndex = index;
 
-            _buyButton.interactable = true;
+            if (!ShopGerald.Assortment[_selectedItem])
+            {
+                _selectedIndex = -1;
+                _selectedItem = null;
+                return;
+            }
+
+            if(_selectedItem.Value <= _player.Gold) _buyButton.interactable = true;
         }
 
         public void SelectItemToSell(int index)
@@ -106,28 +113,33 @@ namespace UserInterface
 
         private void GeneratePreviews()
         {
-            _itemSprites.Clear();
-            _itemValues.Clear();
-
-            foreach (Item item in ShopGerald.Assortment)
+            foreach (KeyValuePair<Item, bool> kvp in ShopGerald.Assortment)
             {
-                Sprite preview = item.UIImage;
-                _itemSprites.Add(preview);
+                if (!kvp.Value) continue;
 
-                string value = item.Value.ToString();
-                _itemValues.Add(value);
+                Item item = kvp.Key;
+                _items.Add(item);
+            }
+
+            int i = 0;
+            foreach (Item item in _items)
+            {
+                if (i > 4) break;
+                
+                _images[i].GetComponent<Image>().sprite = item.UIImage;
+                _images[i].GetComponentInChildren<Text>().text = item.Value.ToString();
+
+                i++;
+            }
+
+            foreach (Image image in _images)
+            {
+                if (image.GetComponentInChildren<Text>().text.Equals("Default"))
+                {
+                    Destroy(image.gameObject);
+                }
             }
         }
-
-        public void DisplayItems()
-        {
-            for (int i = 0; i < _itemSprites.Count; i++)
-            {
-                _images[i].GetComponent<Image>().sprite = _itemSprites[i];
-                _images[i].GetComponentInChildren<Text>().text = _itemValues[i];
-            }
-        }
-
         #endregion
     }
 }

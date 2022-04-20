@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using AI.FSM;
 using Items;
 using UnityEngine;
+using Managers;
+using PlayerScripts;
+using UI;
 using Utils;
 
 namespace LivingEntities
@@ -34,6 +37,12 @@ namespace LivingEntities
         [Header("Obstacle Avoidance")]
         [SerializeField] private LayerMask _obstacleAvoidanceMask;
         protected SteeringBehaviour _steeringBehaviour;
+
+        protected Animator _animator;
+        private InGameUI _inGameUI;
+        protected Immunities _immunity;
+        private bool _stopActions;
+
         #endregion
 
         #region Properties
@@ -47,25 +56,25 @@ namespace LivingEntities
         public float Health
         {
             get => _health; 
-            protected set => _health = value;
+            set => _health = value;
         }
 
         public int Attack
         {
             get => _attack;
-            protected set => _attack = value;  
+            set => _attack = value;  
         }
 
         public int Intelligence
         {
             get => _intelligence;
-            protected set => _intelligence = value;
+            set => _intelligence = value;
         }
 
         public float Range
         {
             get => _range;
-            protected set => _range = value;
+            set => _range = value;
         }
 
         public float Haste
@@ -83,19 +92,19 @@ namespace LivingEntities
         public bool IsAlive
         {
             get => _isAlive;
-            protected set => _isAlive = value;
+            set => _isAlive = value;
         }
 
         public Transform MeleeAttackPoint
         {
             get => _meleeAttackPoint;
-            protected set => _meleeAttackPoint = value;
+            set => _meleeAttackPoint = value;
         }
 
         public float MeleeAttackRange
         {
             get => _meleeAttackRange;
-            protected set => _meleeAttackRange = value;
+            set => _meleeAttackRange = value;
         }
 
         public LayerMask HostileEntityLayers
@@ -127,7 +136,24 @@ namespace LivingEntities
             get => _obstacleAvoidanceMask;
             private set => _obstacleAvoidanceMask = value;
         }
-        
+        public Animator Animator
+        {
+            get => _animator;
+            protected set => _animator = value;
+        }
+
+        public Immunities Immunity
+        {
+            get => _immunity;
+            protected set => _immunity = value;
+        }
+
+        public bool StopActions
+        {
+            get => _stopActions;
+            set => _stopActions = value;
+        }
+
         private List<Item> EquippedItems {  get; set; }
         public LivingEntity Target { get; set; }
         
@@ -166,6 +192,7 @@ namespace LivingEntities
             Health = _maxHealth;
             
             EquippedItems = new List<Item>();
+            _animator = GetComponent<Animator>();
         }
 
         protected virtual void Start()
@@ -176,10 +203,13 @@ namespace LivingEntities
             MaxForce = Speed * GameConstants.SpeedMultiplier;
             MaxTurnRate = 10f;
             Mass = 1f;
+            
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
         }
 
         #endregion
 
+        #region Damage Methods
         public virtual void HealEntity(float amount)
         {
             if (IsAlive)
@@ -195,6 +225,8 @@ namespace LivingEntities
 
         public virtual void DamageEntity(float amount)
         {
+            _animator.SetTrigger(AnimatorStrings.GetHitString);
+
             Health -= amount;
             if (Health <= 0)
             {
@@ -202,17 +234,48 @@ namespace LivingEntities
             }
         }
 
+        #endregion
+
+        #region Death Methods
+
         protected virtual void OnDeath()
         {
             IsAlive = false;
-            Debug.Log("Entity died [" + GetType().Name + "]");
-            Destroy(gameObject);
+            Animator.SetTrigger(AnimatorStrings.DeathString);
+
+            // Disabing all colliders if the entity died to prevent blocking the player while death animation
+            foreach (Collider collider in GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
         }
+
+        /// <summary>
+        /// Gets called after the death animation is finished
+        /// </summary>
+        private void DestroyOnDeath()
+        {
+            if (this is Player)
+            {
+                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().IngamePanel.SetActive(false);
+                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().DeathPanel.SetActive(true);
+
+                Time.timeScale = 0;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        #endregion
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
         }
+
+        #region Equip Methods
 
         public void Equip(Item item)
         {
@@ -225,6 +288,9 @@ namespace LivingEntities
             EquippedItems.Remove(item);
             item.Unequip(this);
         }
+        #endregion
+
+        #region Movement
 
         public abstract void MoveEntity();
 
@@ -234,6 +300,16 @@ namespace LivingEntities
         {
             Velocity = Vector3.zero;
         }
+
+        #endregion
         
+        [Flags]
+        public enum Immunities
+        {
+            ImmuneToBleeding = 1,
+            ImmuneToPoison = 2,
+            ImmuneToPetrification = 4,
+            ImmuneToMelee = 8
+        }
     }
 }

@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
 namespace Scrolls.StandardScrolls
 {
-    public class UnkownPotion : StandardScroll
+    public class UnknownPotion : StandardScroll
     {
         PlayerScripts.Player player;
         float previousMaxHealth;
-        public UnkownPotion()
+
+        public UnknownPotion() : base()
         {
-            Cost = 0;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
@@ -30,7 +29,10 @@ namespace Scrolls.StandardScrolls
             if (chance <= 50)
                 player.HealEntity(healamount);
             else
-                player.MaxHealth %= 5; // should player also loose health down to 5% ? or just not regenerate anymore 
+            {
+                player.MaxHealth *= 0.05f; // using %= does not work ? (puts it to zero even when using %= 50?)//more efficient this way anýways 
+                player.DamageEntity(player.Health - player.MaxHealth);
+            }
         }
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {

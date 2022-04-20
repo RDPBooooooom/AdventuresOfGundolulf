@@ -1,6 +1,7 @@
 using System;
 using Assets.Scripts;
 using Managers;
+using PlayerScripts;
 using UnityEngine;
 
 namespace Items
@@ -8,6 +9,8 @@ namespace Items
     public class DroppedItem : MonoBehaviour, IInteractable
     {
         #region Fields
+
+        Player _player;
 
         [SerializeField] private float _upDownDifference = 0.5f;
         [SerializeField] private float _groundOffset = 0.5f;
@@ -21,8 +24,6 @@ namespace Items
         
         #endregion
 
-        
-
         #region Properties
 
         public Item Item { get; set; }
@@ -31,12 +32,16 @@ namespace Items
 
         public void Interact()
         {
-            GameManager.Instance.Player.Equip(Item);
+            _player.Equip(Item);
+            _player.Animator.SetTrigger(AnimatorStrings.PickUpString);
+            _player.StopMovement = true;
+
             Destroy(gameObject);
         }
 
         private void Start()
         {
+            _player = GameManager.Instance.Player;
             if(Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit, LayerMask.GetMask("Floor")))
             {
                 _minUpDownPos = hit.point.y + _groundOffset;

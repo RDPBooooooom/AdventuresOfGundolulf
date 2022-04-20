@@ -50,21 +50,16 @@ public class Teleport : Ability
 
     public void DoTeleport()
     {
+        _owner.Animator.SetTrigger(AnimatorStrings.MagicString);
+
         TrimTargetPos();
         if(GameManager.Instance?.LevelManager?.CurrentRoom)
             TargetPos = GameManager.Instance.LevelManager.CurrentRoom.GetClosestPositionOnGround(TargetPos);
         
-        // TODO Implement cooldown
         Vector3 startPosition = _targetEntity.transform.position;
 
         OnTeleportStart?.Invoke(startPosition, TargetPos);
-        //TODO Play Teleport animation
-
-        // TODO Figure out a way to not teleport in to walls etc.
         _targetEntity.transform.position = TargetPos;
-
-        //TODO Play landing animation
-
         OnTeleportEnd?.Invoke(startPosition, _targetEntity.transform.position);
 
         StartCooldown();
@@ -77,7 +72,6 @@ public class Teleport : Ability
         if (teleportDistance < TeleportRange) return;
 
         Vector3 direction = (TargetPos - _targetEntity.transform.position).normalized;
-
 
         TargetPos -= (direction * (teleportDistance - TeleportRange));
     }

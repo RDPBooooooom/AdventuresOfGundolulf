@@ -11,7 +11,7 @@ namespace Levels.Rooms
     {
         #region Fields
 
-        private List<LivingEntity> _enemiesPrfabs;
+        private List<LivingEntity> _enemiesPrefabs;
         private List<LivingEntity> _enemies;
 
         #endregion
@@ -48,7 +48,7 @@ namespace Levels.Rooms
             if (WasVisited) return;
             LoadEnemies();
             _enemies = new List<LivingEntity>();
-            foreach (LivingEntity entity in _enemiesPrfabs)
+            foreach (LivingEntity entity in _enemiesPrefabs)
             {
                 LivingEntity activeEnemy = Instantiate(entity.gameObject, transform.position, Quaternion.identity)
                     .GetComponent<LivingEntity>();
@@ -59,10 +59,10 @@ namespace Levels.Rooms
 
         private void LoadEnemies()
         {
-            _enemiesPrfabs = GameManager.Instance.EnemyManager.GetRandomEnemies();
+            _enemiesPrefabs = GameManager.Instance.EnemyManager.GetRandomEnemies();
         }
 
-        protected override bool CanLeave()
+        public override bool CanLeave()
         {
             if (!IsLeavable) return false;
 

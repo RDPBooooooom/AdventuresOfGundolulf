@@ -8,21 +8,24 @@ namespace Scrolls.StandardScrolls
     {
         PlayerScripts.Player player;
         int factor = 10;
-        public IntelligenceUp()
+
+        public IntelligenceUp() : base()
         {
-            Cost = -1;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
             player = Managers.GameManager.Instance.Player;
-            //player.Attack += factor;
+            player.Intelligence += factor;
+            inGameUI.UpdateIntelligenceDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            //player.Attack -= factor;
+            player.Intelligence -= factor;
+            inGameUI.UpdateIntelligenceDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
     }

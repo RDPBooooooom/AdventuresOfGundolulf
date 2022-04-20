@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Effects;
 using UnityEngine;
 
 namespace LivingEntities
 {
     public class LivingStatueEntity : EnemyEntity
     {
-        // Update is called once per frame
-        void Update()
+        protected override void Awake()
         {
-
+            base.Awake();
+            Immunity = Immunities.ImmuneToPetrification | Immunities.ImmuneToMelee;
         }
     }
 }

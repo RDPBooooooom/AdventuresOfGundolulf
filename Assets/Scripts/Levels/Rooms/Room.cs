@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 
 namespace Levels.Rooms
@@ -34,6 +33,10 @@ namespace Levels.Rooms
             set => _data = value;
         }
 
+        public Bounds RoomBounds
+        {
+            get => _roomBounds;
+        }
 
         public RoomConnections RoomConnections { get; set; }
 
@@ -65,14 +68,13 @@ namespace Levels.Rooms
             _doors = new Dictionary<Door, DoorDirections>();
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
-            _roomBounds = _floorPlane.GetComponent<MeshFilter>().mesh.bounds;
-            _roomBounds.extents = Vector3.Scale(_roomBounds.extents, _floorPlane.transform.localScale * 0.93f);
+            _roomBounds = GetTotalBounds(_floorPlane.GetComponentsInChildren<Renderer>());
+            _roomBounds.extents *= 0.95f;
             _roomBounds.extents += new Vector3(0, 5, 0);
-            _roomBounds.center = _floorPlane.transform.position;
         }
-
+        
         #endregion
 
         #region Door Management
@@ -98,22 +100,32 @@ namespace Levels.Rooms
             EnterRoom?.Invoke(this);
         }
 
-        public virtual void OnRoomCleared()
+        protected virtual void OnRoomCleared()
         {
             RoomCleared?.Invoke();
         }
 
         public void TryLeave(Door door)
         {
-            if (CanLeave())
-            {
-                _wasVisited = true;
-                Room toEnter = GetRoomByDirection(_doors[door]);
-                LeaveRoom?.Invoke(this, toEnter);
-            }
+            if (!CanLeave()) return;
+
+            Leave(door);
         }
 
-        protected virtual bool CanLeave()
+        public void Leave(Door door)
+        {
+            _wasVisited = true;
+            Room toEnter = GetRoomByDirection(_doors[door]);
+            LeaveRoom?.Invoke(this, toEnter);
+        }
+
+        public void Leave(Room toEnter)
+        {
+            _wasVisited = true;
+            LeaveRoom?.Invoke(this, toEnter);
+        }
+
+        public virtual bool CanLeave()
         {
             return true;
         }
@@ -124,7 +136,6 @@ namespace Levels.Rooms
 
         private Room GetRoomByDirection(DoorDirections direction)
         {
-            Debug.Log(direction);
             switch (direction)
             {
                 case DoorDirections.Top:
@@ -150,9 +161,9 @@ namespace Levels.Rooms
         public Vector3 GetClosestPositionOnGround(Vector3 position)
         {
             Vector3 pos = GetClosestPositionInRoom(position);
-            
-            return new Vector3(pos.x, 0, pos.z);
 
+
+            return new Vector3(pos.x, 0, pos.z);
         }
 
         public bool IsPositionInRoom(Vector3 position)
@@ -160,6 +171,44 @@ namespace Levels.Rooms
             return _roomBounds.Contains(position);
         }
 
+        private Bounds GetTotalBounds(Renderer[] renderers)
+        {
+            Bounds bounds = new Bounds();
+            bool isFirst = true;
+            
+            foreach (Renderer renderer in renderers)
+            {
+                if (!renderer.gameObject.CompareTag("Floor"))
+                {
+                    continue;
+                }
+
+                Bounds temp = renderer.bounds;
+                if (isFirst)
+                {
+                    bounds = temp;
+                    isFirst = false;
+                }
+                else
+                {
+                    bounds.Encapsulate(temp);
+                }
+            }
+
+            return bounds;
+        }
+
+        private Bounds[] GetBounds(MeshFilter[] meshFilters)
+        {
+            Bounds[] bounds = new Bounds[meshFilters.Length];
+
+            for (int i = 0; i < meshFilters.Length; i++)
+            {
+                //meshFilters[i].mesh.bounds;
+            }
+
+            return null;
+        }
 
         #endregion
     }

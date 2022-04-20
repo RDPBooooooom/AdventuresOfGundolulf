@@ -19,7 +19,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     private ItemManager _itemManager;
 
-    private int _merchantMoney = 250; // Depends on difficulty?
+    private int _merchantMoney = 50; // Depends on difficulty?
     private int _amountOfItems = 4;
     private int _valueLossFactor = 2;
 
@@ -27,12 +27,11 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     #region Properties
 
-    public List<Item> Assortment { get; private set; }
+    public Dictionary<Item, bool> Assortment { get; private set; }
 
     #endregion
     private void Awake()
     {
-        
     }
 
     private void Start()
@@ -44,10 +43,10 @@ public class ShopGerald : MonoBehaviour, IInteractable
     public void SellToPlayer(Item item)
     {
         _merchantMoney += item.Value;
-        Assortment.Remove(item);
-
+        Assortment[item] = false;
+        _player.Gold -= item.Value;
         _player.Equip(item);
-
+        
         _itemManager.ItemEquipped(item);
     }
 
@@ -58,7 +57,7 @@ public class ShopGerald : MonoBehaviour, IInteractable
         if (_merchantMoney >= price)
         {
             _merchantMoney -= price;
-            Assortment.Add(item);
+            Assortment.Add(item, true);
 
             _player.Gold += price;
             _player.Unequip(item);
@@ -76,9 +75,14 @@ public class ShopGerald : MonoBehaviour, IInteractable
     {
         if (Assortment == null)
         {
-            Assortment = _itemManager.GetRandomItems(_amountOfItems);
-            Assortment.Add(_itemManager.GetSpecificItem(typeof(HealthPotion)));
+            Assortment = new Dictionary<Item, bool>();
+            List<Item> items = _itemManager.GetRandomItems(_amountOfItems);
+            items.Add(_itemManager.GetSpecificItem(typeof(HealthPotion)));
 
+            foreach (Item item in items)
+            {
+                Assortment.Add(item, true);
+            }
         }
 
         if (_shopUI == null)
@@ -86,6 +90,10 @@ public class ShopGerald : MonoBehaviour, IInteractable
             _shopUI = Instantiate(_shopPanelPrefab, GameManager.Instance.UIManager.MainCanvas.transform);
             _shopUI.ShopGerald = this;
         }
+
+        Time.timeScale = 0;
+        _player.Input.Disable();
+        GameManager.Instance.UIManager.DisablePausePanel = true;
     }
 
     public void Interact()

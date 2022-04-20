@@ -4,9 +4,9 @@ namespace Scrolls.StandardScrolls
 {
     public class PoisonGas : StandardScroll
     {
-        public PoisonGas()
+        public PoisonGas() : base()
         {
-            Cost = 3;
+            
         }
 
         protected override void ApplyEffect()

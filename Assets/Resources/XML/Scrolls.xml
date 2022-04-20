@@ -1,0 +1,175 @@
+<?xml version ="1.0" encoding="utf-8"?>
+<ScrollCollection>
+	<Scrolls>		
+		<Scroll Name ="HelloDarkness">
+			<DisplayName>Hello Darkness</DisplayName>
+			<Cost>3</Cost>
+			<Description>You appear to be short-sighted.</Description>
+		</Scroll>
+		<Scroll Name ="PoisonGas">
+			<DisplayName>Poison Gas</DisplayName>
+			<Cost>3</Cost>
+			<Description>The room contains Bulrogs toxic gas (Don't ask), which lasts 15 seconds and deals 1 Damage/second to you and Enemies.</Description>
+		</Scroll>
+		<Scroll Name ="BroughtASwordToAMagicFight">
+			<DisplayName>Brought a Sword to a Magic Fight</DisplayName>
+			<Cost>1</Cost>
+			<Description>You can't use Magic anymore and have to fight like back in the good old days.</Description>
+		</Scroll>
+		<Scroll Name ="Weeny">
+			<DisplayName>Weeny</DisplayName>
+			<Cost>1</Cost>
+			<Description>Like a Weeny, you can only use Magic to fight.</Description>
+		</Scroll>
+		<Scroll Name ="Pacifist">
+			<DisplayName>Pacifist</DisplayName>
+			<Cost>3</Cost>
+			<Description>You don't want to hurt someone, so you can't attack for 10 seconds.</Description>
+		</Scroll>
+		<Scroll Name ="BulrogsTaxes">
+			<DisplayName>Bulrogs Taxes</DisplayName>
+			<Cost>1</Cost>
+			<Description>Everyone has to pay their taxes, so your live savings gets cut in half.</Description>
+		</Scroll>
+		<Scroll Name ="DoubleTime">
+			<DisplayName>Double Time</DisplayName>
+			<Cost>1</Cost>
+			<Description>Think fast, everything happens twice as fast as usual.</Description>
+		</Scroll>
+		<Scroll Name ="HalfTimeShow">
+			<DisplayName>Half Time Show</DisplayName>
+			<Cost>-2</Cost>
+			<Description>Yeah, you've got time, all Enemies move half as fast as usual.</Description>
+		</Scroll>
+		<Scroll Name ="Warrior">
+			<DisplayName>Warrior</DisplayName>
+			<Cost>-2</Cost>
+			<Description>A real Warrior needs a Sword! Alright, you get one this time. If you already have one, I'll pay you 5 Bucks.</Description>
+		</Scroll>
+		<Scroll Name ="Flipped">
+			<DisplayName>Flipped</DisplayName>
+			<Cost>3</Cost>
+			<Description>Are you drunk? Oh no, your controls are inverted.</Description>
+		</Scroll>
+		<Scroll Name ="MindControl">
+			<DisplayName>Mind Control</DisplayName>
+			<Cost>-3</Cost>
+			<Description>You somehow managed to let your enemies attack each other, well at least for 5 seconds.</Description>
+		</Scroll>
+		<Scroll Name ="HealingWord">
+			<DisplayName>Healing Word</DisplayName>
+			<Cost>-2</Cost>
+			<Description>You need some heals? There you go, but only 50!</Description>
+		</Scroll>
+		<Scroll Name ="HolyBlessing">
+			<DisplayName>Holy Blessing</DisplayName>
+			<Cost>-3</Cost>
+			<Description>You won't get hurt for 10 seconds. Gotta report you for cheating i guess...</Description>
+		</Scroll>
+		<Scroll Name ="TopUpPerspective">
+			<DisplayName>Top Up Perspective</DisplayName>
+			<Cost>2</Cost>
+			<Description>You walking on your hands or why are you upside down? Oh no, it's your Camera.</Description>
+		</Scroll>
+		<Scroll Name ="Spinning">
+			<DisplayName>Spinning</DisplayName>
+			<Cost>3</Cost>
+			<Description>Don't get dizzy, the Camera keeps rotating.</Description>
+		</Scroll>
+		<Scroll Name ="AreYouOnDrugs">
+			<DisplayName>Are you on Drugs?</DisplayName>
+			<Cost>0</Cost>
+			<Description>Your enemies either will get doubled or cut in half. It's 50/50, so why not go for it?</Description>
+		</Scroll>
+		<Scroll Name ="AttackUp">
+			<DisplayName>Attack Up</DisplayName>
+			<Cost>-1</Cost>
+			<Description>Look at those muscles. Your Attack gets increased by 10.</Description>
+		</Scroll>
+		<Scroll Name ="SpeedUp">
+			<DisplayName>Speed Up</DisplayName>
+			<Cost>-1</Cost>
+			<Description>That's why you never skip leg-day! Your Speed gets increased by 5.</Description>
+		</Scroll>
+		<Scroll Name ="IntelligenceUp">
+			<DisplayName>Intelligence Up</DisplayName>
+			<Cost>-1</Cost>
+			<Description>Last minute learning pays off. Your Intelligence gets increased by 10.</Description>
+		</Scroll>
+		<Scroll Name ="GoldMine">
+			<DisplayName>Gold Mine</DisplayName>
+			<Cost>-1</Cost>
+			<Description>Your enemies drop twice as much gold. You're obviously greedy and take it all, so your Speed gets cut in half.</Description>
+		</Scroll>
+		<Scroll Name ="MommysGift">
+			<DisplayName>Mommy's Gift</DisplayName>
+			<Cost>-1</Cost>
+			<Description>It's your Birthday, so you get gifted an Active Item! You've got one already? Well, new is always better!</Description>
+		</Scroll>
+		<Scroll Name ="UnknownPotion">
+			<DisplayName>Unknown Potion</DisplayName>
+			<Cost>0</Cost>
+			<Description>I don't know, it's unknown!! Jk, you're either getting completely healed or beat up until your health is at 5%, it's 50/50 of course.</Description>
+		</Scroll>
+		<Scroll Name ="AttackDown">
+			<DisplayName>Attack Down</DisplayName>
+			<Cost>1</Cost>
+			<Description>You should stop playing videogames and do something for your body instead. Your Attack gets reduced by 10.</Description>
+		</Scroll>
+		<Scroll Name ="SpeedDown">
+			<DisplayName>Speed Down</DisplayName>
+			<Cost>1</Cost>
+			<Description>Look at these spaghetti-legs. Your Speed gets reduced by 5.</Description>
+		</Scroll>
+		<Scroll Name ="IntelligenceDown">
+			<DisplayName>Intelligence Down</DisplayName>
+			<Cost>1</Cost>
+			<Description>You should stop playing videogames and do something for your mind instead. Your Intelligence gets reduced by 10.</Description>
+		</Scroll>
+		<Scroll Name ="NoHitChallenge">
+			<DisplayName>No Hit Challenge</DisplayName>
+			<Cost>0</Cost>
+			<Description>You lose your Coins (up to 20). Get back twice as much, if you don't get git. And if you do... Well then you should start saving again.</Description>
+		</Scroll>
+		<Scroll Name ="WhoAreYou">
+			<DisplayName>Who are you?</DisplayName>
+			<Cost>-1</Cost>
+			<Description>Your Enemies got fired and replaced by random other Enemies.</Description>
+		</Scroll>
+		<Scroll Name ="TeleporterMalfunction">
+			<DisplayName>Teleporter Malfunction</DisplayName>
+			<Cost>1</Cost>
+			<Description>You shouldn't have bought the cheap one. You'll get teleported to a random position every 7 seconds.</Description>
+		</Scroll>
+		<Scroll Name ="GlitchInTheMatrix">
+			<DisplayName>Glitch in the Matrix</DisplayName>
+			<Cost>3</Cost>
+			<Description>Somethings wrong, i can feel it. Your Enemies get teleported to a random position every 10 seconds.</Description>
+		</Scroll>
+		<Scroll Name ="Casino">
+			<DisplayName>Casino</DisplayName>
+			<Cost>2</Cost>
+			<Description>You've got a 30% chance to tenfold your money! Forget about the 70% to lose it all.</Description>
+		</Scroll>
+		<Scroll Name ="PartyMix">
+			<DisplayName>Party Mix</DisplayName>
+			<Cost>1</Cost>
+			<Description>Looks like you've messed up your notes. Your stats got all mixed up!</Description>
+		</Scroll>
+		<Scroll Name ="HomedoorCompanion">
+			<DisplayName>Homedoor Companion</DisplayName>
+			<Cost>0</Cost>
+			<Description>You brought your door with you. I mean, who doesn't? Entering it will Teleport you to a random room on this Level.</Description>
+		</Scroll>
+		<Scroll Name ="SkipIt">
+			<DisplayName>Skip It</DisplayName>
+			<Cost>-4</Cost>
+			<Description>You scared? How about killing them all with just one snap?</Description>
+		</Scroll>
+		<Scroll Name ="Shuffle">
+			<DisplayName>Shuffle</DisplayName>
+			<Cost>-1</Cost>
+			<Description>Don't like your Scrolls? Alright, put them back, shuffle and get some new ones. But only this time, promised?</Description>
+		</Scroll>
+	</Scrolls>
+</ScrollCollection>

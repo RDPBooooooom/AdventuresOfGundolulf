@@ -3,6 +3,7 @@ using Levels;
 using PlayerScripts;
 using Scrolls;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
@@ -14,6 +15,7 @@ namespace Managers
         [SerializeField] private EnemyManager _enemyManagerPrefab;
         [SerializeField] private UIManager _uIManagerPrefab;
         [SerializeField] private ItemManager _itemManagerPrefab;
+        [SerializeField] private MonoBehaviourDummy _monoBehaviourDummyPrefab;
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Camera _playerCamPrefab;
 
@@ -34,6 +36,8 @@ namespace Managers
         public DeckManager DeckManager { get; private set; }
 
         public Player Player { get; private set; }
+
+        public MonoBehaviourDummy MonoBehaviourDummy { get; private set; }
 
         #endregion
 
@@ -66,6 +70,8 @@ namespace Managers
             UIManager = Instantiate(_uIManagerPrefab, transform);
 
             ItemManager = Instantiate(_itemManagerPrefab, transform);
+
+            MonoBehaviourDummy = Instantiate(_monoBehaviourDummyPrefab, transform);
 
             DeckManager = new DeckManager();
             DeckManager.LoadDecks();

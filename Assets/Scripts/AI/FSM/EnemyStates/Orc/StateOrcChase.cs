@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AI.FSM.EnemyStates.Orc
 {
-    public class StateOrcChase : State<OrcEntity>
+    public class StateOrcChase : ComplexState<OrcEntity>
     {
 
         private LivingEntity _toChase;

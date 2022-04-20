@@ -6,10 +6,10 @@ namespace Scrolls.StandardScrolls
 {
     public class HealingWord : StandardScroll
     {
-        public HealingWord()
+        public HealingWord() : base()
         {
-            Cost = -2;
         }
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);

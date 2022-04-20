@@ -17,8 +17,8 @@ namespace PlayerScripts
         #region Fields
 
         private PlayerInput _input;
-        private Animator _animator;
         private Camera _camera;
+        private Rigidbody _rigidbody;
 
         private Teleport _teleport;
         private Melee _melee;
@@ -29,8 +29,14 @@ namespace PlayerScripts
         
         [Header("Player")]
         [SerializeField] private float _interactRange;
-        
-        private int _gold;
+        private bool _stopMovement = false;
+
+        [SerializeField] private int _gold;
+
+        private bool _invincible = false;
+        private bool _pacifist = false;
+        private bool _weeny = false;
+        private bool _notWeeny = false;
 
         #endregion
 
@@ -44,6 +50,47 @@ namespace PlayerScripts
                 _gold = value;
                 UpdateGoldEvent?.Invoke();
             }
+        }
+
+        public bool StopMovement
+        {
+            get => _stopMovement;
+            set => _stopMovement = value;
+        }
+
+        public SpellCast SpellCast
+        {
+            get => _spellCast;
+            protected set => _spellCast = value;
+        }
+
+        public Teleport Teleport
+        {
+            get => _teleport;
+            set => _teleport = value;
+        }
+
+        public PlayerInput Input
+        {
+            get => _input;
+            set => _input = value;
+        }
+
+        public bool Invincible
+        {
+            set => _invincible = value;
+        }
+        public bool Pacifist
+        {
+            set => _pacifist = value;
+        }
+        public bool Weeny
+        {
+            set => _weeny = value;
+        }
+        public bool NotWeeny
+        {
+            set => _notWeeny = value;
         }
 
         #endregion
@@ -85,7 +132,7 @@ namespace PlayerScripts
             base.Start();
             _steeringBehaviour.SeekOn();
             _camera = Camera.main;
-            _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
             UpdateHealthEvent?.Invoke();
@@ -175,6 +222,14 @@ namespace PlayerScripts
             return closestInteractable;
         }
 
+        /// <summary>
+        /// Gets called if the animation for picking up an item is finished
+        /// </summary>
+        private void PickingUpFinished()
+        {
+            _stopMovement = false;
+        }
+
         #endregion
 
         #region Character actions
@@ -237,15 +292,26 @@ namespace PlayerScripts
         private void LookDirection()
         {
             Vector3 worldPoint = GetCurrentMousePosInWorldOnGround();
+            worldPoint = new Vector3(worldPoint.x, 0.5f, worldPoint.z);
+
+            Vector3 pos = transform.position;
+
+            Vector3 direction = worldPoint - new Vector3(pos.x, 0.5f, pos.z);
+
+            if ((direction - Vector3.up).magnitude < 1.1f) return;
+            if (direction.magnitude < 7.5f)
+            {
+                worldPoint += direction.normalized * 3;
+            }
 
             if (GameManager.Instance?.LevelManager?.CurrentRoom &&
                 GameManager.Instance.LevelManager.CurrentRoom.IsPositionInRoom(worldPoint))
             {
-                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.green);
+                Debug.DrawLine(transform.position, worldPoint, Color.cyan);
             }
             else
             {
-                Debug.DrawLine(transform.position, new Vector3(worldPoint.x, 0, worldPoint.z), Color.red);
+                Debug.DrawLine(transform.position, worldPoint, Color.red);
             }
 
             transform.LookAt(worldPoint);
@@ -254,14 +320,20 @@ namespace PlayerScripts
 
         private void PerformMelee(InputAction.CallbackContext context)
         {
-            Debug.Log("Melee Input performed");
-            _melee.Use();
+            if(!_pacifist && !_weeny)
+            {
+                Debug.Log("Melee Input performed");
+                _melee.Use();
+            }
         }
 
         private void PerformSpellCast(InputAction.CallbackContext context)
         {
-            Debug.Log("Spell Cast Input performed");
-            _spellCast.Use();
+            if(!_pacifist && !_notWeeny)
+            {
+                Debug.Log("Spell Cast Input performed");
+                _spellCast.Use();
+            }
         }
 
         private void PerformTeleport(InputAction.CallbackContext context)
@@ -309,9 +381,12 @@ namespace PlayerScripts
 
         public override void DamageEntity(float amount)
         {
-            base.DamageEntity(amount);
+            if(!_invincible)
+            {
+                base.DamageEntity(amount);
+                UpdateHealthEvent?.Invoke();
+            }
 
-            UpdateHealthEvent?.Invoke();
         }
 
         #endregion

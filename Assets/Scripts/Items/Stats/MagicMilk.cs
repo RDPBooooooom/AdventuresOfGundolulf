@@ -1,3 +1,5 @@
+using LivingEntities;
+
 namespace Items.Stats
 {
     public class MagicMilk : StatsItem
@@ -5,6 +7,20 @@ namespace Items.Stats
         public MagicMilk() : base()
         {
             Value = 5;
+        }
+
+        public override void Equip(LivingEntity equipOn)
+        {
+            base.Equip(equipOn);
+            equipOn.Speed += 10;
+            inGameUI.UpdateSpeedDisplay();
+        }
+
+        public override void Unequip(LivingEntity unequipFrom)
+        {
+            base.Unequip(unequipFrom);
+            unequipFrom.Speed -= 10;
+            inGameUI.UpdateSpeedDisplay();
         }
     }
 }

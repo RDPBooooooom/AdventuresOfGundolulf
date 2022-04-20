@@ -5,15 +5,13 @@ using UnityEngine;
 
 namespace Utils
 {
-
     public class MonoBehaviourDummy : MonoBehaviour
     {
-        public static MonoBehaviourDummy dummy;
-        Camera cam;
+        public static MonoBehaviourDummy Dummy { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
-            dummy = this;
+            Dummy = this;
         }
     }
 }

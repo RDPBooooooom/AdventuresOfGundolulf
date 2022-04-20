@@ -1,5 +1,7 @@
 using LivingEntities;
 using UnityEngine;
+using PlayerScripts;
+using Managers;
 
 namespace Items
 {
@@ -11,6 +13,8 @@ namespace Items
 
         private Sprite _uIImage;
         private int _value;
+        protected Player _player;
+        protected UI.InGameUI inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
 
         #endregion
 
@@ -50,6 +54,7 @@ namespace Items
         protected Item()
         {
             _uIImage = Resources.Load<Sprite>("UI/Items/" + GetType().Name);
+            _player = GameManager.Instance.Player;
         }
 
         #endregion

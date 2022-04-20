@@ -1,4 +1,5 @@
-﻿using Items;
+﻿using System.Runtime.Serialization;
+using Items;
 using Managers;
 
 namespace Levels.Rooms
@@ -9,6 +10,10 @@ namespace Levels.Rooms
         {
             base.Enter();
 
+            if (WasVisited) return;
+            
+            OnRoomCleared();
+            
             DroppedItem item = GameManager.Instance.ItemManager.GetRandomDroppedItem();
             item.transform.position = this.transform.position;
         }
