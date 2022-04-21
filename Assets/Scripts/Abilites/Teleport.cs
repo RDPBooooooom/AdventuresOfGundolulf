@@ -15,6 +15,7 @@ public class Teleport : Ability
     #region Properties
 
     public Vector3 TargetPos { get; set; }
+
     public int TeleportRange { get; set; } = 25;
 
     #endregion
@@ -32,13 +33,17 @@ public class Teleport : Ability
 
     #endregion
 
-    #region Methods
+    #region Constructor
 
     public Teleport(LivingEntity owner, LivingEntity targetEntity) : base(owner)
     {
         Cooldown = 2f;
         _targetEntity = targetEntity;
     }
+
+    #endregion
+
+    #region Methods
 
     public override void Use()
     {
@@ -64,6 +69,10 @@ public class Teleport : Ability
 
         StartCooldown();
     }
+
+    #endregion
+
+    #region Helper Methods
 
     private void TrimTargetPos()
     {

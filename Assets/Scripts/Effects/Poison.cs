@@ -7,10 +7,16 @@ namespace Effects
 {
     public class Poison : Effect
     {
+        #region Constructor
+
         public Poison(float effectChance, float effectDuration) : base(effectChance, effectDuration)
         {
             DPS = 10;
         }
+
+        #endregion
+
+        #region Effect
 
         public override void TryApplyEffect(LivingEntity target)
         {
@@ -24,5 +30,7 @@ namespace Effects
         {
             target.DamageEntity(DPS);
         }
+
+        #endregion
     }
 }

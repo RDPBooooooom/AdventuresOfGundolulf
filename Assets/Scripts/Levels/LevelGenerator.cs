@@ -28,7 +28,7 @@ namespace Levels
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public LevelGenerator(List<Room> possibleRooms, int numberOfRooms, int numberOfShopRooms = 1,
             int numberOfTreasureRooms = 1, int distanceToBossRoom = 4, bool drawDebug = false)
@@ -48,6 +48,8 @@ namespace Levels
         }
 
         #endregion
+
+        #region Level Generation
 
         public List<Room> GenerateLevel()
         {
@@ -129,6 +131,8 @@ namespace Levels
 
             return rooms;
         }
+
+        #endregion
 
         #region Layout generation
 

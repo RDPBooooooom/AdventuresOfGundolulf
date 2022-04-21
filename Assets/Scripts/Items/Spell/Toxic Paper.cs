@@ -6,19 +6,28 @@ namespace Items.Spell
 {
     public class ToxicPaper : SpellItem
     {
+        #region Fields
+
         private ISpellcaster _spellcaster;
         private Poison _poison = new Poison(30, 5);
 
-         public ToxicPaper()
+        #endregion
+
+        #region Constructor
+
+        public ToxicPaper()
         {
             Value = 15;
         }
+
+        #endregion
+
+        #region Equip
 
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
 
-            // Add effects
             if (!(equipOn.GetType() == typeof(ISpellcaster))) return;
 
             _spellcaster = (ISpellcaster)equipOn;
@@ -31,5 +40,7 @@ namespace Items.Spell
 
             _spellcaster.SpellCast.RemoveEffect(_poison);
         }
+
+        #endregion
     }
 }

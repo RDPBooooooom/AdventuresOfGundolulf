@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 using Random = System.Random;
@@ -8,18 +7,24 @@ namespace Scrolls.StandardScrolls
 {
     public class TeleporterMalfunction : StandardScroll
     {
+        #region Fields
 
-        private Vector3 _currentRoomCenter;
-
-        private IEnumerator _teleportCoroutine;
         private MonoBehaviourDummy _monoDummy;
+        private Bounds _roomBounds;
+        private Teleport _teleport;
+        private IEnumerator _teleportCoroutine;
 
-        Bounds _roomBounds;
-        Teleport _teleport;
+        #endregion
+
+        #region Constructor
 
         public TeleporterMalfunction() : base()
         {
         }
+
+        #endregion
+
+        #region Effect
 
         protected override void ApplyEffect()
         {
@@ -60,5 +65,7 @@ namespace Scrolls.StandardScrolls
 
             return new Vector3(_roomBounds.center.x + x, 0, _roomBounds.center.z + z);
         }
+
+        #endregion
     }
 }

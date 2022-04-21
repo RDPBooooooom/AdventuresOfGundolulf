@@ -1,30 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class HolyBlessing : StandardScroll
     {
-        PlayerScripts.Player player;
+        #region Fields
+
+        private Player _player;
+
+        #endregion
+
+        #region Constructor
+
         public HolyBlessing() : base()
         {
-
         }
+
+        #endregion
+
+        #region Effect
 
         protected override void ApplyEffect()
         {
-            player = Managers.GameManager.Instance.Player;
+            _player = Managers.GameManager.Instance.Player;
             MonoBehaviourDummy.Dummy.StartCoroutine(Invincible());
             Debug.Log("Activated " + GetType().Name);
         }
 
         IEnumerator Invincible()
         {
-            player.Invincible = true;
+            _player.Invincible = true;
             yield return new WaitForSeconds(10);
-            player.Invincible = false;
+            _player.Invincible = false;
         }
+
+        #endregion
     }
 }

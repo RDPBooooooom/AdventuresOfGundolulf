@@ -4,7 +4,6 @@ namespace Items.Spell
     {
         protected SpellItem() : base()
         {
-        
         }
     }
 }

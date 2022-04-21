@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Utils
+﻿namespace Utils
 {
     public static class GameConstants
     {

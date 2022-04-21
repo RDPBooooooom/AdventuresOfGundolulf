@@ -1,22 +1,33 @@
 using UnityEngine;
 using Random = System.Random;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class UnknownPotion : StandardScroll
     {
-        PlayerScripts.Player player;
-        float previousMaxHealth;
+        #region Fields
+
+        private Player _player;
+        private float _previousMaxHealth;
+
+        #endregion
+
+        #region Constructor
 
         public UnknownPotion() : base()
         {
         }
 
+        #endregion
+
+        #region Effect
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            player = Managers.GameManager.Instance.Player;
-            previousMaxHealth = player.MaxHealth;
+            _player = Managers.GameManager.Instance.Player;
+            _previousMaxHealth = _player.MaxHealth;
             GetNewHealth();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
@@ -25,19 +36,21 @@ namespace Scrolls.StandardScrolls
         {
             Random random = new Random();
             int chance = random.Next(1, 100);
-            float healamount = player.MaxHealth - player.Health;
+            float healamount = _player.MaxHealth - _player.Health;
             if (chance <= 50)
-                player.HealEntity(healamount);
+                _player.HealEntity(healamount);
             else
             {
-                player.MaxHealth *= 0.05f; // using %= does not work ? (puts it to zero even when using %= 50?)//more efficient this way anýways 
-                player.DamageEntity(player.Health - player.MaxHealth);
+                _player.MaxHealth *= 0.05f;
+                _player.DamageEntity(_player.Health - _player.MaxHealth);
             }
         }
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            player.MaxHealth = previousMaxHealth;
+            _player.MaxHealth = _previousMaxHealth;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
+
+        #endregion
     }
 }

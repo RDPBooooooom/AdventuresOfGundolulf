@@ -6,10 +6,16 @@ namespace Items.Spell
 {
     public class MagicSplit : SpellItem
     {
+        #region Constructor
+
         public MagicSplit() : base()
         {
             Value = 20;
         }
+
+        #endregion
+
+        #region Equip
 
         public override void Equip(LivingEntity equipOn)
         {
@@ -18,8 +24,9 @@ namespace Items.Spell
             if (!(equipOn.GetType() == typeof(ISpellcaster))) return;
 
             ISpellcaster spellcaster = (ISpellcaster) equipOn;
+
             equipOn.Range -= 175;
-            inGameUI.UpdateRangeDisplay();
+            _inGameUI.UpdateRangeDisplay();
         }
 
 
@@ -27,7 +34,9 @@ namespace Items.Spell
         {
             base.Unequip(unequipFrom);
             unequipFrom.Range += 175;
-            inGameUI.UpdateRangeDisplay();
+            _inGameUI.UpdateRangeDisplay();
         }
+
+        #endregion
     }
 }

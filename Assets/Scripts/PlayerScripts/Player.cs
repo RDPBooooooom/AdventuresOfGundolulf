@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Assets.Scripts;
+﻿using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using Items.Active;
 using LivingEntities;
 using Managers;
-using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -15,6 +12,9 @@ namespace PlayerScripts
     public class Player : LivingEntity
     {
         #region Fields
+
+        [SerializeField] private float _interactRange;
+        [SerializeField] private int _gold;
 
         private PlayerInput _input;
         private Camera _camera;
@@ -27,11 +27,7 @@ namespace PlayerScripts
 
         private int _groundLayer;
 
-        [SerializeField] private float _interactRange;
         private bool _stopMovement = false;
-
-        [SerializeField] private int _gold;
-
         private bool _invincible = false;
         private bool _pacifist = false;
         private bool _weeny = false;
@@ -79,14 +75,17 @@ namespace PlayerScripts
         {
             set => _invincible = value;
         }
+
         public bool Pacifist
         {
             set => _pacifist = value;
         }
+
         public bool Weeny
         {
             set => _weeny = value;
         }
+
         public bool NotWeeny
         {
             set => _notWeeny = value;
@@ -347,6 +346,8 @@ namespace PlayerScripts
             UseItem();
         }
 
+        #endregion
+        
         #region Events
 
         private void SubscribeToEvents()
@@ -357,8 +358,6 @@ namespace PlayerScripts
             _input.Ingame.Interact.performed += PerformInteract;
             _input.Ingame.ActiveItem.performed += PerformActiveItem;
         }
-
-        #endregion
 
         #endregion
 

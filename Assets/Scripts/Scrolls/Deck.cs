@@ -1,8 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Scrolls.BossScrolls;
-using Scrolls.StandardScrolls;
-using UnityEngine;
 using Utils;
 
 namespace Scrolls
@@ -22,7 +18,7 @@ namespace Scrolls
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         public Deck()
         {
@@ -50,7 +46,7 @@ namespace Scrolls
             scroll.ActivateEvent += OnScrollActivation;
         }
 
-        public void AddScroll(List<T> scrolls)
+        public void AddScrolls(List<T> scrolls)
         {
             Scrolls.AddRange(scrolls);
             Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollActivation);

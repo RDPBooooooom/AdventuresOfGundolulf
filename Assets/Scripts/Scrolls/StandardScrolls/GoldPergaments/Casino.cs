@@ -1,21 +1,33 @@
 using UnityEngine;
 using Random = System.Random;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class Casino : StandardScroll
     {
-        int currentGoldAmount;
-        PlayerScripts.Player player = Managers.GameManager.Instance.Player;
+        #region Fields
+
+        private Player _player = Managers.GameManager.Instance.Player;
+        private int _currentGoldAmount;
+
+        #endregion
+
+        #region Constructor
+
         public Casino() : base()
         {
         }
 
+        #endregion
+
+        #region Effect
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            currentGoldAmount = player.Gold;
-            player.Gold = CalculateNewGold();
+            _currentGoldAmount = _player.Gold;
+            _player.Gold = CalculateNewGold();
         }
 
         int CalculateNewGold()
@@ -23,11 +35,13 @@ namespace Scrolls.StandardScrolls
             Random random = new Random();
             int chance = random.Next(1, 100);
             if (chance <= 30)
-                return currentGoldAmount * 10;
+                return _currentGoldAmount * 10;
             else
                 return 0;
             
         }
+
+        #endregion
     }
 }
 

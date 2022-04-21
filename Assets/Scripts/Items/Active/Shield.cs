@@ -7,15 +7,20 @@ namespace Items.Active
 {
     public class Shield : ActiveItem, IUsable
     {
+        #region Constructor
+
         public Shield() : base()
         {
             Value = 20;
             Cooldown = 30;
         }
 
+        #endregion
+
+        #region Effect
+
         protected override void Effect()
         {
-            // Do effect
             MonoBehaviourDummy.Dummy.StartCoroutine(Invincibile());
             _cooldown.Start();
         }
@@ -27,6 +32,6 @@ namespace Items.Active
             _player.Invincible = false;
         }
 
-        
+        #endregion
     }
 }

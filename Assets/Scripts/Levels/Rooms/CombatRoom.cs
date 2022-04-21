@@ -18,11 +18,7 @@ namespace Levels.Rooms
 
         #region Properties
 
-        public Boolean IsLeavable { get; set; }
-
-        #endregion
-
-        #region Unity Methods
+        public bool IsLeavable { get; set; }
 
         #endregion
 

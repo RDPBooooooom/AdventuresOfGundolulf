@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class AnimatorStrings
 {
     public static readonly string MeleeString = "Melee";

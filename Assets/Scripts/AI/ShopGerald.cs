@@ -16,10 +16,9 @@ public class ShopGerald : MonoBehaviour, IInteractable
 
     private Player _player;
     private ShopUI _shopUI;
-
     private ItemManager _itemManager;
 
-    private int _merchantMoney = 50; // Depends on difficulty?
+    private int _merchantMoney = 50;
     private int _amountOfItems = 4;
     private int _valueLossFactor = 2;
 
@@ -30,15 +29,18 @@ public class ShopGerald : MonoBehaviour, IInteractable
     public Dictionary<Item, bool> Assortment { get; private set; }
 
     #endregion
-    private void Awake()
-    {
-    }
+
+    #region Unity Methods
 
     private void Start()
     {
         _player = GameManager.Instance.Player;
         _itemManager = GameManager.Instance.ItemManager;
     }
+
+    #endregion
+
+    #region Transactions
 
     public void SellToPlayer(Item item)
     {
@@ -71,6 +73,10 @@ public class ShopGerald : MonoBehaviour, IInteractable
         }
     }
 
+    #endregion
+
+    #region Assortment
+
     void ShowAssortment()
     {
         if (Assortment == null)
@@ -100,4 +106,6 @@ public class ShopGerald : MonoBehaviour, IInteractable
     {
         ShowAssortment();
     }
+
+    #endregion
 }

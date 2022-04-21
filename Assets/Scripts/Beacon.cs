@@ -1,63 +1,72 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Levels.Rooms;
 
 public class Beacon : MonoBehaviour
 {
-    Room currentRoom;
-    [SerializeField] Room nextRoom;
-    [SerializeField] Light fire;
+    #region Fields
 
-    Color32 defaultColor = new Color32(30, 220, 210,255); // blue
-    Color32 bossRoom = new Color32(255, 0, 0, 255); //Red
-    Color32 treasureRoom = new Color32(255, 255, 255, 255); //White
-    Color32 shopRoom = new Color32(0, 155, 20, 255); //green
+    [SerializeField] private Light _fire;
 
-    bool startUpCall = true;
+    private Room _currentRoom;
+    private Room _nextRoom;
+
+    private Color32 _defaultColor = new Color32(30, 220, 210,255); // blue
+    private Color32 _bossRoom = new Color32(255, 0, 0, 255); //Red
+    private Color32 _treasureRoom = new Color32(255, 255, 255, 255); //White
+    private Color32 _shopRoom = new Color32(0, 155, 20, 255); //green
+
+    private bool _startUpCall = true;
+
+    #endregion
+
+    #region Unity Methods
 
     private void Start()
     {
-        currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
-        UpdateColor(currentRoom);
-        startUpCall = false;
+        _currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
+        UpdateColor(_currentRoom);
+        _startUpCall = false;
     }
+
+    #endregion
+
+    #region Color
 
     [ContextMenu("Test")]
     void UpdateColor(Room room)
     {
-        currentRoom = room;
+        _currentRoom = room;
         switch (transform.eulerAngles.y)
         {
             case 180:
-                nextRoom = currentRoom.RoomConnections.Bottom;
+                _nextRoom = _currentRoom.RoomConnections.Bottom;
                 break;
 
             case 90:
-                nextRoom = currentRoom.RoomConnections.Left;
+                _nextRoom = _currentRoom.RoomConnections.Left;
                 break;
 
             case 270:
-                nextRoom = currentRoom.RoomConnections.Right;
+                _nextRoom = _currentRoom.RoomConnections.Right;
                 break;
 
             default:
-                nextRoom = currentRoom.RoomConnections.Top;
+                _nextRoom = _currentRoom.RoomConnections.Top;
                 break;
         }
-        if(nextRoom is Levels.Rooms.BossRoom)
-            fire.color = bossRoom;
-        else if(nextRoom is Levels.Rooms.TreasureRoom)
-            fire.color = treasureRoom;
-        else if(nextRoom is Levels.Rooms.ShopRoom)
-            fire.color = shopRoom;
+        if(_nextRoom is Levels.Rooms.BossRoom)
+            _fire.color = _bossRoom;
+        else if(_nextRoom is Levels.Rooms.TreasureRoom)
+            _fire.color = _treasureRoom;
+        else if(_nextRoom is Levels.Rooms.ShopRoom)
+            _fire.color = _shopRoom;
         else
-            fire.color = defaultColor;
+            _fire.color = _defaultColor;
 
-        if(!startUpCall)
+        if(!_startUpCall)
         {
-            nextRoom.EnterRoom += UpdateColor;
-            nextRoom.RoomCleared += TurnOff;
+            _nextRoom.EnterRoom += UpdateColor;
+            _nextRoom.RoomCleared += TurnOff;
         }
         else{}
 
@@ -66,6 +75,8 @@ public class Beacon : MonoBehaviour
     void TurnOff()
     {
         Debug.Log("Room was cleared");
-        fire.gameObject.SetActive(false);
+        _fire.gameObject.SetActive(false);
     }
+
+    #endregion
 }

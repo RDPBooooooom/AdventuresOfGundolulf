@@ -4,8 +4,6 @@ namespace Items.Teleport
     {
         protected TeleportItem() : base()
         {
-        
         }
-    
     }
 }

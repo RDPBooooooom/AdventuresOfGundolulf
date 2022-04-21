@@ -1,14 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Scrolls.StandardScrolls
 {
     public class BulrogsTaxes : StandardScroll
     {
+        #region Constructor
+
         public BulrogsTaxes() : base()
         {
         }
+
+        #endregion
+
+        #region Effect
 
         protected override void ApplyEffect()
         {
@@ -20,5 +24,7 @@ namespace Scrolls.StandardScrolls
         {
             Managers.GameManager.Instance.Player.Gold = Mathf.CeilToInt(Managers.GameManager.Instance.Player.Gold /2);
         }
+
+        #endregion
     }
 }

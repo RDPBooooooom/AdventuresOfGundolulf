@@ -11,13 +11,8 @@ namespace Managers
         #region Fields
 
         private ItemFactory _itemFactory;
-
         private List<Type> _availableItemTypes;
         private List<Type> _usedItemTypes;
-
-        #endregion
-
-        #region Properties
 
         #endregion
 
@@ -32,7 +27,7 @@ namespace Managers
 
         #endregion
 
-        #region Methods
+        #region Item Methods
 
         public void ItemEquipped(Item item)
         {

@@ -4,17 +4,23 @@ namespace Items.Stats
 {
     public class MagicMilk : StatsItem
     {
+        #region Constructor
+
         public MagicMilk() : base()
         {
             Value = 5;
         }
+
+        #endregion
+
+        #region Equip
 
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
 
             equipOn.Speed += 10;
-            inGameUI.UpdateSpeedDisplay();
+            _inGameUI.UpdateSpeedDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -22,7 +28,9 @@ namespace Items.Stats
             base.Unequip(unequipFrom);
 
             unequipFrom.Speed -= 10;
-            inGameUI.UpdateSpeedDisplay();
+            _inGameUI.UpdateSpeedDisplay();
         }
+
+        #endregion
     }
 }

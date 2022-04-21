@@ -1,32 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class SpeedDown : StandardScroll
     {
-        PlayerScripts.Player player;
-        int factor = 5;
+        #region Fields
+
+        private Player _player;
+        private int _factor = 5;
+
+        #endregion
+
+        #region Constructor
 
         public SpeedDown() : base()
         {
         }
 
+        #endregion
+
+        #region Effect
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            player = Managers.GameManager.Instance.Player;
-            player.Speed -= factor;
+            _player = Managers.GameManager.Instance.Player;
+            _player.Speed -= _factor;
             inGameUI.UpdateSpeedDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            player.Speed += factor;
+            _player.Speed += _factor;
             inGameUI.UpdateSpeedDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
+
+        #endregion
     }
 }

@@ -10,16 +10,14 @@ namespace Items
     {
         #region Fields
 
-        Player _player;
-
         [SerializeField] private float _upDownDifference = 0.5f;
         [SerializeField] private float _groundOffset = 0.5f;
         [SerializeField] private float _upDownSpeed = 0.25f;
-        private float _maxUpDownPos;
-        private float _minUpDownPos;
-
         [SerializeField] private float _rotationSpeed = 30;
 
+        private Player _player;
+        private float _maxUpDownPos;
+        private float _minUpDownPos;
         private bool _isUp = true;
         
         #endregion
@@ -30,6 +28,8 @@ namespace Items
 
         #endregion
 
+        #region Interaction
+
         public void Interact()
         {
             _player.Equip(Item);
@@ -39,9 +39,14 @@ namespace Items
             Destroy(gameObject);
         }
 
+        #endregion
+
+        #region Unity Methods
+
         private void Start()
         {
             _player = GameManager.Instance.Player;
+
             if(Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit, LayerMask.GetMask("Floor")))
             {
                 _minUpDownPos = hit.point.y + _groundOffset;
@@ -54,6 +59,10 @@ namespace Items
             UpDownAnimation();
             SpinningAnimation();
         }
+
+        #endregion
+
+        #region Animation
 
         private void UpDownAnimation()
         {
@@ -74,5 +83,7 @@ namespace Items
         {
             transform.Rotate(Vector3.up, _rotationSpeed * Time.deltaTime, Space.World);
         }
+
+        #endregion
     }
 }

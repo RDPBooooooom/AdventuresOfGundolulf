@@ -1,14 +1,19 @@
 using System;
 using System.Collections.Generic;
 using Items;
-using Managers;
 using UnityEngine;
 
 namespace Tests.Items
 {
     public class TestItemSpawner : MonoBehaviour
     {
+        #region Fields
+
         private Vector3 _currentPos = new Vector3(0, 1, 0);
+
+        #endregion
+
+        #region Unity Methods
 
         private void Start()
         {
@@ -41,5 +46,7 @@ namespace Tests.Items
                 _currentPos += new Vector3(3, 0, 0);
             }
         }
+
+        #endregion
     }
 }

@@ -1,30 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class AttackDown : StandardScroll
     {
-        PlayerScripts.Player player;
-        int factor = 10;
+        #region Fields
+
+        private Player _player;
+        private int _factor = 10;
+
+        #endregion
+
+        #region Constructor
+
         public AttackDown() : base()
         {
         }
+
+        #endregion
+
+        #region Effect
+
         protected override void ApplyEffect()
         {
             Debug.Log("Activated " + GetType().Name);
-            player = Managers.GameManager.Instance.Player;
-            player.Attack -= factor;
+            _player = Managers.GameManager.Instance.Player;
+            _player.Attack -= _factor;
             inGameUI.UpdateAttackDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
-            player.Attack += factor;
+            _player.Attack += _factor;
             inGameUI.UpdateAttackDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
+
+        #endregion
     }
 }
