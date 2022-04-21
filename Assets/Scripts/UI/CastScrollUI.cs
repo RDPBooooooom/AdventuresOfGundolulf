@@ -1,7 +1,4 @@
-using Managers;
 using Scrolls;
-using Scrolls.StandardScrolls;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,7 +39,6 @@ namespace UI
         public void SelectScroll(int index)
         {
             _selectedScroll = DrawnScrolls[index];
-
             _castButton.interactable = true;
         }
 

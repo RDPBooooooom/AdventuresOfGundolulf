@@ -7,8 +7,12 @@ namespace Levels.Rooms
 {
     public class Door : MonoBehaviour
     {
+        #region Fields
+
         private Room _room;
         private static Timer _doorTimer;
+
+        #endregion
 
         #region Delegates
 
@@ -36,17 +40,6 @@ namespace Levels.Rooms
             SceneManager.activeSceneChanged += CleanUp;
         }
     
-        #endregion
-
-
-        private void SetupCleared()
-        {
-            _room.RoomCleared -= OpenDoors;
-            _room.RoomCleared -= SetupCleared;
-            _room.EnterRoom += OpenDoors;
-            _room.LeaveRoom += CloseDoors;
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (!_doorTimer.IsReady) return;
@@ -57,6 +50,19 @@ namespace Levels.Rooms
             _doorTimer.Start();
             OnDoorEntry?.Invoke(this);
         }
+
+        #endregion
+
+        #region Door Methods
+
+        private void SetupCleared()
+        {
+            _room.RoomCleared -= OpenDoors;
+            _room.RoomCleared -= SetupCleared;
+            _room.EnterRoom += OpenDoors;
+            _room.LeaveRoom += CloseDoors;
+        }
+
 
         private void OpenDoors(Room entering)
         {
@@ -84,5 +90,7 @@ namespace Levels.Rooms
             _doorTimer = null;
             SceneManager.activeSceneChanged -= CleanUp;
         }
+
+        #endregion
     }
 }

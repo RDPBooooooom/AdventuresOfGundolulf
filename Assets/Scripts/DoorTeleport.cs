@@ -8,9 +8,27 @@ using Assets.Scripts;
 
 public class DoorTeleport : MonoBehaviour, IInteractable
 {
+    #region Fields
+
     private Player _player;
     private LevelManager _levelManager;
     private List<Room> _rooms;
+
+    #endregion
+
+    #region Unity Methods
+
+    void Start()
+    {
+        _player = GameManager.Instance.Player;
+        _levelManager = GameManager.Instance.LevelManager;
+        _rooms = GameManager.Instance.LevelManager.Rooms;
+    }
+
+    #endregion
+
+    #region Effect
+
     public void Interact()
     {
         if(_levelManager.CurrentRoom.CanLeave())
@@ -18,15 +36,8 @@ public class DoorTeleport : MonoBehaviour, IInteractable
             
             Room newRoom = GetRandomRoom();
             _levelManager.CurrentRoom.Leave(newRoom);
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         }
-    }
-
-    void Start()
-    {
-        _player = GameManager.Instance.Player;
-        _levelManager = GameManager.Instance.LevelManager;
-        _rooms = GameManager.Instance.LevelManager.Rooms;
     }
 
     Room GetRandomRoom()
@@ -38,4 +49,6 @@ public class DoorTeleport : MonoBehaviour, IInteractable
         else
             return GetRandomRoom();
     }
+
+    #endregion
 }

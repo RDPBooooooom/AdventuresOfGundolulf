@@ -13,9 +13,8 @@ namespace Levels.Rooms
         [SerializeField] private RoomData _data;
         [SerializeField] private GameObject _floorPlane;
 
-        private Bounds _roomBounds;
-
         private Dictionary<Door, DoorDirections> _doors;
+        private Bounds _roomBounds;
 
         #endregion
 
@@ -55,7 +54,6 @@ namespace Levels.Rooms
         #region Events
 
         public event EnterRoomHandler EnterRoom;
-
         public event RoomClearedHandler RoomCleared;
         public event LeaveRoomHandler LeaveRoom;
 
@@ -197,18 +195,6 @@ namespace Levels.Rooms
             }
 
             return bounds;
-        }
-
-        private Bounds[] GetBounds(MeshFilter[] meshFilters)
-        {
-            Bounds[] bounds = new Bounds[meshFilters.Length];
-
-            for (int i = 0; i < meshFilters.Length; i++)
-            {
-                //meshFilters[i].mesh.bounds;
-            }
-
-            return null;
         }
 
         #endregion

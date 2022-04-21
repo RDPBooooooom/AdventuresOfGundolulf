@@ -6,15 +6,29 @@ using UnityEngine;
 
 public class HealthPotion : Item
 {
-    int healAmount = 50;
+    #region Fields
+
+    private int _healAmount = 50;
+
+    #endregion
+
+    #region Constructor
+
     public HealthPotion() : base()
     {
         Value = 10; 
     }
+
+    #endregion
+
+    #region Equip
+
     public override void Equip(LivingEntity equipOn)
     {
         base.Equip(equipOn);
-        _player.HealEntity(healAmount);
+        _player.HealEntity(_healAmount);
         Unequip(equipOn);
     }
+
+    #endregion
 }

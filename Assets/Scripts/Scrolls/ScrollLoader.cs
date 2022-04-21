@@ -1,36 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Xml.Serialization;
-using System.IO;
 using System.Xml;
 
 namespace Scrolls
 {
     public static class ScrollLoader
     {
-        public const string path = "XML/Scrolls";
+        #region Fields
 
-        private static XmlDocument scrollDataXml;
+        private static XmlDocument _scrollDataXml;
+
+        public const string _path = "XML/Scrolls";
+
+        #endregion
+
+        #region Loading
 
         public static void LoadXML()
         {
-            if (scrollDataXml != null)
+            if (_scrollDataXml != null)
             {
                 return;
             }
 
-            TextAsset xmlTextAsset = Resources.Load<TextAsset>(path);
-            scrollDataXml = new XmlDocument();
-            scrollDataXml.LoadXml(xmlTextAsset.text);
+            TextAsset xmlTextAsset = Resources.Load<TextAsset>(_path);
+            _scrollDataXml = new XmlDocument();
+            _scrollDataXml.LoadXml(xmlTextAsset.text);
         }
+
+        #endregion
+
+        #region Find Scrolls
 
         public static XmlNodeList FindAllScrolls()
         {
             LoadXML();
 
             Debug.Log("Finding all scrolls");
-            XmlNodeList scrolls = scrollDataXml.SelectNodes("/ScrollCollection/Scrolls/Scroll");
+            XmlNodeList scrolls = _scrollDataXml.SelectNodes("/ScrollCollection/Scrolls/Scroll");
 
             return scrolls;
         }
@@ -39,10 +45,14 @@ namespace Scrolls
         {
             LoadXML();
 
-            XmlNode curNode = scrollDataXml.SelectSingleNode("/ScrollCollection/Scrolls/Scroll[@Name='" + scrollName + "']");
+            XmlNode curNode = _scrollDataXml.SelectSingleNode("/ScrollCollection/Scrolls/Scroll[@Name='" + scrollName + "']");
 
             return curNode;
         }
+
+        #endregion
+
+        #region Get Nodes
 
         public static string GetDisplayName(string scrollName)
         {
@@ -73,5 +83,7 @@ namespace Scrolls
 
             return cost;
         }
+
+        #endregion
     }
 }

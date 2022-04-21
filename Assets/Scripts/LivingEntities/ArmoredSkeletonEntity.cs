@@ -7,6 +7,5 @@ namespace LivingEntities
 {
     public class ArmoredSkeletonEntity : EnemyEntity
     {
-
     }
 }

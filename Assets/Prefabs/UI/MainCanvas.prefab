@@ -1469,14 +1469,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainMenuSceneName: MainMenuScene
   _currentSceneName: InGameScene
-  HealthDisplayBar: {fileID: 6696401665998712639}
-  GoldAmount: {fileID: 6735586431988257066}
+  _healthDisplayBar: {fileID: 6696401665998712639}
+  _goldAmount: {fileID: 6735586431988257066}
   _attackValue: {fileID: 6735586431169317471}
   _intelligenceValue: {fileID: 6735586432578273958}
   _rangeValue: {fileID: 6735586431366323094}
   _hasteValue: {fileID: 6735586431332383006}
   _speedValue: {fileID: 6735586432565252715}
-  ItemDisplay: {fileID: 8677958850198962810}
+  _itemDisplay: {fileID: 8677958850198962810}
   IngamePanel: {fileID: 6735586431681317198}
   PausePanel: {fileID: 6735586432121442333}
   DeathPanel: {fileID: 1607697202}

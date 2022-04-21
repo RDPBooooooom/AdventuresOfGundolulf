@@ -1,30 +1,42 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Utils;
+using PlayerScripts;
 
 namespace Scrolls.StandardScrolls
 {
     public class Pacifist : StandardScroll
     {
-        PlayerScripts.Player player;
+        #region Fields
+        
+        private Player _player;
+
+        #endregion
+
+        #region Constructor
+
         public Pacifist() : base()
         {
-
         }
 
+        #endregion
+
+        #region Effect
+        
         protected override void ApplyEffect()
         {
-            player = Managers.GameManager.Instance.Player;
+            _player = Managers.GameManager.Instance.Player;
             MonoBehaviourDummy.Dummy.StartCoroutine(NoOuchAllowed());
             Debug.Log("Activated " + GetType().Name);
         }
 
         IEnumerator NoOuchAllowed()
         {
-            player.Pacifist = true;
+            _player.Pacifist = true;
             yield return new WaitForSeconds(10);
-            player.Pacifist = false;
+            _player.Pacifist = false;
         }
+
+        #endregion
     }
 }

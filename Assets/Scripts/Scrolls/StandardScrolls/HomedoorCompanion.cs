@@ -4,11 +4,21 @@ namespace Scrolls.StandardScrolls
 {
     public class HomedoorCompanion : StandardScroll
     {
-        GameObject Door = Resources.Load<GameObject>("Prefabs/Door");
+        #region Fields
+
+        private GameObject _door = Resources.Load<GameObject>("Prefabs/Door");
+
+        #endregion
+
+        #region Constructor
+
         public HomedoorCompanion() : base()
         {
-
         }
+
+        #endregion
+
+        #region Effect
 
         protected override void ApplyEffect()
         {
@@ -18,7 +28,9 @@ namespace Scrolls.StandardScrolls
 
         void SpawnDoor()
         {
-            GameObject.Instantiate(Door, Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position, Quaternion.identity);
+            Object.Instantiate(_door, Managers.GameManager.Instance.LevelManager.CurrentRoom.transform.position, Quaternion.identity);
         }
+
+        #endregion
     }
 }

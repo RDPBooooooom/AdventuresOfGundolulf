@@ -7,9 +7,14 @@ namespace Managers
 {
     public class EnemyManager : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private List<LivingEntity> _enemies;
         [SerializeField] private List<LivingEntity> _bossEnemies;
 
+        #endregion
+
+        #region Get Enemies
 
         public List<LivingEntity> GetRandomEnemies()
         {
@@ -23,7 +28,6 @@ namespace Managers
             return _bossEnemies;
         }
 
-
-
+        #endregion
     }
 }

@@ -12,12 +12,16 @@ public class SpellCast : Ability
 
     #endregion
 
-    #region Methods
+    #region Constructor
 
     public SpellCast(LivingEntity owner) : base(owner)
     {
         Cooldown = 100 / owner.Haste;
     }
+
+    #endregion
+
+    #region Methods
 
     public override void Use()
     {

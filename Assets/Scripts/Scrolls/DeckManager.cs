@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Levels.Rooms;
 using Managers;
 using Scrolls.BossScrolls;
@@ -17,10 +16,6 @@ namespace Scrolls
         private Deck<StandardScroll> _standardDeck;
         private Deck<BossScroll> _bossDeck;
 
-        #endregion
-
-        #region Properties
-        
         #endregion
 
         #region Constructor
@@ -83,6 +78,8 @@ namespace Scrolls
 
         #endregion
 
+        #region Triggers
+
         private void OnScrollCast(Scroll scroll)
         {
             GameManager.Instance.Player.Input.Enable();
@@ -98,5 +95,7 @@ namespace Scrolls
                 DisplayStandardDeck();
             } 
         }
+
+        #endregion
     }
 }

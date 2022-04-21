@@ -4,20 +4,19 @@ using PlayerScripts;
 using Managers;
 using Effects;
 using System.Collections.Generic;
+using UI;
 
 namespace Items
 {
     public class Item
     {
-        // Class that all items will inherit from
-
         #region Fields
 
         private Sprite _uIImage;
         private int _value;
 
         protected Player _player;
-        protected UI.InGameUI inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
+        protected InGameUI _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
 
         #endregion
 

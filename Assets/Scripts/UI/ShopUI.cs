@@ -1,13 +1,8 @@
 using Managers;
 using PlayerScripts;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System;
 using Items;
 
 namespace UserInterface
@@ -58,8 +53,7 @@ namespace UserInterface
         #endregion
 
         #region UI Methods
-
-        
+                
         public void Buy()
         {
             ShopGerald.SellToPlayer(_selectedItem);
@@ -140,6 +134,7 @@ namespace UserInterface
                 }
             }
         }
+
         #endregion
     }
 }

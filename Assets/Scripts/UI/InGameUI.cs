@@ -11,22 +11,25 @@ namespace UI
     {
         #region Fields
 
-        private Player _player;
-        private PlayerInput _input;
-
         [SerializeField] private string _mainMenuSceneName;
         [SerializeField] private string _currentSceneName;
 
-        [Header("Displays")] [SerializeField] private Image HealthDisplayBar;
-        [SerializeField] private Text GoldAmount;
+        [Header("Displays")] 
+        [SerializeField] private Image _healthDisplayBar;
+        [SerializeField] private Text _goldAmount;
 
-        [Header("Stats")] [SerializeField] private Text _attackValue;
+        [Header("Stats")] 
+        [SerializeField] private Text _attackValue;
         [SerializeField] private Text _intelligenceValue;
         [SerializeField] private Text _rangeValue;
         [SerializeField] private Text _hasteValue;
         [SerializeField] private Text _speedValue;
 
-        [Header("Items")] [SerializeField] private Image ItemDisplay;
+        [Header("Items")] 
+        [SerializeField] private Image _itemDisplay;
+
+        private Player _player;
+        private PlayerInput _input;
 
         #endregion
 
@@ -104,17 +107,17 @@ namespace UI
         #region UpdateDisplays
         public void UpdateHealthbar()
         {
-            HealthDisplayBar.fillAmount = _player.Health / 100;
+            _healthDisplayBar.fillAmount = _player.Health / 100;
         }
 
         public void UpdateGold()
         {
-            GoldAmount.text = _player.Gold.ToString();
+            _goldAmount.text = _player.Gold.ToString();
         }
 
         public void UpdateActiveItem(Sprite item)
         {
-            ItemDisplay.sprite = item;
+            _itemDisplay.sprite = item;
         }
 
         public void UpdateAttackDisplay()

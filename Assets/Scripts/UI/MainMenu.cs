@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,7 +7,7 @@ namespace UserInterface
     {
         #region Declaring variables
 
-        [SerializeField] string startSceneName;
+        [SerializeField] private string _startSceneName;
 
         #endregion
 
@@ -26,7 +24,7 @@ namespace UserInterface
 
         public void StartButton()
         {
-            SceneManager.LoadScene(startSceneName);
+            SceneManager.LoadScene(_startSceneName);
         }
 
         public void Quit()

@@ -8,13 +8,22 @@ namespace Items
 {
     public class ItemFactory
     {
+        #region Properties
 
         public List<Type> AllItemTypes { get; private set; }
+
+        #endregion
+
+        #region Constructor
 
         public ItemFactory()
         {
             AllItemTypes = ReflectiveEnumerator.GetAllItemTypes<Item>().ToList();
         }
+
+        #endregion
+
+        #region Create Instance
 
         public Item CreateInstanceOfItem(Type type)
         {
@@ -27,5 +36,7 @@ namespace Items
             types.ForEach(type => items.Add(CreateInstanceOfItem(type)));
             return items;
         }
+
+        #endregion
     }
 }

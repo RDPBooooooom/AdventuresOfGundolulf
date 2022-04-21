@@ -6,17 +6,26 @@ namespace Scrolls.StandardScrolls
 {
     public class Spinning : StandardScroll
     {
-        private Camera _cam;
-        private float _angleChangeNextStep = 1f;
-        private IEnumerator _spinCameraCoroutine;
+        #region Fields
+
         private MonoBehaviourDummy _monoDummy;
+        private Camera _cam;
+        private Quaternion _defaultRotation = Quaternion.Euler(60, 0, 0);
+        private IEnumerator _spinCameraCoroutine;
 
+        private float _angleChangeNextStep = 1f;
 
-        Quaternion _defaultRotation = Quaternion.Euler(60, 0, 0);
+        #endregion
+
+        #region Constructor
 
         public Spinning() : base()
         {
         }
+
+        #endregion
+
+        #region Effect
 
         protected override void ApplyEffect()
         {
@@ -60,5 +69,7 @@ namespace Scrolls.StandardScrolls
             //}
             _cam.transform.rotation = _defaultRotation;
         }
+
+        #endregion
     }
 }

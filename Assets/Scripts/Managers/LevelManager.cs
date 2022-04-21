@@ -12,7 +12,7 @@ namespace Managers
         #region Fields
 
         [SerializeField] private List<Room> _roomPrefabs;
-        [SerializeField] int _numberOfRooms;
+        [SerializeField] private int _numberOfRooms;
         [SerializeField] private bool _showDebug;
         [SerializeField] private int _numberOfShopRooms = 20;
         [SerializeField] private int _numberIfTreasureRooms = 1;
@@ -25,11 +25,14 @@ namespace Managers
         #region Properties
 
         public List<Room> Rooms { get; private set; }
+
         public Room CurrentRoom { get; private set; }
+
         public Camera PlayerCam { get; set; }
 
         #endregion
 
+        #region Unity Methods
 
         private void Awake()
         {
@@ -37,6 +40,10 @@ namespace Managers
                 _numberIfTreasureRooms, _distanceToBossRoom);
             PlayerCam = Camera.main;
         }
+
+        #endregion
+
+        #region Level Generation
 
         public void GenerateLevel()
         {
@@ -55,6 +62,10 @@ namespace Managers
 
             RoomSetup();
         }
+
+        #endregion
+
+        #region Room Methods
 
         private void OnLeavingRoom(Room leaving, Room toEnter)
         {
@@ -81,5 +92,7 @@ namespace Managers
         {
             CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
+
+        #endregion
     }
 }

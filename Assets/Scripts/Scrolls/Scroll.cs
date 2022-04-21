@@ -1,7 +1,3 @@
-using System.Xml;
-using System.Xml.Serialization;
-using UnityEngine;
-
 namespace Scrolls
 {
     public abstract class Scroll
@@ -28,6 +24,8 @@ namespace Scrolls
 
         #endregion
 
+        #region Constructor
+
         public Scroll()
         {
             string name = GetType().Name;
@@ -37,6 +35,10 @@ namespace Scrolls
             Cost = ScrollLoader.GetCost(name);
         }
 
+        #endregion
+
+        #region Effect
+
         public void Activate()
         {
             ActivateEvent?.Invoke(this);
@@ -45,5 +47,6 @@ namespace Scrolls
 
         protected abstract void ApplyEffect();
 
+        #endregion
     }
 }

@@ -8,14 +8,24 @@ namespace Items.Teleport
 {
     public class Swoop : TeleportItem
     {
+        #region Fields
+
         private Timer _channelingTimer;
         private ITeleporter _teleporter;
-        private int _oldTeleportRange; 
+        private int _oldTeleportRange;
+
+        #endregion
+
+        #region Constructor
 
         public Swoop() : base()
         {
             Value = 10;
         }
+
+        #endregion
+
+        #region Equip
 
         public override void Equip(LivingEntity equipOn)
         {
@@ -33,5 +43,7 @@ namespace Items.Teleport
 
             _teleporter.Teleport.TeleportRange = _oldTeleportRange;
         }
+
+        #endregion
     }
 }

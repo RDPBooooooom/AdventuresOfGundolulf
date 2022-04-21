@@ -8,12 +8,20 @@ namespace Effects
 {
     public abstract class Effect
     {
-        private float _dps;
+        #region Fields
+
         protected Timer _tickRate;
+
+        private float _dps;
+
+        #endregion
+
+        #region Properties
 
         public bool IsReady { get; private set; } = true;
 
         public float EffectChance { get; set; }
+
         public float EffectDuration { get; set; }
 
         public float DPS 
@@ -22,6 +30,10 @@ namespace Effects
             set => _dps = value; 
         }
 
+        #endregion
+
+        #region Constructor
+
         public Effect(float effectChance, float effectDuration, float tickRate = 1)
         {
             EffectChance = effectChance;
@@ -29,6 +41,10 @@ namespace Effects
 
             _tickRate = new Timer(MonoBehaviourDummy.Dummy, tickRate);
         }
+
+        #endregion
+
+        #region Effect
 
         public virtual void TryApplyEffect(LivingEntity target)
         {
@@ -54,6 +70,10 @@ namespace Effects
             }
         }
 
+        #endregion
+
+        #region Coroutine
+
         protected IEnumerator EffectTick(LivingEntity target)
         {
             float startTime = Time.time;
@@ -68,4 +88,6 @@ namespace Effects
             yield return null;
         }
     }
+
+    #endregion
 }

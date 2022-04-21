@@ -10,68 +10,83 @@ namespace Items.Stats
 {
     public class AmulettOfRegeneration : StatsItem
     {
-        private float oldHealth;
-        private int regenerateValue = 1;
-        private MonoBehaviourDummy dummy = MonoBehaviourDummy.Dummy;
-        private Room currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
-        private bool inCombat;
+        #region Fields
+
+        private MonoBehaviourDummy _dummy = MonoBehaviourDummy.Dummy;
+        private Room _currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
+
+        private float _oldHealth;
+        private int _regenerateValue = 1;
+        private bool _inCombat;
+
+        #endregion
+
+        #region Constructor
 
         public AmulettOfRegeneration() : base()
         {
             Value = 15;
         }
 
+        #endregion
+
+        #region Equip
+
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
 
-            oldHealth = equipOn.MaxHealth;
+            _oldHealth = equipOn.MaxHealth;
             equipOn.MaxHealth /= 2;
 
             if (equipOn.Health > equipOn.MaxHealth)
             {
                 equipOn.Health = equipOn.MaxHealth;
             }
-            inGameUI.UpdateHealthbar();
+            _inGameUI.UpdateHealthbar();
 
-            currentRoom.EnterRoom += OnEnterRoom;
-            currentRoom.RoomCleared += OnRoomCleared;
-            dummy.StartCoroutine(Regenerate(equipOn));
+            _currentRoom.EnterRoom += OnEnterRoom;
+            _currentRoom.RoomCleared += OnRoomCleared;
+            _dummy.StartCoroutine(Regenerate(equipOn));
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
 
-            unequipFrom.MaxHealth = oldHealth;
-            inGameUI.UpdateHealthbar();
+            unequipFrom.MaxHealth = _oldHealth;
+            _inGameUI.UpdateHealthbar();
 
-            dummy.StopCoroutine(Regenerate(unequipFrom));
-            currentRoom.EnterRoom -= OnEnterRoom;
-            currentRoom.RoomCleared -= OnRoomCleared;
+            _dummy.StopCoroutine(Regenerate(unequipFrom));
+            _currentRoom.EnterRoom -= OnEnterRoom;
+            _currentRoom.RoomCleared -= OnRoomCleared;
         }
 
+        #endregion
+
+        #region Helper Methods
 
         IEnumerator Regenerate(LivingEntity entityToHeal)
         {
-            while (!inCombat)
+            while (!_inCombat)
             {
                 yield return new WaitForSeconds(1);
-                entityToHeal.HealEntity(regenerateValue);
-                inGameUI.UpdateHealthbar();
+                entityToHeal.HealEntity(_regenerateValue);
+                _inGameUI.UpdateHealthbar();
             }
         }
 
         private void OnEnterRoom(Room entering)
         {
             if (entering is CombatRoom)
-                inCombat = true;
+                _inCombat = true;
         }
 
         private void OnRoomCleared()
         {
-            inCombat = false;
+            _inCombat = false;
         }
 
+        #endregion
     }
 }

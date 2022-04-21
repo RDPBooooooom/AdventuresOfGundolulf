@@ -18,11 +18,7 @@ namespace Levels.Rooms
 
         #region Properties
 
-        public Boolean IsLeavable { get; set; }
-
-        #endregion
-
-        #region Unity Methods
+        public bool IsLeavable { get; set; }
 
         #endregion
 
@@ -31,6 +27,7 @@ namespace Levels.Rooms
         private void CheckCleared()
         {
             if (IsLeavable) return;
+
             if (_enemies.Any(entity => entity.IsAlive))
             {
                 IsLeavable = false;

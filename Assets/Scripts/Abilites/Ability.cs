@@ -9,12 +9,11 @@ public abstract class Ability
 {
     #region Fields
 
+    private float _cooldown;
+
     protected LivingEntity _owner;
     protected Timer _cooldownTimer;
-
     protected List<Effect> _effects;
-
-    private float _cooldown;
 
     #endregion
 
@@ -36,12 +35,16 @@ public abstract class Ability
 
     public abstract void Use();
 
+    #region Constructor
+
     protected Ability(LivingEntity owner)
     {
         _owner = owner;
         _cooldownTimer = new Timer(_owner, Cooldown);
         _effects = new List<Effect>();
     }
+
+    #endregion
 
     #region Cooldown
 

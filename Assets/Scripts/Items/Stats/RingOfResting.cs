@@ -4,23 +4,34 @@ namespace Items.Stats
 {
     public class RingOfResting : StatsItem
     {
-        float oldSpeed;
+        #region Fields
+
+        private float _oldSpeed;
+
+        #endregion
+
+        #region Constructor
+
         public RingOfResting() : base()
         {
             Value = 10;
         }
 
+        #endregion
+
+        #region Equip
+
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
 
-            oldSpeed = _player.Speed;
+            _oldSpeed = _player.Speed;
             equipOn.MaxHealth += 50;
             equipOn.HealEntity(50);
-            inGameUI.UpdateHealthbar();
+            _inGameUI.UpdateHealthbar();
 
             equipOn.Speed = 0.25f; //equipOn.Speed = 0;
-            inGameUI.UpdateSpeedDisplay();
+            _inGameUI.UpdateSpeedDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -33,10 +44,12 @@ namespace Items.Stats
             {
                 unequipFrom.Health = unequipFrom.MaxHealth;
             }
-            inGameUI.UpdateHealthbar();
+            _inGameUI.UpdateHealthbar();
 
-            unequipFrom.Speed = oldSpeed;
-            inGameUI.UpdateSpeedDisplay();
+            unequipFrom.Speed = _oldSpeed;
+            _inGameUI.UpdateSpeedDisplay();
         }
+
+        #endregion
     }
 }

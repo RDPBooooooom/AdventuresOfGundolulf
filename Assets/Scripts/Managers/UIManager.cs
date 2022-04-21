@@ -7,14 +7,16 @@ public class UIManager : MonoBehaviour
 {
     #region Fields
 
-    [SerializeField] private Canvas mainCanvasPrefab;
+    [SerializeField] private Canvas _mainCanvasPrefab;
 
     #endregion
 
     #region Properties
 
     public Canvas MainCanvas { get; private set; }
+
     public CastScrollUI CastScrollUI { get; private set; }
+
     public bool DisablePausePanel { get; set; } = false;
 
     #endregion
@@ -23,7 +25,7 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        MainCanvas = Instantiate(mainCanvasPrefab);
+        MainCanvas = Instantiate(_mainCanvasPrefab);
         CastScrollUI = MainCanvas.GetComponentInChildren<CastScrollUI>(true);
     }
 

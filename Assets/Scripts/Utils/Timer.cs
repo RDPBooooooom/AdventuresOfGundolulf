@@ -1,16 +1,24 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Utils
 {
     public class Timer
     {
+        #region Fields
 
         private MonoBehaviour _owner;
 
+        #endregion
+
+        #region Properties
+
         public float Time { get; set; }
         public bool IsReady { get; private set; }
+
+        #endregion
+
+        #region Constructor
 
         public Timer(MonoBehaviour owner, float time)
         {
@@ -18,6 +26,10 @@ namespace Utils
             Time = time;
             IsReady = true;
         }
+
+        #endregion
+
+        #region Timer
 
         public void Start()
         {
@@ -32,5 +44,7 @@ namespace Utils
 
             IsReady = true;
         }
+
+        #endregion
     }
 }

@@ -6,12 +6,16 @@ using UnityEngine;
 
 public class Melee : Ability
 {
-    #region Methods
+    #region Constructor
 
     public Melee(LivingEntity owner) : base(owner)
     {
         Cooldown = 100 / owner.Haste;
     }
+
+    #endregion
+
+    #region Methods
 
     public override void Use()
     {
