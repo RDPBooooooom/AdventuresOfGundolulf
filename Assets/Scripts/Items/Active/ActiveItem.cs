@@ -12,7 +12,6 @@ namespace Items.Active
 
         protected Timer _cooldown;
         private float _cooldownTime;
-        UI.InGameUI inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
 
         #endregion
 
@@ -37,14 +36,14 @@ namespace Items.Active
         {
             base.Equip(equipOn);
             _cooldown = new Timer(equipOn, Cooldown);
-            inGameUI.UpdateActiveItem(UIImage);
+            _inGameUI.UpdateActiveItem(UIImage);
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             _cooldown = null;
-            inGameUI.UpdateActiveItem(null);
+            _inGameUI.UpdateActiveItem(null);
         }
         
         public void Use()

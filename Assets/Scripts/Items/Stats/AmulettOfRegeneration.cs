@@ -26,7 +26,7 @@ namespace Items.Stats
             base.Equip(equipOn);
             oldHealth = equipOn.MaxHealth;
             equipOn.MaxHealth /= 2;
-            inGameUI.UpdateHealthbar();
+            _inGameUI.UpdateHealthbar();
 
             currentRoom.EnterRoom += OnEnterRoom;
             currentRoom.RoomCleared += OnRoomCleared;
@@ -37,7 +37,7 @@ namespace Items.Stats
         {
             base.Unequip(unequipFrom);
             unequipFrom.MaxHealth = oldHealth;
-            inGameUI.UpdateHealthbar();
+            _inGameUI.UpdateHealthbar();
 
             dummy.StopCoroutine(Regenerate(unequipFrom));
             currentRoom.EnterRoom -= OnEnterRoom;
@@ -51,7 +51,7 @@ namespace Items.Stats
             {
                 yield return new WaitForSeconds(1);
                 entityToHeal.HealEntity(regenerateValue);
-                inGameUI.UpdateHealthbar();
+                _inGameUI.UpdateHealthbar();
             }
         }
 

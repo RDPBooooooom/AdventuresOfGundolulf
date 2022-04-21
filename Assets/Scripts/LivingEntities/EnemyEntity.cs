@@ -9,8 +9,6 @@ namespace LivingEntities
     {
         #region Declaring Variables
 
-        protected Melee _melee;
-
         [SerializeField] private GameObject _coin;
 
         #endregion
@@ -20,7 +18,6 @@ namespace LivingEntities
         protected override void Start()
         {
             base.Start();
-            _melee = new Melee(this);
             _animator = GetComponent<Animator>();
         }
         
@@ -75,17 +72,22 @@ namespace LivingEntities
         {
             Vector3 steeringForce = _steeringBehaviour.Calculate(Target.transform.position);
 
+            _animator.SetFloat(Animator.StringToHash("MoveX"), steeringForce.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), steeringForce.z, 0.1f, Time.deltaTime);
+
             Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
 
             Velocity += accel;
-
+            
             Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+            
+            Debug.DrawLine(transform.position, transform.position + Velocity, Color.magenta, Time.deltaTime);
         }
        
         public override void MoveEntity()
         {
             transform.Translate(Velocity * Time.deltaTime, Space.World);
-            transform.rotation = Quaternion.LookRotation(Velocity);
+            transform.rotation = Quaternion.LookRotation(Velocity, Vector3.up);
         }
 
         #endregion

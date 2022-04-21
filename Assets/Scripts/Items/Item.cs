@@ -2,6 +2,7 @@ using LivingEntities;
 using UnityEngine;
 using PlayerScripts;
 using Managers;
+using UI;
 
 namespace Items
 {
@@ -12,9 +13,9 @@ namespace Items
         #region Fields
 
         private Sprite _uIImage;
-        private int _value;
+        protected int _value;
         protected Player _player;
-        protected UI.InGameUI inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>();
+        protected InGameUI _inGameUI;
 
         #endregion
 
@@ -55,6 +56,7 @@ namespace Items
         {
             _uIImage = Resources.Load<Sprite>("UI/Items/" + GetType().Name);
             _player = GameManager.Instance.Player;
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
         }
 
         #endregion

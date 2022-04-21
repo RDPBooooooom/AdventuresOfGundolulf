@@ -53,14 +53,21 @@ namespace Managers
 
             Instance = this;
 
-            LevelManager = Instantiate(_levelManagerPrefab, transform);
-            LevelManager.GenerateLevel();
+            Vector3 roomPosition = Vector3.zero;
+            
+            if(_levelManagerPrefab != null)
+            {
+                LevelManager = Instantiate(_levelManagerPrefab, transform);
+                LevelManager.GenerateLevel();    
+                roomPosition = LevelManager.CurrentRoom.transform.position;
+                
+                LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
+                LevelManager.PlayerCam.transform.position += roomPosition;
+            } else {
+                Instantiate(_playerCamPrefab).transform.position = roomPosition + Vector3.up * 10;
+            }
 
-            Vector3 roomPosition = LevelManager.CurrentRoom.transform.position;
             Player = Instantiate(_playerPrefab, roomPosition, Quaternion.identity);
-
-            LevelManager.PlayerCam = Instantiate(_playerCamPrefab);
-            LevelManager.PlayerCam.transform.position += roomPosition;
         }
 
         private void Start()
@@ -73,9 +80,12 @@ namespace Managers
 
             MonoBehaviourDummy = Instantiate(_monoBehaviourDummyPrefab, transform);
 
-            DeckManager = new DeckManager();
-            DeckManager.LoadDecks();
-            LevelManager.Rooms.ForEach(room => room.EnterRoom += DeckManager.OnRoomEnter);
+            if (LevelManager != null)
+            {
+                DeckManager = new DeckManager();
+                DeckManager.LoadDecks();
+                LevelManager.Rooms.ForEach(room => room.EnterRoom += DeckManager.OnRoomEnter); 
+            }
         }
 
         #endregion

@@ -52,7 +52,6 @@ MonoBehaviour:
   _wasVisited: 0
   _data: {fileID: 11400000, guid: 29771c20ad9c6ae40a54c15cb5074c4f, type: 2}
   _floorPlane: {fileID: 799311930023910144}
-  _decorationParent: {fileID: 0}
 --- !u!1 &2397815394193587303
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +61,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 485433314054918266}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Pillars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,6 +214,10 @@ PrefabInstance:
     - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder
@@ -599,6 +602,10 @@ PrefabInstance:
     - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder
@@ -1406,6 +1413,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1715,6 +1726,10 @@ PrefabInstance:
     - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder
@@ -2093,6 +2108,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -2216,6 +2235,10 @@ PrefabInstance:
     - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_Name
       value: SM_Env_Pillar_Square_06 (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 117512, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 416452, guid: f3be1ef107933d34d9ca25815249a775, type: 3}
       propertyPath: m_RootOrder

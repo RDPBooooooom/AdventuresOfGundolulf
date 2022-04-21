@@ -13,14 +13,14 @@ namespace Items.Melee
             base.Equip(equipOn);
             equipOn.Attack -= 5;
             // Add KnockBack
-            inGameUI.UpdateAttackDisplay();
+            _inGameUI.UpdateAttackDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             unequipFrom.Attack += 5;
-            inGameUI.UpdateAttackDisplay();
+            _inGameUI.UpdateAttackDisplay();
         }
     }
 }

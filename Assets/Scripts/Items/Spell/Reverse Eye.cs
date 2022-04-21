@@ -15,14 +15,14 @@ namespace Items.Spell
             base.Equip(equipOn);
             //Add effect
             _player.Intelligence += 20;
-            inGameUI.UpdateIntelligenceDisplay();
+            _inGameUI.UpdateIntelligenceDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             _player.Intelligence -= 20;
-            inGameUI.UpdateIntelligenceDisplay();
+            _inGameUI.UpdateIntelligenceDisplay();
         }
 
     }

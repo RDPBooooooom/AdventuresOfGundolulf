@@ -13,14 +13,14 @@ namespace Items.Stats
         {
             base.Equip(equipOn);
             equipOn.Speed += 10;
-            inGameUI.UpdateSpeedDisplay();
+            _inGameUI.UpdateSpeedDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             unequipFrom.Speed -= 10;
-            inGameUI.UpdateSpeedDisplay();
+            _inGameUI.UpdateSpeedDisplay();
         }
     }
 }

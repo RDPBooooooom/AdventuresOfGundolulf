@@ -1,6 +1,6 @@
 ﻿using LivingEntities;
 
-namespace AI.FSM.EnemyStates
+namespace AI.FSM.Connections
 {
     public class StateConnectionOnDeath<T> : StateConnection<T> where T : LivingEntity
     {

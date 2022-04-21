@@ -13,14 +13,14 @@ namespace Items.Melee
             base.Equip(equipOn);
             equipOn.Attack += 10;
             //Add 20% chance for bleeding
-            inGameUI.UpdateAttackDisplay();
+            _inGameUI.UpdateAttackDisplay();
     }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
             unequipFrom.Attack -= 10;
-            inGameUI.UpdateAttackDisplay();
+            _inGameUI.UpdateAttackDisplay();
         }
     }
 }

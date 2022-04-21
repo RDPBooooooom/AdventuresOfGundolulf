@@ -84,11 +84,6 @@ namespace AI.FSM
             return steeringForce;
         }
 
-        private Vector3 CalculateWeighted(Vector3 targetPos)
-        {
-            return Vector3.zero;
-        }
-
         private Vector3 Seek(Vector3 targetPos)
         {
             Vector3 desiredVelocity =
@@ -205,7 +200,7 @@ namespace AI.FSM
             }
 
             Vector3 localPos = _owner.transform.GetChild(0).InverseTransformPoint(hitPoint);
-            float proximityMultiplier = 3f + (detectionLength - localPos.z) / detectionLength;
+            float proximityMultiplier = 5f + (detectionLength - localPos.z) / detectionLength;
 
             float perpendicularForce = Mathf.Clamp((_owner.transform.localScale.x / 2f - localPos.x), 0.1f, 1) *
                                        proximityMultiplier;
@@ -266,7 +261,7 @@ namespace AI.FSM
             for (int i = 0; i < feelers.Length; i++)
             {
                 Ray ray = feelers[i];
-                if (Physics.Raycast(ray, out RaycastHit hit, 2f, LayerMask.GetMask("Wall")))
+                if (Physics.Raycast(ray, out RaycastHit hit, 2f, LayerMask.GetMask("Obstacle")))
                 {
                     float sqrDistance = Vector3.SqrMagnitude(hit.point - ot.position);
 
@@ -290,7 +285,7 @@ namespace AI.FSM
             Vector3 toPoint = closestHit.point - _owner.transform.position;
             Vector3 overshoot = feeler - toPoint;
 
-            return overshoot.magnitude * closestHit.normal * 0.1f;
+            return closestHit.normal * (overshoot.magnitude * 0.1f);
         }
 
         #region SteeringForces
