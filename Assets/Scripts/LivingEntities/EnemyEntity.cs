@@ -72,14 +72,14 @@ namespace LivingEntities
         {
             Vector3 steeringForce = _steeringBehaviour.Calculate(Target.transform.position);
 
-            _animator.SetFloat(Animator.StringToHash("MoveX"), steeringForce.x, 0.1f, Time.deltaTime);
-            _animator.SetFloat(Animator.StringToHash("MoveZ"), steeringForce.z, 0.1f, Time.deltaTime);
-
             Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
 
             Velocity += accel;
             
             Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+            
+            _animator.SetFloat(Animator.StringToHash("MoveX"), Velocity.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), Velocity.z, 0.1f, Time.deltaTime);
             
             Debug.DrawLine(transform.position, transform.position + Velocity, Color.magenta, Time.deltaTime);
         }

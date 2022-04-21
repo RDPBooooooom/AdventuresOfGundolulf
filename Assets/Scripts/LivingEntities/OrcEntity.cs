@@ -50,7 +50,7 @@ namespace LivingEntities
         {
             base.Start();
             
-            _steeringBehaviour.ArriveOn();
+            _steeringBehaviour.SeekOn();
 
             Player player = GameManager.Instance.Player;
 
