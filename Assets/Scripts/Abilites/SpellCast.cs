@@ -1,3 +1,4 @@
+using Effects;
 using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +43,11 @@ public class SpellCast : Ability
     public void DealDamage(LivingEntity targetEntity)
     {
         targetEntity.DamageEntity(_owner.Intelligence);
+
+        foreach (Effect effect in _effects)
+        {
+            effect.TryApplyEffect(targetEntity);
+        }
     }
 
     #endregion

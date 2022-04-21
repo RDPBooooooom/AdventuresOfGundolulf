@@ -11,10 +11,10 @@ namespace Items.Stats
     public class AmulettOfRegeneration : StatsItem
     {
         private float oldHealth;
-        int regenerateValue = 1;
-        MonoBehaviourDummy dummy = MonoBehaviourDummy.Dummy;
-        Room currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
-        bool inCombat;
+        private int regenerateValue = 1;
+        private MonoBehaviourDummy dummy = MonoBehaviourDummy.Dummy;
+        private Room currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
+        private bool inCombat;
 
         public AmulettOfRegeneration() : base()
         {
@@ -24,8 +24,14 @@ namespace Items.Stats
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
+
             oldHealth = equipOn.MaxHealth;
             equipOn.MaxHealth /= 2;
+
+            if (equipOn.Health > equipOn.MaxHealth)
+            {
+                equipOn.Health = equipOn.MaxHealth;
+            }
             inGameUI.UpdateHealthbar();
 
             currentRoom.EnterRoom += OnEnterRoom;
@@ -36,6 +42,7 @@ namespace Items.Stats
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
+
             unequipFrom.MaxHealth = oldHealth;
             inGameUI.UpdateHealthbar();
 

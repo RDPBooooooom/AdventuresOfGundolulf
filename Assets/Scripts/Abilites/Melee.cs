@@ -32,6 +32,7 @@ public class Melee : Ability
         {
             LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
             _targetEntity.DamageEntity(_owner.Attack);
+
             foreach (Effect effect in _effects)
             {
                 effect.TryApplyEffect(_targetEntity);
