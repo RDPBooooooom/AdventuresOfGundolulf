@@ -12,8 +12,7 @@ namespace PlayerScripts
     public class Player : LivingEntity
     {
         #region Fields
-
-        [SerializeField] private float _interactRange;
+        
         [SerializeField] private int _gold;
 
         private PlayerInput _input;
@@ -26,6 +25,9 @@ namespace PlayerScripts
         private ActiveItem _activeItem;
 
         private int _groundLayer;
+        
+        [Header("Player")]
+        [SerializeField] private float _interactRange;
 
         private bool _stopMovement = false;
         private bool _invincible = false;
@@ -97,7 +99,7 @@ namespace PlayerScripts
 
         public delegate void UpdateHealthHandler();
 
-        public delegate void UpdateGoldHandler();
+        public delegate void UpdateGoldHandler(); 
 
         #endregion
 
@@ -125,10 +127,11 @@ namespace PlayerScripts
             SubscribeToEvents();
         }
 
-        protected void Start()
+        protected override void Start()
         {
+            base.Start();
+            _steeringBehaviour.SeekOn();
             _camera = Camera.main;
-            Animator = GetComponent<Animator>();
             _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
@@ -137,16 +140,10 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            if (IsAlive)
-            {
-                if (!StopMovement)
-                {
-                    Movement();
-                }
-
-                LookDirection();
-                GetInteractableObject();
-            }
+            UpdateVelocity();
+            MoveEntity();
+            LookDirection();
+            GetInteractableObject();
         }
 
         private void OnDestroy()
@@ -173,7 +170,6 @@ namespace PlayerScripts
         private Vector3 GetCurrentMousePosInWorldOnGround()
         {
             Vector2 mousePos = _input.Ingame.MousePosition.ReadValue<Vector2>();
-
             Ray ray = _camera.ScreenPointToRay(mousePos);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000, _groundLayer))
             {
@@ -256,7 +252,7 @@ namespace PlayerScripts
         {
             if (_activeItem != null)
             {
-                IUsable usableObject = (IUsable) _activeItem;
+                IUsable usableObject = (IUsable)_activeItem;
 
                 usableObject.Use();
             }
@@ -266,18 +262,31 @@ namespace PlayerScripts
 
         #region Input
 
-        private void Movement()
+        public override void UpdateVelocity()
         {
+            ResetVelocity();
             Vector2 inputVector = _input.Ingame.Movement.ReadValue<Vector2>();
-
-            Animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
-            Animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
+            
+            _animator.SetFloat(Animator.StringToHash("MoveX"), inputVector.x, 0.1f, Time.fixedDeltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), inputVector.y, 0.1f, Time.fixedDeltaTime);
 
             inputVector.Normalize();
-            Vector3 direction = new Vector3(inputVector.x * Speed, 0, inputVector.y * Speed);
+            Vector3 direction = new Vector3(inputVector.x * 1000, 0, inputVector.y * 1000);
 
-            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier),
-                ForceMode.VelocityChange);
+            Vector3 position = transform.position;
+
+            Vector3 steeringForce = _steeringBehaviour.Calculate(position + direction);
+
+            Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
+
+            Velocity += accel;
+
+            Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+        }
+
+        public override void MoveEntity()
+        {
+            transform.Translate(Velocity * Time.deltaTime, Space.World);
         }
 
         private void LookDirection()

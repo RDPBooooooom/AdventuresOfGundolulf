@@ -178,7 +178,6 @@ namespace Levels.Rooms
             {
                 if (!renderer.gameObject.CompareTag("Floor"))
                 {
-                    Debug.Log("Skipped: " + renderer.gameObject.name);
                     continue;
                 }
 

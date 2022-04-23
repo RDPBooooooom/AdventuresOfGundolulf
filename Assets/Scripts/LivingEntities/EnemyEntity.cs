@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Items;
 using Managers;
-using PlayerScripts;
 using UnityEngine;
-using Utils;
 using Random = System.Random;
 
 namespace LivingEntities
@@ -14,57 +9,21 @@ namespace LivingEntities
     {
         #region Declaring Variables
 
-        protected Melee _melee;
-        protected Player _player;
-        protected Rigidbody _rigidbody;
         [SerializeField] private GameObject _coin;
 
         #endregion
 
         #region Unity Methods
         // Start is called before the first frame update
-        protected void Start()
+        protected override void Start()
         {
-            _melee = new Melee(this);
-            _player = FindObjectOfType<Player>();
-            Animator = GetComponent<Animator>();
-            _rigidbody = GetComponent<Rigidbody>();
+            base.Start();
+            _animator = GetComponent<Animator>();
         }
-
-        protected void FixedUpdate()
-        {
-            if (IsAlive && !StopActions)
-            {
-                if (PlayerInRange())
-                    _melee.Use();
-
-                else
-                    FollowPlayer();
-            }
-        }
+        
         #endregion
 
         #region Methods
-        protected virtual void FollowPlayer()
-        {
-            Vector2 targetVector = new Vector2(_player.transform.position.x - transform.position.x, _player.transform.position.z - transform.position.z).normalized;
-
-            Animator.SetFloat(Animator.StringToHash("MoveX"), targetVector.x, 0.1f, Time.fixedDeltaTime);
-            Animator.SetFloat(Animator.StringToHash("MoveZ"), targetVector.x, 0.1f, Time.fixedDeltaTime);
-
-            Vector3 direction = new Vector3(targetVector.x * Speed, 0, targetVector.y * Speed);
-
-            transform.LookAt(_player.transform.position);
-            _rigidbody.AddForce(direction * (Time.fixedDeltaTime * GameConstants.SpeedMultiplier), ForceMode.VelocityChange);
-        }
-
-        protected virtual bool PlayerInRange()
-        {
-            // ToDo: Calculate more accurate!!
-
-            //Debug.Log(Vector3.Distance(transform.position, _player.transform.position));// <= MeleeAttackRange);
-            return Vector3.Distance(MeleeAttackPoint.transform.position, _player.transform.position) - 0.5f <= MeleeAttackRange;
-        }
 
         protected virtual void Drop()
         {
@@ -81,7 +40,7 @@ namespace LivingEntities
             {
                 amount = 5;
             }
-            else if (chance <= 63)
+            else if (chance <= 100) //63
             {
                 DropItem();
             }
@@ -103,6 +62,32 @@ namespace LivingEntities
 
             Vector3 position = transform.position;
             item.transform.position = new Vector3(position.x, position.y + 0.5f, position.z);
+        }
+
+        #endregion
+
+        #region Movement
+
+        public override void UpdateVelocity()
+        {
+            Vector3 steeringForce = _steeringBehaviour.Calculate(Target.transform.position);
+
+            Vector3 accel = steeringForce / Mass; // F = m * a => a = F / m. [a] = m/s^2
+
+            Velocity += accel;
+            
+            Velocity = Vector3.ClampMagnitude(Velocity, MaxSpeed);
+            
+            _animator.SetFloat(Animator.StringToHash("MoveX"), Velocity.x, 0.1f, Time.deltaTime);
+            _animator.SetFloat(Animator.StringToHash("MoveZ"), Velocity.z, 0.1f, Time.deltaTime);
+            
+            Debug.DrawLine(transform.position, transform.position + Velocity, Color.magenta, Time.deltaTime);
+        }
+       
+        public override void MoveEntity()
+        {
+            transform.Translate(Velocity * Time.deltaTime, Space.World);
+            transform.rotation = Quaternion.LookRotation(Velocity, Vector3.up);
         }
 
         #endregion

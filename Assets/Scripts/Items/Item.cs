@@ -10,13 +10,14 @@ namespace Items
 {
     public class Item
     {
+        // Class that all items will inherit from
+
         #region Fields
 
         private Sprite _uIImage;
-        private int _value;
-
+        protected int _value;
         protected Player _player;
-        protected InGameUI _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
+        protected InGameUI _inGameUI;
 
         #endregion
 
@@ -57,6 +58,7 @@ namespace Items
         {
             _uIImage = Resources.Load<Sprite>("UI/Items/" + GetType().Name);
             _player = GameManager.Instance.Player;
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
         }
 
         #endregion

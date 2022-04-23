@@ -38,6 +38,7 @@ namespace Items.Stats
 
             _oldHealth = equipOn.MaxHealth;
             equipOn.MaxHealth /= 2;
+            _inGameUI.UpdateHealthbar();
 
             if (equipOn.Health > equipOn.MaxHealth)
             {

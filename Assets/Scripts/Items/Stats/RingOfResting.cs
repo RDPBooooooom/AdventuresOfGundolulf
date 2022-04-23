@@ -30,7 +30,8 @@ namespace Items.Stats
             equipOn.HealEntity(50);
             _inGameUI.UpdateHealthbar();
 
-            equipOn.Speed = 0.25f; //equipOn.Speed = 0;
+            //equipOn.Speed = 0;
+            equipOn.Speed = 0.25f;
             _inGameUI.UpdateSpeedDisplay();
         }
 
@@ -39,6 +40,7 @@ namespace Items.Stats
             base.Unequip(unequipFrom);
 
             unequipFrom.MaxHealth -= 50;
+            _inGameUI.UpdateHealthbar();
 
             if (unequipFrom.Health > unequipFrom.MaxHealth)
             {

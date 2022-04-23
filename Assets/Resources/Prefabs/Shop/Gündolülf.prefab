@@ -878,7 +878,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: fe9944c077b86ec46a2e83c97f2e5791, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -912,6 +912,9 @@ MonoBehaviour:
   _spellCastAttackPoint: {fileID: 5149790383360427053}
   _projectilePrefab: {fileID: 4063637104488778814, guid: 55e0e82dbaa0b7e4892708c310edf924, type: 3}
   _projectileForce: 20
+  _obstacleAvoidanceMask:
+    serializedVersion: 2
+    m_Bits: 0
   _interactRange: 5
 --- !u!136 &5263268419993395426
 CapsuleCollider:

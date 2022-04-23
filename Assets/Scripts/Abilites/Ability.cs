@@ -33,6 +33,18 @@ public abstract class Ability
 
     #endregion
 
+    #region Delegates
+
+    public delegate void AbilityFinishDelegate();
+
+    #endregion
+
+    #region Events
+
+    public event AbilityFinishDelegate OnFinish;
+
+    #endregion
+
     public abstract void Use();
 
     #region Constructor
@@ -54,6 +66,11 @@ public abstract class Ability
     }
 
     #endregion
+
+    protected void OnAbilityFinshed()
+    {
+        OnFinish?.Invoke();
+    }
 
     #region Effects
 

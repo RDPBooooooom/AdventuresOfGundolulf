@@ -89,7 +89,6 @@ namespace Scrolls
         
         public void OnRoomEnter(Room entering)
         {
-            Debug.Log(ScrollLoader.GetDisplayName("PoisonGas"));
             if (!entering.WasVisited && entering is CombatRoom)
             {
                 DisplayStandardDeck();

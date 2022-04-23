@@ -24,6 +24,7 @@ public class Melee : Ability
             DoMeele();
             StartCooldown();
         }
+        OnAbilityFinshed();
     }
 
     public void DoMeele()

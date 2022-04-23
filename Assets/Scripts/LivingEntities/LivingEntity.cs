@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using AI.FSM;
 using Items;
-using PlayerScripts;
 using UnityEngine;
 using Managers;
+using PlayerScripts;
 using UI;
+using Utils;
 
 namespace LivingEntities
 {
@@ -31,10 +33,14 @@ namespace LivingEntities
         [SerializeField] private Transform _spellCastAttackPoint;
         [SerializeField] private GameObject _projectilePrefab;
         [SerializeField] private float _projectileForce;
+        
+        [Header("Obstacle Avoidance")]
+        [SerializeField] private LayerMask _obstacleAvoidanceMask;
+        protected SteeringBehaviour _steeringBehaviour;
 
-        private Animator _animator;
+        protected Animator _animator;
         private InGameUI _inGameUI;
-        private Immunities _immunity;
+        protected Immunities _immunity;
         private bool _stopActions;
 
         #endregion
@@ -86,19 +92,19 @@ namespace LivingEntities
         public bool IsAlive
         {
             get => _isAlive;
-            protected set => _isAlive = value;
+            set => _isAlive = value;
         }
 
         public Transform MeleeAttackPoint
         {
             get => _meleeAttackPoint;
-            protected set => _meleeAttackPoint = value;
+            set => _meleeAttackPoint = value;
         }
 
         public float MeleeAttackRange
         {
             get => _meleeAttackRange;
-            protected set => _meleeAttackRange = value;
+            set => _meleeAttackRange = value;
         }
 
         public LayerMask HostileEntityLayers
@@ -125,6 +131,11 @@ namespace LivingEntities
             protected set => _projectileForce = value;
         }
 
+        public LayerMask CollisionDetectionMask
+        {
+            get => _obstacleAvoidanceMask;
+            private set => _obstacleAvoidanceMask = value;
+        }
         public Animator Animator
         {
             get => _animator;
@@ -144,6 +155,18 @@ namespace LivingEntities
         }
 
         private List<Item> EquippedItems {  get; set; }
+        public LivingEntity Target { get; set; }
+        
+        
+        
+        public Vector3 Velocity { get; protected set; }
+        public Vector3 HeadingDirection { get; protected set; }
+
+        // Sollten nur wenn nötig geändert werden
+        public float MaxSpeed => Speed;
+        public float Mass { get; protected set; }
+        public float MaxForce { get; set; }
+        public float MaxTurnRate { get; set; }
 
         #endregion
 
@@ -169,10 +192,18 @@ namespace LivingEntities
             Health = _maxHealth;
             
             EquippedItems = new List<Item>();
+            _animator = GetComponent<Animator>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
+            _steeringBehaviour = new SteeringBehaviour(this);
+            
+            Velocity = Vector3.zero;
+            MaxForce = Speed * GameConstants.SpeedMultiplier;
+            MaxTurnRate = 10f;
+            Mass = 1f;
+            
             _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
         }
 
@@ -257,9 +288,21 @@ namespace LivingEntities
             EquippedItems.Remove(item);
             item.Unequip(this);
         }
-
         #endregion
 
+        #region Movement
+
+        public abstract void MoveEntity();
+
+        public abstract void UpdateVelocity();
+
+        public void ResetVelocity()
+        {
+            Velocity = Vector3.zero;
+        }
+
+        #endregion
+        
         [Flags]
         public enum Immunities
         {

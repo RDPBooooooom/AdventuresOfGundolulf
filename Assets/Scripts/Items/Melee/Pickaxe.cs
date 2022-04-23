@@ -34,6 +34,7 @@ namespace Items.Melee
             }*/
 
             equipOn.Attack += 10;
+            //Add effect
             _inGameUI.UpdateAttackDisplay();
         }
 
