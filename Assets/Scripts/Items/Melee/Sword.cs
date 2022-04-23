@@ -35,7 +35,6 @@ namespace Items.Melee
 
             equipOn.Attack += 10;
             //Add 20% chance for bleeding
-            _inGameUI.UpdateAttackDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -45,7 +44,6 @@ namespace Items.Melee
             _melee.Melee.RemoveEffect(_bleeding);
 
             unequipFrom.Attack -= 10;
-            _inGameUI.UpdateAttackDisplay();
         }
 
         #endregion

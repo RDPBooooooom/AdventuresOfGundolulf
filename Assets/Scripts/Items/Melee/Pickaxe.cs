@@ -35,7 +35,6 @@ namespace Items.Melee
 
             equipOn.Attack += 10;
             //Add effect
-            _inGameUI.UpdateAttackDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -44,7 +43,6 @@ namespace Items.Melee
 
             _livingStatueEntity.Immunity |= LivingEntity.Immunities.ImmuneToMelee;
             unequipFrom.Attack -= 10;
-            _inGameUI.UpdateAttackDisplay();
         }
 
         #endregion

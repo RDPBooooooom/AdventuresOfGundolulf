@@ -17,7 +17,6 @@ namespace PlayerScripts
 
         private PlayerInput _input;
         private Camera _camera;
-        private Rigidbody _rigidbody;
 
         private Teleport _teleport;
         private Melee _melee;
@@ -45,7 +44,7 @@ namespace PlayerScripts
             set
             {
                 _gold = value;
-                UpdateGoldEvent?.Invoke();
+                OnUpdateGoldEvent?.Invoke();
             }
         }
 
@@ -93,22 +92,26 @@ namespace PlayerScripts
             set => _notWeeny = value;
         }
 
-        #endregion
 
-        #region Delegates
-
-        public delegate void UpdateHealthHandler();
-
-        public delegate void UpdateGoldHandler(); 
+        public ActiveItem ActiveItem
+        {
+            get => _activeItem;
+            private set
+            {
+                _activeItem = value;
+                OnUpdateActiveItemEvent?.Invoke();
+            }
+        }
 
         #endregion
 
         #region Events
 
-        public event UpdateHealthHandler UpdateHealthEvent;
-        public event UpdateGoldHandler UpdateGoldEvent;
+        public event StatUpdateHandler OnUpdateGoldEvent;
+        public event StatUpdateHandler OnUpdateActiveItemEvent;
 
         #endregion
+        
 
         #region Unity Methods
 
@@ -120,7 +123,7 @@ namespace PlayerScripts
             _teleport = new Teleport(this, this);
             _melee = new Melee(this);
             _spellCast = new SpellCast(this);
-            _activeItem = null;
+            ActiveItem = null;
 
             _groundLayer = LayerMask.GetMask("Floor");
 
@@ -132,10 +135,9 @@ namespace PlayerScripts
             base.Start();
             _steeringBehaviour.SeekOn();
             _camera = Camera.main;
-            _rigidbody = GetComponent<Rigidbody>();
 
             _input.Ingame.Enable();
-            UpdateHealthEvent?.Invoke();
+            UpdateStats();
         }
 
         protected void FixedUpdate()
@@ -250,9 +252,9 @@ namespace PlayerScripts
 
         private void UseItem()
         {
-            if (_activeItem != null)
+            if (ActiveItem != null)
             {
-                IUsable usableObject = (IUsable)_activeItem;
+                IUsable usableObject = (IUsable)ActiveItem;
 
                 usableObject.Use();
             }
@@ -375,8 +377,6 @@ namespace PlayerScripts
         public override void HealEntity(float amount)
         {
             base.HealEntity(amount);
-
-            UpdateHealthEvent?.Invoke();
         }
 
         public override void DamageEntity(float amount)
@@ -384,9 +384,7 @@ namespace PlayerScripts
             if(!_invincible)
             {
                 base.DamageEntity(amount);
-                UpdateHealthEvent?.Invoke();
             }
-
         }
 
         #endregion

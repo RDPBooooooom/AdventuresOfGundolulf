@@ -28,11 +28,9 @@ namespace Items.Stats
             _oldSpeed = _player.Speed;
             equipOn.MaxHealth += 50;
             equipOn.HealEntity(50);
-            _inGameUI.UpdateHealthbar();
 
             //equipOn.Speed = 0;
             equipOn.Speed = 0.25f;
-            _inGameUI.UpdateSpeedDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -40,16 +38,13 @@ namespace Items.Stats
             base.Unequip(unequipFrom);
 
             unequipFrom.MaxHealth -= 50;
-            _inGameUI.UpdateHealthbar();
 
             if (unequipFrom.Health > unequipFrom.MaxHealth)
             {
                 unequipFrom.Health = unequipFrom.MaxHealth;
             }
-            _inGameUI.UpdateHealthbar();
 
             unequipFrom.Speed = _oldSpeed;
-            _inGameUI.UpdateSpeedDisplay();
         }
 
         #endregion

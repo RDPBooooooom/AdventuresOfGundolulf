@@ -26,7 +26,6 @@ namespace Items.Spell
             ISpellcaster spellcaster = (ISpellcaster) equipOn;
 
             equipOn.Range -= 175;
-            _inGameUI.UpdateRangeDisplay();
         }
 
 
@@ -34,7 +33,6 @@ namespace Items.Spell
         {
             base.Unequip(unequipFrom);
             unequipFrom.Range += 175;
-            _inGameUI.UpdateRangeDisplay();
         }
 
         #endregion

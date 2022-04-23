@@ -21,7 +21,6 @@ namespace Items.Spell
 
             _player.SpellCastAttackPoint.Rotate(_player.transform.position, 180);
             _player.Intelligence += 20;
-            _inGameUI.UpdateIntelligenceDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -30,7 +29,6 @@ namespace Items.Spell
 
             _player.SpellCastAttackPoint.Rotate(_player.transform.position, -180);
             _player.Intelligence -= 20;
-            _inGameUI.UpdateIntelligenceDisplay();
         }
 
         #endregion

@@ -53,15 +53,24 @@ namespace UI
         private void Start()
         {
             _player = GameManager.Instance.Player;
-            _player.UpdateHealthEvent += UpdateHealthbar;
-            _player.UpdateGoldEvent += UpdateGold;
+            
+            _player.OnUpdateHealthEvent += UpdateHealthbar;
+            _player.OnUpdateAttackEvent += UpdateAttackDisplay;
+            _player.OnUpdateIntelligenceEvent += UpdateIntelligenceDisplay;
+            _player.OnUpdateRangeEvent += UpdateRangeDisplay;
+            _player.OnUpdateHasteEvent += UpdateHasteDisplay;
+            _player.OnUpdateSpeedEvent += UpdateSpeedDisplay;
+            _player.OnUpdateGoldEvent += UpdateGold;
+            _player.OnUpdateActiveItemEvent += UpdateActiveItem;
+            
             _input.UI.Enable();
 
-            _attackValue.text = "ATT: " + _player.Attack.ToString();
-            _intelligenceValue.text = "INT: " + _player.Intelligence.ToString();
-            _rangeValue.text = "RA: " + _player.Range.ToString();
-            _hasteValue.text = "HA: " + _player.Haste.ToString();
-            _speedValue.text = "SPE: " + _player.Speed.ToString();
+            UpdateAttackDisplay();
+            UpdateIntelligenceDisplay();
+            UpdateRangeDisplay();
+            UpdateHasteDisplay();
+            UpdateSpeedDisplay();
+            UpdateActiveItem();
         }
 
         #endregion
@@ -115,9 +124,9 @@ namespace UI
             _goldAmount.text = _player.Gold.ToString();
         }
 
-        public void UpdateActiveItem(Sprite item)
+        public void UpdateActiveItem()
         {
-            _itemDisplay.sprite = item;
+            _itemDisplay.sprite = _player.ActiveItem.UIImage;
         }
 
         public void UpdateAttackDisplay()

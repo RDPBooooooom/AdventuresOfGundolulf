@@ -45,7 +45,7 @@ namespace Items
 
         private void Start()
         {
-            _player = GameManager.Instance.Player;
+            _player = GameManager.Instance?.Player;
 
             if(Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit, LayerMask.GetMask("Floor")))
             {

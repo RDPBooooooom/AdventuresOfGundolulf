@@ -39,7 +39,6 @@ namespace LivingEntities
         protected SteeringBehaviour _steeringBehaviour;
 
         protected Animator _animator;
-        private InGameUI _inGameUI;
         protected Immunities _immunity;
         private bool _stopActions;
 
@@ -50,43 +49,71 @@ namespace LivingEntities
         public float MaxHealth
         {
             get => _maxHealth;
-            set => _maxHealth = value;
+            set
+            {
+                _maxHealth = value;
+                OnUpdateMaxHealthEvent?.Invoke();
+            }
         }
 
         public float Health
         {
-            get => _health; 
-            set => _health = value;
+            get => _health;
+            set
+            {
+                _health = value;
+                OnUpdateHealthEvent?.Invoke();
+            }
         }
 
         public int Attack
         {
             get => _attack;
-            set => _attack = value;  
+            set
+            {
+                _attack = value;
+                OnUpdateAttackEvent?.Invoke();
+            }
         }
 
         public int Intelligence
         {
             get => _intelligence;
-            set => _intelligence = value;
+            set
+            {
+                _intelligence = value;
+                OnUpdateIntelligenceEvent?.Invoke();
+            }
         }
 
         public float Range
         {
             get => _range;
-            set => _range = value;
+            set
+            {
+                _range = value;
+                OnUpdateRangeEvent?.Invoke();
+            }
         }
 
         public float Haste
         {
             get => _haste;
-            set => _haste = value;
+            set
+            {
+                _haste = value;
+                OnUpdateHasteEvent?.Invoke();
+            }
         }
 
         public float Speed
         {
             get => _speed;
-            set => _speed = value;
+            set
+            {
+                _speed = value;
+                OnUpdateSpeedEvent?.Invoke();
+            }
         }
 
         public bool IsAlive
@@ -173,11 +200,20 @@ namespace LivingEntities
         #region Delegates
 
         public delegate void OnDeathEventHandler();
-
+        
+        public delegate void StatUpdateHandler();
+        
         #endregion
 
         #region Events
 
+        public event StatUpdateHandler OnUpdateMaxHealthEvent;
+        public event StatUpdateHandler OnUpdateHealthEvent;
+        public event StatUpdateHandler OnUpdateAttackEvent;
+        public event StatUpdateHandler OnUpdateIntelligenceEvent;
+        public event StatUpdateHandler OnUpdateRangeEvent;
+        public event StatUpdateHandler OnUpdateHasteEvent;
+        public event StatUpdateHandler OnUpdateSpeedEvent;
         public event OnDeathEventHandler OnDeathEvent;
 
         #endregion
@@ -203,8 +239,6 @@ namespace LivingEntities
             MaxForce = Speed * GameConstants.SpeedMultiplier;
             MaxTurnRate = 10f;
             Mass = 1f;
-            
-            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
         }
 
         #endregion
@@ -273,6 +307,17 @@ namespace LivingEntities
         private void OnDrawGizmosSelected()
         {
             Gizmos.DrawWireSphere(MeleeAttackPoint.position, MeleeAttackRange);
+        }
+
+        public void UpdateStats()
+        {
+            OnUpdateMaxHealthEvent?.Invoke();
+            OnUpdateHealthEvent?.Invoke();
+            OnUpdateAttackEvent?.Invoke();
+            OnUpdateIntelligenceEvent?.Invoke();
+            OnUpdateRangeEvent?.Invoke();
+            OnUpdateHasteEvent?.Invoke();
+            OnUpdateSpeedEvent?.Invoke();
         }
 
         #region Equip Methods

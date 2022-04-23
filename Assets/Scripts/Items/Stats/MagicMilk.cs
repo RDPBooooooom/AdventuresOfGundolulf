@@ -20,7 +20,6 @@ namespace Items.Stats
             base.Equip(equipOn);
 
             equipOn.Speed += 10;
-            _inGameUI.UpdateSpeedDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -28,7 +27,6 @@ namespace Items.Stats
             base.Unequip(unequipFrom);
 
             unequipFrom.Speed -= 10;
-            _inGameUI.UpdateSpeedDisplay();
         }
 
         #endregion

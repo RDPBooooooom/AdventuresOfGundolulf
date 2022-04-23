@@ -27,14 +27,12 @@ namespace Scrolls.StandardScrolls
             Debug.Log("Activated " + GetType().Name);
             _player = Managers.GameManager.Instance.Player;
             _player.Speed -= _factor;
-            inGameUI.UpdateSpeedDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
             _player.Speed += _factor;
-            inGameUI.UpdateSpeedDisplay();
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
 

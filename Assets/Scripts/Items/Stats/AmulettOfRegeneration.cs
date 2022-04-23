@@ -12,8 +12,8 @@ namespace Items.Stats
     {
         #region Fields
 
-        private MonoBehaviourDummy _dummy = MonoBehaviourDummy.Dummy;
-        private Room _currentRoom = GameManager.Instance.LevelManager.CurrentRoom;
+        private MonoBehaviourDummy _dummy;
+        private Room _currentRoom;
 
         private float _oldHealth;
         private int _regenerateValue = 1;
@@ -26,6 +26,8 @@ namespace Items.Stats
         public AmulettOfRegeneration() : base()
         {
             Value = 15;
+            _currentRoom = GameManager.Instance?.LevelManager?.CurrentRoom;
+            _dummy = MonoBehaviourDummy.Dummy;
         }
 
         #endregion
@@ -38,13 +40,12 @@ namespace Items.Stats
 
             _oldHealth = equipOn.MaxHealth;
             equipOn.MaxHealth /= 2;
-            _inGameUI.UpdateHealthbar();
+
 
             if (equipOn.Health > equipOn.MaxHealth)
             {
                 equipOn.Health = equipOn.MaxHealth;
             }
-            _inGameUI.UpdateHealthbar();
 
             _currentRoom.EnterRoom += OnEnterRoom;
             _currentRoom.RoomCleared += OnRoomCleared;
@@ -56,7 +57,6 @@ namespace Items.Stats
             base.Unequip(unequipFrom);
 
             unequipFrom.MaxHealth = _oldHealth;
-            _inGameUI.UpdateHealthbar();
 
             _dummy.StopCoroutine(Regenerate(unequipFrom));
             _currentRoom.EnterRoom -= OnEnterRoom;
@@ -73,7 +73,6 @@ namespace Items.Stats
             {
                 yield return new WaitForSeconds(1);
                 entityToHeal.HealEntity(_regenerateValue);
-                _inGameUI.UpdateHealthbar();
             }
         }
 

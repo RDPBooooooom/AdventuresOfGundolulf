@@ -45,7 +45,6 @@ namespace Items.Active
             base.Equip(equipOn);
 
             _cooldown = new Timer(equipOn, Cooldown);
-            _inGameUI.UpdateActiveItem(UIImage);
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -53,7 +52,6 @@ namespace Items.Active
             base.Unequip(unequipFrom);
 
             _cooldown = null;
-            _inGameUI.UpdateActiveItem(null);
         }
 
         #endregion

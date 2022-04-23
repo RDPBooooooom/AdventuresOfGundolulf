@@ -21,7 +21,6 @@ namespace Items.Melee
 
             equipOn.Attack -= 5;
             // Add KnockBack
-            _inGameUI.UpdateAttackDisplay();
         }
 
         public override void Unequip(LivingEntity unequipFrom)
@@ -29,7 +28,6 @@ namespace Items.Melee
             base.Unequip(unequipFrom);
 
             unequipFrom.Attack += 5;
-            _inGameUI.UpdateAttackDisplay();
         }
 
         #endregion
