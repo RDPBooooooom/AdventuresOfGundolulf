@@ -262,6 +262,10 @@ namespace LivingEntities
             _animator.SetTrigger(AnimatorStrings.GetHitString);
 
             Health -= amount;
+            if (this == GameManager.Instance.Player)
+                GameManager.Instance.AudioManager.PlayOuchSound();
+            else
+                GameManager.Instance.AudioManager.PlayOuchOrcSound();
             if (Health <= 0)
             {
                 OnDeathEvent?.Invoke();

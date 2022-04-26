@@ -15,6 +15,7 @@ namespace Managers
         [SerializeField] private EnemyManager _enemyManagerPrefab;
         [SerializeField] private UIManager _uIManagerPrefab;
         [SerializeField] private ItemManager _itemManagerPrefab;
+        [SerializeField] private AudioManager _audioManagerPrefab;
         [SerializeField] private MonoBehaviourDummy _monoBehaviourDummyPrefab;
         [SerializeField] private Player _playerPrefab;
         [SerializeField] private Camera _playerCamPrefab;
@@ -34,6 +35,8 @@ namespace Managers
         public ItemManager ItemManager { get; private set; }
 
         public DeckManager DeckManager { get; private set; }
+
+        public AudioManager AudioManager { get; private set; }
 
         public Player Player { get; private set; }
 
@@ -73,6 +76,8 @@ namespace Managers
         private void Start()
         {
             EnemyManager = Instantiate(_enemyManagerPrefab, transform);
+
+            AudioManager = Instantiate(_audioManagerPrefab, transform);
 
             UIManager = Instantiate(_uIManagerPrefab, transform);
 

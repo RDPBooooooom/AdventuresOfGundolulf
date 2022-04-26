@@ -50,6 +50,7 @@ public class Teleport : Ability
         if (IsReady)
         {
             DoTeleport();
+            GameManager.Instance.AudioManager.PlayteleportSound();
         }
     }
 
