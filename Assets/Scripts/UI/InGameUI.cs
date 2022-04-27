@@ -38,6 +38,7 @@ namespace UI
         [SerializeField] public GameObject IngamePanel;
         [SerializeField] public GameObject PausePanel;
         [SerializeField] public GameObject DeathPanel;
+        [SerializeField] public Text _textInteractable;
 
         #endregion
 

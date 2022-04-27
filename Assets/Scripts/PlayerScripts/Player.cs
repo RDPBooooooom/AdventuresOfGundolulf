@@ -3,6 +3,7 @@ using Assets.Scripts.Interfaces;
 using Items.Active;
 using LivingEntities;
 using Managers;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
@@ -33,6 +34,8 @@ namespace PlayerScripts
         private bool _pacifist = false;
         private bool _weeny = false;
         private bool _notWeeny = false;
+
+        private InGameUI _inGameUI;
 
         #endregion
 
@@ -137,13 +140,24 @@ namespace PlayerScripts
             _camera = Camera.main;
 
             _input.Ingame.Enable();
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
             UpdateStats();
         }
 
         protected void FixedUpdate()
         {
-            UpdateVelocity();
-            MoveEntity();
+            if (StopActions)
+            {
+                _input.Ingame.Disable();
+                return;
+            }
+
+            if (!_stopMovement)
+            {
+                UpdateVelocity();
+                MoveEntity();
+            }
+            
             LookDirection();
             GetInteractableObject();
         }
@@ -221,11 +235,21 @@ namespace PlayerScripts
                 }
             }
 
+            if (closestInteractable != null)
+            {
+                _inGameUI._textInteractable.gameObject.SetActive(true);
+            }
+            else
+            {
+                _inGameUI._textInteractable.gameObject.SetActive(false);
+            }
+
             return closestInteractable;
         }
 
         /// <summary>
-        /// Gets called if the animation for picking up an item is finished
+        /// Gets called by using an animation event in the animator after the animation for picking up an item is finished
+        /// Not allowed to Rename! -> PickingUpFinished
         /// </summary>
         private void PickingUpFinished()
         {
@@ -238,8 +262,6 @@ namespace PlayerScripts
 
         private void InteractWithObject()
         {
-            // ToDo: Display Text if you can interact with something
-
             IInteractable interactableObject = GetInteractableObject();
 
             if (interactableObject == null)
@@ -340,9 +362,12 @@ namespace PlayerScripts
 
         private void PerformTeleport(InputAction.CallbackContext context)
         {
-            Debug.Log("Teleport Input performed");
-            _teleport.TargetPos = GetCurrentMousePosInWorldOnGround();
-            _teleport.Use();
+            if (!_stopMovement)
+            {
+                Debug.Log("Teleport Input performed");
+                _teleport.TargetPos = GetCurrentMousePosInWorldOnGround();
+                _teleport.Use();
+            }
         }
 
         private void PerformInteract(InputAction.CallbackContext context)

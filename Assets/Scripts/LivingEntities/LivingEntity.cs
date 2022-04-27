@@ -278,18 +278,20 @@ namespace LivingEntities
 
         protected virtual void OnDeath()
         {
+            StopActions = true;
             IsAlive = false;
             Animator.SetTrigger(AnimatorStrings.DeathString);
 
-            // Disabing all colliders if the entity died to prevent blocking the player while death animation
-            foreach (Collider collider in GetComponents<Collider>())
-            {
-                collider.enabled = false;
-            }
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+            rigidbody.useGravity = false;
+            rigidbody.freezeRotation = true;
+            rigidbody.detectCollisions = false;
+            rigidbody.velocity = Vector3.zero;
         }
 
         /// <summary>
-        /// Gets called after the death animation is finished
+        /// Gets called by using an animation event in the animator after the death animation is finished
+        /// Not allowed to Rename! -> DestroyOnDeath
         /// </summary>
         private void DestroyOnDeath()
         {

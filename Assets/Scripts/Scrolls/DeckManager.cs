@@ -36,10 +36,10 @@ namespace Scrolls
         {
             //TODO: Load deck from MainMenu(or where ever)
             _standardDeck.AddScroll(new HomedoorCompanion());
-            _standardDeck.AddScroll(new HelloDarkness());
             _standardDeck.AddScroll(new UnknownPotion());
-
             _standardDeck.AddScroll(new Weeny());
+
+            //_standardDeck.AddScroll(new HelloDarkness());
             _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
             _standardDeck.AddScroll(new Pacifist());
             _standardDeck.AddScroll(new AttackDown());

@@ -38,6 +38,15 @@ public class Melee : Ability
         foreach (Collider hostileEntity in hostileEntitiesHit)
         {
             LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
+
+            /*if (_targetEntity is LivingStatueEntity ) // && pickaxe equiped
+            {
+                _targetEntity.DamageEntity(_owner.Attack * 2);
+            }
+            else
+            {
+                
+            }*/
             _targetEntity.DamageEntity(_owner.Attack);
 
             foreach (Effect effect in _effects)
