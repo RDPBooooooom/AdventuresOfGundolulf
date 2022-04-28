@@ -128,7 +128,7 @@ namespace UI
         public void UpdateActiveItem()
         {
             _itemDisplay.sprite = _player.ActiveItem?.UIImage;
-            
+            Debug.Log("Updated Active item display");
         }
 
         public void UpdateAttackDisplay()

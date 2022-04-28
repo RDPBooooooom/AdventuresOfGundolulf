@@ -30,7 +30,7 @@ namespace Items.Stats
             equipOn.HealEntity(50);
 
             //equipOn.Speed = 0;
-            equipOn.Speed = 0.25f;
+            equipOn.Speed = 5f;
         }
 
         public override void Unequip(LivingEntity unequipFrom)

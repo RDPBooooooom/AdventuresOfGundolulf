@@ -44,6 +44,7 @@ namespace Items.Active
         public override void Equip(LivingEntity equipOn)
         {
             base.Equip(equipOn);
+            _player.ActiveItem = this;
 
             _cooldown = new Timer(equipOn, Cooldown);
 
@@ -67,7 +68,8 @@ namespace Items.Active
 
             if (unequipFrom is Player)
             {
-                _player.ActiveItem = null;
+                if(_player.ActiveItem == this)//to make sure you don't remove a newly equipped active item replacing a previous
+                    _player.ActiveItem = null;
             }
             
             _cooldown = null;

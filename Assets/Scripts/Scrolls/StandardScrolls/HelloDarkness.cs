@@ -1,5 +1,6 @@
 using UnityEngine;
 using Levels.Rooms;
+using Random = System.Random;
 
 namespace Scrolls.StandardScrolls
 {
@@ -8,6 +9,7 @@ namespace Scrolls.StandardScrolls
         #region Fields
 
         GameObject _fog = Resources.Load<GameObject>("Prefabs/Fog");
+        GameObject _gündololülfsVision = Resources.Load<GameObject>("Prefabs/GündololülfsVision");
         GameObject _fogger;
         Room _currentRoom;
 
@@ -27,8 +29,17 @@ namespace Scrolls.StandardScrolls
         {
             _currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
             _currentRoom.LeaveRoom += OnLeavingRoom;
-            _fogger = Object.Instantiate(_fog, new Vector3(_currentRoom.transform.position.x, 6.5f ,_currentRoom.transform.position.z), Quaternion.identity);
-            Debug.Log("Activated " + GetType().Name);
+            Random random = new Random();
+            if(random.Next(0,100)<101)
+            {
+                _fogger = Object.Instantiate(_gündololülfsVision);
+                Debug.Log("Activated Gündololülfs Vision");
+            }
+            else
+            {
+                _fogger = Object.Instantiate(_fog);
+                Debug.Log("Activated " + GetType().Name);
+            }
         }
 
         private void OnLeavingRoom(Room leaving, Room toEnter)
