@@ -20,6 +20,12 @@ namespace Levels.Rooms
 
         public bool IsLeavable { get; set; }
 
+        public List<LivingEntity> Enemies
+        {   
+            get => _enemies;
+            protected set => _enemies = value; 
+        }
+
         #endregion
 
         #region Room Methods

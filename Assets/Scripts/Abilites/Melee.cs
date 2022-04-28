@@ -7,6 +7,10 @@ using Managers;
 
 public class Melee : Ability
 {
+    public delegate void MeleeDelegate(LivingEntity target, int damage);
+
+    public event MeleeDelegate OnDamage;
+
     #region Constructor
 
     public Melee(LivingEntity owner) : base(owner)
@@ -38,16 +42,12 @@ public class Melee : Ability
         foreach (Collider hostileEntity in hostileEntitiesHit)
         {
             LivingEntity _targetEntity = hostileEntity.GetComponent<LivingEntity>();
-
-            /*if (_targetEntity is LivingStatueEntity ) // && pickaxe equiped
-            {
-                _targetEntity.DamageEntity(_owner.Attack * 2);
-            }
-            else
-            {
-                
-            }*/
             _targetEntity.DamageEntity(_owner.Attack);
+
+            if (_targetEntity is LivingStatueEntity)
+            {
+                OnDamage?.Invoke(_targetEntity, _owner.Attack);
+            }
 
             foreach (Effect effect in _effects)
             {

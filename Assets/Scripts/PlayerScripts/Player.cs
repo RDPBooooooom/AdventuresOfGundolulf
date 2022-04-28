@@ -99,7 +99,7 @@ namespace PlayerScripts
         public ActiveItem ActiveItem
         {
             get => _activeItem;
-            private set
+            set
             {
                 _activeItem = value;
                 OnUpdateActiveItemEvent?.Invoke();
@@ -138,14 +138,15 @@ namespace PlayerScripts
             base.Start();
             _steeringBehaviour.SeekOn();
             _camera = Camera.main;
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
 
             _input.Ingame.Enable();
-            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
             UpdateStats();
         }
 
         protected void FixedUpdate()
         {
+            Debug.Log("Active Item: " + ActiveItem);
             if (StopActions)
             {
                 _input.Ingame.Disable();

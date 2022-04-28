@@ -1,3 +1,4 @@
+using Interfaces;
 using LivingEntities;
 
 namespace Items.Melee
@@ -5,8 +6,6 @@ namespace Items.Melee
     public class Pickaxe : MeleeItem
     {
         #region Fields
-
-        LivingStatueEntity _livingStatueEntity;
 
         #endregion
 
@@ -25,24 +24,25 @@ namespace Items.Melee
         {
             base.Equip(equipOn);
 
-            _livingStatueEntity.Immunity ^= LivingEntity.Immunities.ImmuneToMelee;
-
-            /*
-            if ()
-            {
-                _player.Attack *= 2;
-            }*/
+            if (!(equipOn.GetType() == typeof(IMelee))) 
+            { 
+                IMelee iMelee = (IMelee)equipOn;
+                iMelee.Melee.OnDamage += DamageEntity;
+            }
 
             equipOn.Attack += 10;
-            //Add effect
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
 
-            _livingStatueEntity.Immunity |= LivingEntity.Immunities.ImmuneToMelee;
             unequipFrom.Attack -= 10;
+        }
+
+        private void DamageEntity(LivingEntity target, int damage)
+        {
+            target.DamageEntity(damage);
         }
 
         #endregion

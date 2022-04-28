@@ -1,6 +1,7 @@
 using System.Collections;
 using LivingEntities;
 using Managers;
+using PlayerScripts;
 using UnityEngine;
 using Utils;
 
@@ -45,12 +46,30 @@ namespace Items.Active
             base.Equip(equipOn);
 
             _cooldown = new Timer(equipOn, Cooldown);
+
+            if (equipOn is Player)
+            {
+                if (_player.ActiveItem == null)
+                {
+                    _player.ActiveItem = this;
+                }
+                else
+                {
+                    _player.ActiveItem.Unequip(equipOn);
+                    _player.ActiveItem = this;
+                }
+            }
         }
 
         public override void Unequip(LivingEntity unequipFrom)
         {
             base.Unequip(unequipFrom);
 
+            if (unequipFrom is Player)
+            {
+                _player.ActiveItem = null;
+            }
+            
             _cooldown = null;
         }
 

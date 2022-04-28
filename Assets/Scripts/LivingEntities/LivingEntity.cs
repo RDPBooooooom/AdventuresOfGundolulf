@@ -282,10 +282,11 @@ namespace LivingEntities
             IsAlive = false;
             Animator.SetTrigger(AnimatorStrings.DeathString);
 
+            
             Rigidbody rigidbody = GetComponent<Rigidbody>();
+            rigidbody.detectCollisions = false;
             rigidbody.useGravity = false;
             rigidbody.freezeRotation = true;
-            rigidbody.detectCollisions = false;
             rigidbody.velocity = Vector3.zero;
         }
 

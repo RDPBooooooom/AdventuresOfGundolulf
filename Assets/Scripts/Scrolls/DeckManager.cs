@@ -59,7 +59,9 @@ namespace Scrolls
             
             _standardDeck.AddScroll(new TopUpPerspective());
             _standardDeck.AddScroll(new TeleporterMalfunction());
+
             _standardDeck.InitDeck();
+            _standardDeck.Shuffle();
             //_bossDeck.AddScroll();
 
             _standardDeck.Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollCast);
@@ -68,6 +70,7 @@ namespace Scrolls
         private void DisplayStandardDeck()
         {
             //TODO Get amount to draw from Difficulty manager or something like this
+            
             _castScrollUI.DrawnScrolls = _standardDeck.Draw(3).Cast<Scroll>().ToList();
 
             Time.timeScale = 0;

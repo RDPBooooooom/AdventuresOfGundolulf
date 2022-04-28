@@ -32,6 +32,8 @@ namespace Items.Teleport
             base.Equip(equipOn);
 
             _channelingTimer = new Timer(equipOn, 0.5f);
+
+            if (!(equipOn.GetType() == typeof(ISpellcaster))) return;
             _teleporter = (ITeleporter)equipOn;
             _oldTeleportRange = _teleporter.Teleport.TeleportRange;
             _teleporter.Teleport.TeleportRange = 50;
