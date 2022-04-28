@@ -3,6 +3,7 @@ using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Managers;
 
 public class SpellCast : Ability
 {
@@ -28,6 +29,7 @@ public class SpellCast : Ability
         if (IsReady)
         {
             Projectile();
+            GameManager.Instance.AudioManager.PlayMagicSound();
             StartCooldown();
         }
     }

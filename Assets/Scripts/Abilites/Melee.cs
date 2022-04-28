@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Effects;
 using UnityEngine;
+using Managers;
 
 public class Melee : Ability
 {
@@ -22,6 +23,7 @@ public class Melee : Ability
         if (IsReady)
         {
             DoMeele();
+            GameManager.Instance.AudioManager.PlayAttackSound();
             StartCooldown();
         }
         OnAbilityFinshed();
