@@ -25,9 +25,6 @@ namespace AI.FSM
         private const float _fleeDistanceSqr = 100;
         private readonly LivingEntity _owner;
 
-        private Vector3 _steeringForce;
-
-
         // Wander
         private Vector3 _wanderTarget;
         private float _wanderRadius;

@@ -47,6 +47,8 @@ namespace Items
         {
             _player = GameManager.Instance?.Player;
 
+            if (_player == null) _player = FindObjectOfType<Player>();
+
             if(Physics.Raycast(transform.position, Vector3.down,out RaycastHit hit, LayerMask.GetMask("Floor")))
             {
                 _minUpDownPos = hit.point.y + _groundOffset;
