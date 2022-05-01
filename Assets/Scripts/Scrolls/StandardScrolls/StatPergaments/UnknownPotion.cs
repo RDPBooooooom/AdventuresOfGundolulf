@@ -41,7 +41,7 @@ namespace Scrolls.StandardScrolls
                 _player.HealEntity(healamount);
             else
             {
-                _player.MaxHealth *= 0.05f;
+                _player.MaxHealth *= 0.1f;
                 _player.DamageEntity(_player.Health - _player.MaxHealth);
             }
         }

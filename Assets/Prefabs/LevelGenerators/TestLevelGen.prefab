@@ -124,7 +124,7 @@ MonoBehaviour:
   - {fileID: -824011402606140805, guid: ef4c7ae80b73c8f4aa684541aecfbc43, type: 3}
   - {fileID: 8796315692998045840, guid: aa04da0c1c3a01b4183bba97c8555870, type: 3}
   - {fileID: -3430437060874289759, guid: 8e778eff1cf21bf4697f83c7c0d5bfbd, type: 3}
-  _numberOfRooms: 25
+  _numberOfRooms: 20
   _showDebug: 0
   _numberOfShopRooms: 1
   _numberIfTreasureRooms: 1

@@ -42,6 +42,8 @@ namespace Managers
 
         public MonoBehaviourDummy MonoBehaviourDummy { get; private set; }
 
+        BorderPlacement BorderPlacement;
+
         #endregion
 
         #region Unity Methods
@@ -84,6 +86,10 @@ namespace Managers
             ItemManager = Instantiate(_itemManagerPrefab, transform);
 
             MonoBehaviourDummy = Instantiate(_monoBehaviourDummyPrefab, transform);
+
+            BorderPlacement = new BorderPlacement();
+
+            BorderPlacement.Initialize();
 
             if (LevelManager != null)
             {
