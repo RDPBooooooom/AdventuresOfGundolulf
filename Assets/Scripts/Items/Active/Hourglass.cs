@@ -55,8 +55,7 @@ namespace Items.Active
                 //_currentRoom = (BossRoom)GameManager.Instance.LevelManager.CurrentRoom;
                 MonoBehaviourDummy.Dummy.StartCoroutine(SlowTime());
             }
-            
-            _cooldown.Start();
+            base.Effect();
         }
 
         IEnumerator SlowTime()

@@ -39,6 +39,7 @@ namespace UI
         [SerializeField] public GameObject PausePanel;
         [SerializeField] public GameObject DeathPanel;
         [SerializeField] public Text _textInteractable;
+        [SerializeField] public Image ItemBackgroundImage;
 
         #endregion
 
@@ -128,6 +129,10 @@ namespace UI
         public void UpdateActiveItem()
         {
             _itemDisplay.sprite = _player.ActiveItem?.UIImage;
+            if (_itemDisplay.sprite != null)
+                _itemDisplay.gameObject.SetActive(true);
+            else
+                _itemDisplay.gameObject.SetActive(false);
             Debug.Log("Updated Active item display");
         }
 

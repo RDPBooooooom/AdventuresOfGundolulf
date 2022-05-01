@@ -22,7 +22,7 @@ namespace Items.Active
         protected override void Effect()
         {
             MonoBehaviourDummy.Dummy.StartCoroutine(Invincibile());
-            _cooldown.Start();
+            base.Effect();
         }
 
         private IEnumerator Invincibile()

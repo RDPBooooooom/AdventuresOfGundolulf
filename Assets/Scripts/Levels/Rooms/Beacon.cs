@@ -24,7 +24,7 @@ public class Beacon : MonoBehaviour
     private void Start()
     {
         _currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
-        UpdateColor(_currentRoom);
+        UpdateColor(_currentRoom, _currentRoom);
         _startUpCall = false;
     }
 
@@ -32,8 +32,8 @@ public class Beacon : MonoBehaviour
 
     #region Color
 
-    [ContextMenu("Test")]
-    void UpdateColor(Room room)
+    //[ContextMenu("Test")]
+    void UpdateColor(Room oldroom, Room room)
     {
         _currentRoom = room;
         switch (transform.eulerAngles.y)
@@ -63,12 +63,13 @@ public class Beacon : MonoBehaviour
         else
             _fire.color = _defaultColor;
 
-        if(!_startUpCall)
-        {
-            _nextRoom.EnterRoom += UpdateColor;
+        //if(!_startUpCall)
+        //{
+            _currentRoom.LeaveRoom += UpdateColor;
+        if(_nextRoom is CombatRoom)
             _nextRoom.RoomCleared += TurnOff;
-        }
-        else{}
+        //}
+        //else{}
 
     }
 
