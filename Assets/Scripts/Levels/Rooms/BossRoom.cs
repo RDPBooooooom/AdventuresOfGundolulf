@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LivingEntities;
 using Managers;
+using UI;
 using UnityEngine;
 
 namespace Levels.Rooms

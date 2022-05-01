@@ -66,6 +66,7 @@ namespace Items
         public virtual void Equip(LivingEntity equipOn)
         {
             EquipEvent?.Invoke(equipOn);
+            GameManager.Instance.ItemManager.ItemEquipped(this);
         }
 
         public virtual void Unequip(LivingEntity unequipFrom)

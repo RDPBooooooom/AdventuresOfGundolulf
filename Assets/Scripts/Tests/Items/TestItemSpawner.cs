@@ -23,7 +23,7 @@ namespace Tests.Items
 
             foreach (Item item in items)
             {
-                GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/" + item.GetType().Name);
+                GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/SpawnableItems/" + item.GetType().Name);
 
                 if (prefab == null)
                 {

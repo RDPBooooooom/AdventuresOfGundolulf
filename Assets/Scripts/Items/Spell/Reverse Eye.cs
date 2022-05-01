@@ -19,7 +19,7 @@ namespace Items.Spell
         {
             base.Equip(equipOn);
 
-            _player.SpellCastAttackPoint.Rotate(_player.transform.position, 180);
+            _player.SpellCastAttackPoint.Rotate(_player.transform.up, 180);
             _player.Intelligence += 20;
         }
 

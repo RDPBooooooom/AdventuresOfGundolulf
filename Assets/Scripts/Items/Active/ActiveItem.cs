@@ -55,6 +55,7 @@ namespace Items.Active
                 }
                 else
                 {
+                    GameManager.Instance.ItemManager.ItemSold(_player.ActiveItem);
                     _player.ActiveItem.Unequip(equipOn);
                     _player.ActiveItem = this;
                 }

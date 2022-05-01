@@ -24,7 +24,7 @@ namespace Items.Melee
         {
             base.Equip(equipOn);
 
-            if (!(equipOn.GetType() == typeof(IMelee))) 
+            if ((equipOn.GetType() == typeof(IMelee))) 
             { 
                 IMelee iMelee = (IMelee)equipOn;
                 iMelee.Melee.OnDamage += DamageEntity;
