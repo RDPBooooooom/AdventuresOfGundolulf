@@ -43,7 +43,7 @@ namespace Scrolls.StandardScrolls
             {
                 yield return new WaitForSeconds(0);
                 _cam.transform.rotation = Quaternion.Euler(60, 0, _cam.transform.rotation.z + _angleChangeNextStep);
-                _angleChangeNextStep += 0.5f;
+                _angleChangeNextStep += 0.125f;
             }
         }
 

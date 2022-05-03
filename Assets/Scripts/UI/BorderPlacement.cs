@@ -23,12 +23,12 @@ public class BorderPlacement
     // Update is called once per frame
     void UpdateBorderLocations(Room room)
     {
-        //borders[0].transform.position = new Vector3(room.transform.position.x, 8, room.transform.position.z + 18); //Top
-        borders[1].transform.position = new Vector3(room.transform.position.x - 20.7f, 8, room.transform.position.z -0.5f); //Left
+        borders[0].transform.position = new Vector3(room.transform.position.x, 8, room.transform.position.z + 21); //Top
+        borders[1].transform.position = new Vector3(room.transform.position.x - 27.7f, 8, room.transform.position.z -0.5f); //Left
         borders[1].transform.rotation = Quaternion.Euler(90, 90, 0);
-        borders[2].transform.position = new Vector3(room.transform.position.x + 20.7f, 8, room.transform.position.z -0.5f); //Right
+        borders[2].transform.position = new Vector3(room.transform.position.x + 27.7f, 8, room.transform.position.z -0.5f); //Right
         borders[2].transform.rotation = Quaternion.Euler(90, 90, 0);
-        borders[3].transform.position = new Vector3(room.transform.position.x, 8, room.transform.position.z - 18); // Bottom
+        borders[3].transform.position = new Vector3(room.transform.position.x, 8, room.transform.position.z - 25); // Bottom -18
     }
 
     void OnLeaveRoom(Room leaving, Room entering)

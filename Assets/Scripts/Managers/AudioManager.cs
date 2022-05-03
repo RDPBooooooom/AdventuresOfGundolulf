@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -13,11 +14,13 @@ namespace Managers
         AudioSource door;
         AudioSource ouch;
         AudioSource ouchOrc;
+        List<AudioSource> audioSources;
         #endregion
 
         private void Start()
         {
             GetAudioClips();
+            audioSources = new List<AudioSource> { attackSword, attackMagic, teleport, door, ouch, ouchOrc };
         }
 
         void GetAudioClips()
@@ -30,6 +33,13 @@ namespace Managers
             ouchOrc = Instantiate(Resources.Load<AudioSource>("Prefabs/AudioSources/OuchOrc"), transform);
         }
 
+        public void SetSoundsValue(float volume)
+        {
+            foreach (AudioSource audio in audioSources)
+                audio.volume = volume;
+        }
+
+        #region Playing clips
         public void PlayAttackSound()
         {
             attackSword.Play();
@@ -55,4 +65,5 @@ namespace Managers
             ouchOrc.Play();
         }
     }
+    #endregion
 }

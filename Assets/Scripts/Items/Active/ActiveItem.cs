@@ -100,7 +100,7 @@ namespace Items.Active
         {
             yield return new WaitForSeconds(0.25f);
             inGameUI.ItemBackgroundImage.fillAmount -= 0.25f / Cooldown;
-            if (inGameUI.ItemBackgroundImage.fillAmount > 0)//Small part hidden which irritates otherwise
+            if (inGameUI.ItemBackgroundImage.fillAmount > 0)//0.1 ? to hide Small part which irritates otherwise
                 MonoBehaviourDummy.Dummy.StartCoroutine(FillUp());
         }
     }

@@ -64,11 +64,11 @@ namespace Managers
         {
             Item item = GetRandomItem();
 
-            GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/SpawnableItems/Hourglass");// SpawnableItems/" + item.GetType().Name);
+            GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/SpawnableItems/" + item.GetType().Name);
 
             if (prefab == null)
             {
-                Debug.Log("Couldn't find item via name of dropped");
+                Debug.Log("Couldn't find item via name of dropped" + item.GetType().Name);
                 return null;
             }
             GameObject go = Instantiate(prefab);

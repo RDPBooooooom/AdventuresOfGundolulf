@@ -77,7 +77,12 @@ namespace PlayerScripts
 
         public bool Invincible
         {
-            set => _invincible = value;
+            get => _invincible;
+            set
+            {
+                _invincible = value;
+                OnUpdateInvincibilityEvent?.Invoke();
+            }
         }
 
         public bool Pacifist
@@ -112,6 +117,7 @@ namespace PlayerScripts
 
         public event StatUpdateHandler OnUpdateGoldEvent;
         public event StatUpdateHandler OnUpdateActiveItemEvent;
+        public event InvincibilityHandler OnUpdateInvincibilityEvent;
 
         #endregion
         

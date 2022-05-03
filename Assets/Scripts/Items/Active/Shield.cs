@@ -1,4 +1,5 @@
 using Assets.Scripts.Interfaces;
+using LivingEntities;
 using System.Collections;
 using UnityEngine;
 using Utils;
@@ -13,6 +14,20 @@ namespace Items.Active
         {
             Value = 20;
             Cooldown = 30;
+        }
+
+        #endregion
+
+        #region Equip
+
+        public override void Equip(LivingEntity equipOn)
+        {
+            base.Equip(equipOn);
+        }
+
+        public override void Unequip(LivingEntity unequipFrom)
+        {
+            base.Unequip(unequipFrom);
         }
 
         #endregion

@@ -39,6 +39,8 @@ namespace Levels.Rooms
 
         public RoomConnections RoomConnections { get; set; }
 
+        public bool Cleared { get; private set; }
+
         #endregion
 
         #region Delegates
@@ -101,6 +103,7 @@ namespace Levels.Rooms
         protected virtual void OnRoomCleared()
         {
             RoomCleared?.Invoke();
+            Cleared = true;
         }
 
         public void TryLeave(Door door)

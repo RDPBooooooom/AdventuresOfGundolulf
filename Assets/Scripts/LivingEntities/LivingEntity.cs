@@ -202,6 +202,8 @@ namespace LivingEntities
         public delegate void OnDeathEventHandler();
         
         public delegate void StatUpdateHandler();
+
+        public delegate void InvincibilityHandler();
         
         #endregion
 

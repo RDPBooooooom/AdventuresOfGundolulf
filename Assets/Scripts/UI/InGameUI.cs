@@ -30,6 +30,9 @@ namespace UI
 
         private Player _player;
         private PlayerInput _input;
+        private SkinnedMeshRenderer _playerMaterial;
+        private Material _normalMaterial;
+        private Material _invincibleMaterial;
 
         #endregion
 
@@ -40,6 +43,7 @@ namespace UI
         [SerializeField] public GameObject DeathPanel;
         [SerializeField] public Text _textInteractable;
         [SerializeField] public Image ItemBackgroundImage;
+        [SerializeField] public Slider audioSlider;
 
         #endregion
 
@@ -55,6 +59,9 @@ namespace UI
         private void Start()
         {
             _player = GameManager.Instance.Player;
+            _invincibleMaterial = Resources.Load<Material>("Material/Invincible");
+            _playerMaterial = _player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+            _normalMaterial = _playerMaterial.material;
             
             _player.OnUpdateHealthEvent += UpdateHealthbar;
             _player.OnUpdateAttackEvent += UpdateAttackDisplay;
@@ -64,6 +71,7 @@ namespace UI
             _player.OnUpdateSpeedEvent += UpdateSpeedDisplay;
             _player.OnUpdateGoldEvent += UpdateGold;
             _player.OnUpdateActiveItemEvent += UpdateActiveItem;
+            _player.OnUpdateInvincibilityEvent += UpdateInvincibilityStatus;
             
             _input.UI.Enable();
 
@@ -73,6 +81,7 @@ namespace UI
             UpdateHasteDisplay();
             UpdateSpeedDisplay();
             UpdateActiveItem();
+            audioSlider.onValueChanged.AddListener(GameManager.Instance.AudioManager.SetSoundsValue);
         }
 
         #endregion
@@ -157,6 +166,17 @@ namespace UI
         public void UpdateSpeedDisplay()
         {
             _speedValue.text = "SPE: " + _player.Speed.ToString();
+        }
+
+        void UpdateInvincibilityStatus()
+        {
+            if (_player.Invincible)
+            {
+                _playerMaterial.material = _invincibleMaterial;
+                Debug.Log("magic");
+            }
+            else
+                _playerMaterial.material = _normalMaterial;
         }
 
 
