@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Utils
 {
     public static class ListUtils
     {
 
+        private static Random rand = new Random();
+        
         /// <summary>
         /// Returns a Random Element form the List
         /// </summary>
@@ -15,9 +18,8 @@ namespace Utils
         public static T GetRandomElement<T>(List<T> list)
         {
             if (list.Count == 0) return default(T);
-            
-            Random rand = new Random();
-            return list[rand.Next(0, list.Count - 1)];
+
+            return list[rand.Next(0, list.Count)];
         }
 
         /// <summary>

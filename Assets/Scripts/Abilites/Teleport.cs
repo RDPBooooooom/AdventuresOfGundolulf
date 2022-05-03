@@ -1,6 +1,7 @@
 using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
+using Abilites;
 using Managers;
 using UnityEngine;
 

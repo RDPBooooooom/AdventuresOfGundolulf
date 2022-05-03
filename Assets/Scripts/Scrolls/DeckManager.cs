@@ -3,6 +3,7 @@ using Levels.Rooms;
 using Managers;
 using Scrolls.BossScrolls;
 using Scrolls.StandardScrolls;
+using Scrolls.StandardScrolls.StatPergaments;
 using UI;
 using UnityEngine;
 

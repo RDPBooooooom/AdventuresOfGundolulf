@@ -1,91 +1,92 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using LivingEntities;
+using UnityEngine;
 
-public class Projectile : MonoBehaviour
+namespace Abilites
 {
-    #region Fields
-
-    private Vector3 _ownerPosition;
-    private float _rangeDivisor = 20;
-
-    //[SerializeField] private GameObject hitEffect;
-
-    #endregion
-
-    #region Properties
-
-    public SpellCast Owner { get; set; }
-
-    #endregion
-
-    #region Delegates
-
-    public delegate void ProjectileEndHandler(Projectile projectile);
-
-    #endregion
-
-    #region Unity Methods
-
-    void Start()
+    public class Projectile : MonoBehaviour
     {
-        _ownerPosition = Owner.GetPosition();
-        IgnoreCollision();
-    }
+        #region Fields
 
-    private void Update()
-    {
-        DestroyProjectile();
-    }
+        private Vector3 _ownerPosition;
+        private float _rangeDivisor = 20;
 
-    #endregion
+        //[SerializeField] private GameObject hitEffect;
 
-    #region Helper Methods
-    private void DestroyProjectile()
-    {
-        float distance = Vector3.Distance(_ownerPosition, transform.position);
+        #endregion
 
-        if (distance >= Owner.GetRange() / _rangeDivisor)
+        #region Properties
+
+        public SpellCast Owner { get; set; }
+
+        #endregion
+
+        #region Delegates
+
+        public delegate void ProjectileEndHandler(Projectile projectile);
+
+        #endregion
+
+        #region Unity Methods
+
+        void Start()
         {
-            Destroy(gameObject);
+            _ownerPosition = Owner.GetPosition();
+            IgnoreCollision();
         }
-    }
 
-    #endregion
-
-    #region Collision
-
-    private void IgnoreCollision()
-    {
-        foreach (Collider characterCollider in Owner.GetCollider())
+        private void Update()
         {
-            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), characterCollider);
+            DestroyProjectile();
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        //GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
-        //Destroy(effect, 2f);
-        Destroy(gameObject);
-    }
+        #endregion
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (IsInLayerMask(other.gameObject.layer, Owner.GetHostileEntites()))
+        #region Helper Methods
+        private void DestroyProjectile()
         {
-            if (other.GetComponent<LivingEntity>() != null)
+            float distance = Vector3.Distance(_ownerPosition, transform.position);
+
+            if (distance >= Owner.GetRange() / _rangeDivisor)
             {
-                Owner.DealDamage(other.GetComponent<LivingEntity>());
+                Destroy(gameObject);
             }
         }
-    }
-    
-    public static bool IsInLayerMask(int layer, LayerMask layerMask)
-    {
-        return layerMask == (layerMask | (1 << layer));
-    }
 
-    #endregion
+        #endregion
+
+        #region Collision
+
+        private void IgnoreCollision()
+        {
+            foreach (Collider characterCollider in Owner.GetCollider())
+            {
+                Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), characterCollider);
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            //GameObject effect = Instantiate(hitEffect, transform.position, Quaternion.identity);
+            //Destroy(effect, 2f);
+            Destroy(gameObject);
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (IsInLayerMask(other.gameObject.layer, Owner.GetHostileEntites()))
+            {
+                if (other.GetComponent<LivingEntity>() != null)
+                {
+                    Owner.DealDamage(other.GetComponent<LivingEntity>());
+                }
+            }
+        }
+    
+        public static bool IsInLayerMask(int layer, LayerMask layerMask)
+        {
+            return layerMask == (layerMask | (1 << layer));
+        }
+
+        #endregion
+    }
 }

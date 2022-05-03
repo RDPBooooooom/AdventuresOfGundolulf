@@ -152,7 +152,6 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            Debug.Log("Active Item: " + ActiveItem);
             if (StopActions)
             {
                 _input.Ingame.Disable();

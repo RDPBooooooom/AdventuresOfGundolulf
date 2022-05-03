@@ -2,6 +2,7 @@ using Effects;
 using LivingEntities;
 using System.Collections;
 using System.Collections.Generic;
+using Abilites;
 using UnityEngine;
 using Managers;
 
@@ -44,6 +45,8 @@ public class SpellCast : Ability
 
         Rigidbody rigidbody = _projectile.GetComponent<Rigidbody>();
         rigidbody.AddForce(_owner.SpellCastAttackPoint.forward * _owner.ProjectileForce, ForceMode.Impulse);
+        
+        OnAbilityFinshed();
     }
 
     public void DealDamage(LivingEntity targetEntity)

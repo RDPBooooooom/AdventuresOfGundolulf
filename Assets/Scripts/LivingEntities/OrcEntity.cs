@@ -28,7 +28,7 @@ namespace LivingEntities
         private StateOrcAttack _attackState;
 
         private StateConnectionOnDeath<OrcEntity> _connectionChaseDeath;
-        private StateConnectionEntityInRange<OrcEntity> _connectionEntityInRange;
+        private StateConnectionEntityInMeleeRange<OrcEntity> _connectionEntityInMeleeRange;
         private StateAttackConnectionOnFinish<OrcEntity> _connectionOnAttackFinish;
 
         public Melee Melee
@@ -61,8 +61,8 @@ namespace LivingEntities
             _connectionChaseDeath = new StateConnectionOnDeath<OrcEntity>(_deathState,this);
             _chaseState.AddConnection(_connectionChaseDeath);
 
-            _connectionEntityInRange = new StateConnectionEntityInRange<OrcEntity>(_attackState, this, player.transform);
-            _chaseState.AddConnection(_connectionEntityInRange);
+            _connectionEntityInMeleeRange = new StateConnectionEntityInMeleeRange<OrcEntity>(_attackState, this, player.transform);
+            _chaseState.AddConnection(_connectionEntityInMeleeRange);
 
             _connectionOnAttackFinish = new StateAttackConnectionOnFinish<OrcEntity>(_chaseState, _attackState);
             _attackState.AddConnection(_connectionOnAttackFinish);

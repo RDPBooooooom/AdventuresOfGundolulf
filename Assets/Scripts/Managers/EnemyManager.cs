@@ -2,6 +2,7 @@
 using Levels.Rooms;
 using LivingEntities;
 using UnityEngine;
+using Utils;
 
 namespace Managers
 {
@@ -18,8 +19,12 @@ namespace Managers
 
         public List<LivingEntity> GetRandomEnemies()
         {
-            //TODO Get Random enemies based on current stage etc
-            return _enemies;
+            foreach (LivingEntity livingEntity in _enemies)
+            {
+                Debug.Log(livingEntity);
+            }
+            
+            return ListUtils.GetRandomElements(_enemies, 1);
         }
         
         public List<LivingEntity> GetRandomBoss()
