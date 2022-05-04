@@ -46,7 +46,7 @@ namespace Levels.Rooms
         public override void Enter()
         {
             base.Enter();
-            //TODO Spawn enemies
+
             if (WasVisited) return;
             LoadEnemies();
             _enemies = new List<LivingEntity>();

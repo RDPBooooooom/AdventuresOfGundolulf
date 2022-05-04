@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace AI.FSM.Connections
 {
-    public class StateConnectionEntityInRange<T> : StateConnection<T> where T : LivingEntity
+    public class StateConnectionEntityInMeleeRange<T> : StateConnection<T> where T : LivingEntity
     {
 
         private T _owner;
@@ -11,7 +11,7 @@ namespace AI.FSM.Connections
         private Transform _target;
         private Transform _attackPoint;
 
-        public StateConnectionEntityInRange(State<T> connectedState, T owner, Transform target) : base(connectedState)
+        public StateConnectionEntityInMeleeRange(State<T> connectedState, T owner, Transform target) : base(connectedState)
         {
             _owner = owner;
             _target = target;

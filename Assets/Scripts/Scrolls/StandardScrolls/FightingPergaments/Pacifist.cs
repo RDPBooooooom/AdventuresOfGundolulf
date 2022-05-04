@@ -27,7 +27,6 @@ namespace Scrolls.StandardScrolls
         {
             _player = Managers.GameManager.Instance.Player;
             MonoBehaviourDummy.Dummy.StartCoroutine(NoOuchAllowed());
-            Debug.Log("Activated " + GetType().Name);
         }
 
         IEnumerator NoOuchAllowed()

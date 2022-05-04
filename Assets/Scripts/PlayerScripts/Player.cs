@@ -1,8 +1,11 @@
-﻿using Assets.Scripts;
+﻿using Abilities;
+using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using Items.Active;
+using Levels.Rooms;
 using LivingEntities;
 using Managers;
+using System.Collections;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -30,12 +33,14 @@ namespace PlayerScripts
         [SerializeField] private float _interactRange;
 
         private bool _stopMovement = false;
-        private bool _invincible = false;
+        
         private bool _pacifist = false;
         private bool _weeny = false;
         private bool _notWeeny = false;
 
         private InGameUI _inGameUI;
+
+        private Coroutine _regeneration;
 
         #endregion
 
@@ -75,16 +80,6 @@ namespace PlayerScripts
             set => _input = value;
         }
 
-        public bool Invincible
-        {
-            get => _invincible;
-            set
-            {
-                _invincible = value;
-                OnUpdateInvincibilityEvent?.Invoke();
-            }
-        }
-
         public bool Pacifist
         {
             set => _pacifist = value;
@@ -117,7 +112,6 @@ namespace PlayerScripts
 
         public event StatUpdateHandler OnUpdateGoldEvent;
         public event StatUpdateHandler OnUpdateActiveItemEvent;
-        public event InvincibilityHandler OnUpdateInvincibilityEvent;
 
         #endregion
         
@@ -152,7 +146,6 @@ namespace PlayerScripts
 
         protected void FixedUpdate()
         {
-            Debug.Log("Active Item: " + ActiveItem);
             if (StopActions)
             {
                 _input.Ingame.Disable();
@@ -353,7 +346,6 @@ namespace PlayerScripts
         {
             if(!_pacifist && !_weeny)
             {
-                Debug.Log("Melee Input performed");
                 _melee.Use();
             }
         }
@@ -362,7 +354,6 @@ namespace PlayerScripts
         {
             if(!_pacifist && !_notWeeny)
             {
-                Debug.Log("Spell Cast Input performed");
                 _spellCast.Use();
             }
         }
@@ -371,7 +362,6 @@ namespace PlayerScripts
         {
             if (!_stopMovement)
             {
-                Debug.Log("Teleport Input performed");
                 _teleport.TargetPos = GetCurrentMousePosInWorldOnGround();
                 _teleport.Use();
             }
@@ -379,13 +369,11 @@ namespace PlayerScripts
 
         private void PerformInteract(InputAction.CallbackContext context)
         {
-            Debug.Log("Interact Input performed");
             InteractWithObject();
         }
 
         private void PerformActiveItem(InputAction.CallbackContext context)
         {
-            Debug.Log("Active Item Input performed");
             UseItem();
         }
 
@@ -400,6 +388,8 @@ namespace PlayerScripts
             _input.Ingame.Teleport.performed += PerformTeleport;
             _input.Ingame.Interact.performed += PerformInteract;
             _input.Ingame.ActiveItem.performed += PerformActiveItem;
+            GameManager.Instance.LevelManager.OnChangeRoomEvent += RegainHealth;
+            GameManager.Instance.LevelManager.OnChangeRoomEvent += Regenerate;
         }
 
         #endregion
@@ -411,12 +401,48 @@ namespace PlayerScripts
             base.HealEntity(amount);
         }
 
-        public override void DamageEntity(float amount)
+        #endregion
+
+        #region Regeneration
+        void RegainHealth(Room room)
         {
-            if(!_invincible)
+            if (room is CombatRoom)
+                room.RoomCleared += CombatRecovery;
+        }
+
+        void CombatRecovery()
+        {
+            HealEntity(10);
+            Debug.Log("Recovering");
+        }
+
+        void Regenerate(Room entering)
+        {
+            if (entering is StartRoom || entering is TreasureRoom)
             {
-                base.DamageEntity(amount);
+                _regeneration = StartCoroutine(Regenerate(0.75f));
+                entering.LeaveRoom += StopRegeneration;
             }
+            else if (entering is ShopRoom)
+            {
+                _regeneration = StartCoroutine(Regenerate(0.25f));
+                entering.LeaveRoom += StopRegeneration;
+            }
+        }
+
+        IEnumerator Regenerate(float value)
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+                HealEntity(value);
+            }
+        }
+
+        void StopRegeneration(Room leaving, Room leavingTo)
+        {
+            StopCoroutine(_regeneration);
+            leaving.LeaveRoom -= StopRegeneration;
         }
 
         #endregion

@@ -1,7 +1,7 @@
-using UnityEngine;
 using PlayerScripts;
+using UnityEngine;
 
-namespace Scrolls.StandardScrolls
+namespace Scrolls.StandardScrolls.StatPergaments
 {
     public class SpeedUp : StandardScroll
     {
@@ -24,7 +24,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _player = Managers.GameManager.Instance.Player;
             _player.Speed += _factor;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
@@ -33,7 +32,7 @@ namespace Scrolls.StandardScrolls
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
             _player.Speed -= _factor;
-            Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
+            leaving.LeaveRoom -= OnLeavingRoom;
         }
 
         #endregion

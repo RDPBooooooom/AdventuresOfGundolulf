@@ -8,8 +8,8 @@ namespace Scrolls.StandardScrolls
     {
         #region Fields
 
-        GameObject _fog = Resources.Load<GameObject>("Prefabs/Fog");
-        GameObject _gündololülfsVision = Resources.Load<GameObject>("Prefabs/GündololülfsVision");
+        GameObject _fog = Resources.Load<GameObject>("UI/Fog");
+        GameObject _gündololülfsVision = Resources.Load<GameObject>("UI/GündololülfsVision");
         GameObject _fogger;
         Room _currentRoom;
 
@@ -30,7 +30,7 @@ namespace Scrolls.StandardScrolls
             _currentRoom = Managers.GameManager.Instance.LevelManager.CurrentRoom;
             _currentRoom.LeaveRoom += OnLeavingRoom;
             Random random = new Random();
-            if(random.Next(0,100)<101)
+            if(random.Next(0,100)<20)
             {
                 _fogger = Object.Instantiate(_gündololülfsVision);
                 Debug.Log("Activated Gündololülfs Vision");
@@ -38,7 +38,6 @@ namespace Scrolls.StandardScrolls
             else
             {
                 _fogger = Object.Instantiate(_fog);
-                Debug.Log("Activated " + GetType().Name);
             }
         }
 

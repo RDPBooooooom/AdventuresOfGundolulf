@@ -142,7 +142,6 @@ namespace UI
                 _itemDisplay.gameObject.SetActive(true);
             else
                 _itemDisplay.gameObject.SetActive(false);
-            Debug.Log("Updated Active item display");
         }
 
         public void UpdateAttackDisplay()
@@ -171,10 +170,7 @@ namespace UI
         void UpdateInvincibilityStatus()
         {
             if (_player.Invincible)
-            {
                 _playerMaterial.material = _invincibleMaterial;
-                Debug.Log("magic");
-            }
             else
                 _playerMaterial.material = _normalMaterial;
         }

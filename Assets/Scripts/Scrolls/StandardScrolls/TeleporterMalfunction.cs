@@ -1,4 +1,5 @@
 using System.Collections;
+using Abilities;
 using UnityEngine;
 using Utils;
 using Random = System.Random;
@@ -28,7 +29,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _roomBounds = Managers.GameManager.Instance.LevelManager.CurrentRoom.RoomBounds;
             _teleportCoroutine = Teleport();
             _teleport = Managers.GameManager.Instance.Player.Teleport;

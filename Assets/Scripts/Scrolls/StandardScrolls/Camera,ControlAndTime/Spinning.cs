@@ -29,7 +29,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _cam = Camera.main;
             _spinCameraCoroutine = SpinCamera();
             _monoDummy =  MonoBehaviourDummy.Dummy;
@@ -50,26 +49,10 @@ namespace Scrolls.StandardScrolls
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)
         {
             _monoDummy.StopCoroutine(_spinCameraCoroutine);
-            Debug.Log(_cam.transform.eulerAngles.z);
             _angleChangeNextStep = 0.5f;
-            _monoDummy.StartCoroutine(SpinBack());
+            _cam.transform.rotation = _defaultRotation;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom -= OnLeavingRoom;
         }
-
-        IEnumerator SpinBack()
-        {
-            //float spinValue = 0.5f;
-            //while(_cam.transform.rotation.z > 0)
-            //{
-                yield return new WaitForSeconds(0);
-            //    Debug.Log(_cam.transform.rotation.z);
-            //    _cam.transform.rotation = Quaternion.Euler(60,0,_cam.transform.rotation.z -spinValue);
-            //    Debug.Log("SpanBack");
-            //    spinValue += 0.5f;
-            //}
-            _cam.transform.rotation = _defaultRotation;
-        }
-
         #endregion
     }
 }

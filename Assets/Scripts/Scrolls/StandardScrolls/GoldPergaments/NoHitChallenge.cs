@@ -24,7 +24,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _currentGoldAmount = Managers.GameManager.Instance.Player.Gold;
             _playerStartingHP = Managers.GameManager.Instance.Player.Health;
             if (_currentGoldAmount >= 20)

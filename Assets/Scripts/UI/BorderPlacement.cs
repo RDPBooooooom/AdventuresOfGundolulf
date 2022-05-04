@@ -11,7 +11,7 @@ public class BorderPlacement
     // Start is called before the first frame update
     public void Initialize()
     {
-        borderPrefab = Resources.Load<GameObject>("Prefabs/Border");
+        borderPrefab = Resources.Load<GameObject>("UI/Border");
         Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeaveRoom;
         for (int i = 0; i < 4; i++)
         {
@@ -33,7 +33,6 @@ public class BorderPlacement
 
     void OnLeaveRoom(Room leaving, Room entering)
     {
-        Debug.Log("Entered a new room");
         entering.LeaveRoom += OnLeaveRoom;
         UpdateBorderLocations(entering);
     }

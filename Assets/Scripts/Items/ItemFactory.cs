@@ -11,7 +11,6 @@ namespace Items
         #region Properties
 
         public List<Type> AllItemTypes { get; private set; }
-
         #endregion
 
         #region Constructor

@@ -18,6 +18,18 @@ namespace Utils
 
         #endregion
 
+        #region Delegates
+
+        public delegate void TimerReadyHandler();
+
+        #endregion
+
+        #region events
+
+        public event TimerReadyHandler OnTimerReady;
+
+        #endregion
+        
         #region Constructor
 
         public Timer(MonoBehaviour owner, float time)
@@ -43,6 +55,7 @@ namespace Utils
             yield return new WaitForSeconds(Time);
 
             IsReady = true;
+            OnTimerReady?.Invoke();
         }
 
         #endregion

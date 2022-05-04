@@ -3,6 +3,7 @@ using Levels.Rooms;
 using Managers;
 using Scrolls.BossScrolls;
 using Scrolls.StandardScrolls;
+using Scrolls.StandardScrolls.StatPergaments;
 using UI;
 using UnityEngine;
 
@@ -42,11 +43,10 @@ namespace Scrolls
             _standardDeck.AddScroll(new HelloDarkness());
             _standardDeck.AddScroll(new BroughtASwordToAMagicFight());
             _standardDeck.AddScroll(new Pacifist());
-            _standardDeck.AddScroll(new AttackDown());
-            _standardDeck.AddScroll(new Spinning());
             _standardDeck.AddScroll(new HolyBlessing());
-            _standardDeck.AddScroll(new AttackUp());
             _standardDeck.AddScroll(new HealingWord());
+            _standardDeck.AddScroll(new AttackDown());
+            _standardDeck.AddScroll(new AttackUp());
             _standardDeck.AddScroll(new IntelligenceDown());
             _standardDeck.AddScroll(new IntelligenceUp());
             _standardDeck.AddScroll(new SpeedDown());
@@ -55,10 +55,13 @@ namespace Scrolls
             _standardDeck.AddScroll(new Casino());
             _standardDeck.AddScroll(new NoHitChallenge());
             _standardDeck.AddScroll(new TopUpPerspective());
+            _standardDeck.AddScroll(new Spinning());
             _standardDeck.AddScroll(new TeleporterMalfunction());
 
+            
+
             _standardDeck.InitDeck();
-            //_standardDeck.Shuffle();
+            _standardDeck.Shuffle();
             //_bossDeck.AddScroll();
 
             _standardDeck.Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollCast);

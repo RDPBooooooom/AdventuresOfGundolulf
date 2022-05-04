@@ -18,6 +18,8 @@ namespace Managers
         [SerializeField] private int _numberIfTreasureRooms = 1;
         [SerializeField] private int _distanceToBossRoom = 4;
 
+        Room _currentRoom;
+
         private LevelGenerator _levelGenerator;
 
         #endregion
@@ -26,10 +28,23 @@ namespace Managers
 
         public List<Room> Rooms { get; private set; }
 
-        public Room CurrentRoom { get; private set; }
+        public Room CurrentRoom 
+        {
+            get =>_currentRoom;
+            private set
+            {
+                _currentRoom = value;
+                OnChangeRoomEvent?.Invoke(value);
+            }
+        }
 
         public Camera PlayerCam { get; set; }
 
+        #endregion
+
+        #region Events
+        public delegate void CurrentRoomHandler(Room room);
+        public event CurrentRoomHandler OnChangeRoomEvent;
         #endregion
 
         #region Unity Methods

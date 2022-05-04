@@ -63,7 +63,8 @@ namespace Managers
         public DroppedItem GetRandomDroppedItem()
         {
             Item item = GetRandomItem();
-
+            if (item is HealthPotion)
+                return GetRandomDroppedItem();
             GameObject prefab = Resources.Load<GameObject>("Prefabs/Items/SpawnableItems/" + item.GetType().Name);
 
             if (prefab == null)
