@@ -11,5 +11,10 @@ namespace Utils
         {
             Dummy = this;
         }
+
+        public void OnRenderImage(RenderTexture source, RenderTexture destination)
+        {
+            
+        }
     }
 }
