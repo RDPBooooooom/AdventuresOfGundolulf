@@ -29,19 +29,19 @@ namespace LivingEntities
         protected virtual void Drop()
         {
             Debug.Log("Dropping");
-            int amount = 0;
+            int amount = 1;//=0
             Random random = new Random();
             int chance = random.Next(1, 100);
 
-            if (chance <= 50)
-            {
-                amount = 1;
-            }
-            else if (chance <= 60)
+            //if (chance <= 50)
+            //{
+            //    amount = 1;
+            //}
+            if (chance >= 50) //60
             {
                 amount = 5;
             }
-            else if (chance <= 100) //63
+            else if (chance <= 40) //63
             {
                 DropItem();
             }

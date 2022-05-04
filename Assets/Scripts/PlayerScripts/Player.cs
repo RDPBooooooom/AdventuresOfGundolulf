@@ -422,7 +422,7 @@ namespace PlayerScripts
         {
             if (entering is StartRoom || entering is TreasureRoom)
             {
-                _regeneration = StartCoroutine(Regenerate(0.75f));
+                _regeneration = StartCoroutine(Regenerate(1.75f));
                 entering.LeaveRoom += StopRegeneration;
             }
             else if (entering is ShopRoom)

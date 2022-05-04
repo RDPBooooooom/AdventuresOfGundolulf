@@ -40,8 +40,8 @@ namespace Scrolls.StandardScrolls
                 _player.HealEntity(healamount);
             else
             {
-                _player.MaxHealth *= 0.1f;
-                _player.DamageEntity(_player.Health - _player.MaxHealth);
+                //_player.MaxHealth *= 0.1f;
+                _player.DamageEntity(_player.Health*0.9f);
             }
         }
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)

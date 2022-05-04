@@ -1244,13 +1244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7949c908356224aa95b02f5dc5da8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 300
-  _health: 300
+  _maxHealth: 120
+  _health: 120
   _attack: 15
   _intelligence: 15
   _range: 500
-  _haste: 85
-  _speed: 10
+  _haste: 75
+  _speed: 8
   _isAlive: 1
   _meleeAttackPoint: {fileID: 5950236221840526658}
   _meleeAttackRange: 0.75
