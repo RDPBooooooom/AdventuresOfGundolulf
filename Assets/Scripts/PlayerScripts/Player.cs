@@ -2,8 +2,10 @@
 using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using Items.Active;
+using Levels.Rooms;
 using LivingEntities;
 using Managers;
+using System.Collections;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -342,7 +344,6 @@ namespace PlayerScripts
         {
             if(!_pacifist && !_weeny)
             {
-                Debug.Log("Melee Input performed");
                 _melee.Use();
             }
         }
@@ -351,7 +352,6 @@ namespace PlayerScripts
         {
             if(!_pacifist && !_notWeeny)
             {
-                Debug.Log("Spell Cast Input performed");
                 _spellCast.Use();
             }
         }
@@ -360,7 +360,6 @@ namespace PlayerScripts
         {
             if (!_stopMovement)
             {
-                Debug.Log("Teleport Input performed");
                 _teleport.TargetPos = GetCurrentMousePosInWorldOnGround();
                 _teleport.Use();
             }
@@ -368,13 +367,11 @@ namespace PlayerScripts
 
         private void PerformInteract(InputAction.CallbackContext context)
         {
-            Debug.Log("Interact Input performed");
             InteractWithObject();
         }
 
         private void PerformActiveItem(InputAction.CallbackContext context)
         {
-            Debug.Log("Active Item Input performed");
             UseItem();
         }
 
@@ -389,6 +386,8 @@ namespace PlayerScripts
             _input.Ingame.Teleport.performed += PerformTeleport;
             _input.Ingame.Interact.performed += PerformInteract;
             _input.Ingame.ActiveItem.performed += PerformActiveItem;
+            GameManager.Instance.LevelManager.OnChangeRoomEvent += RegainHealth;
+            GameManager.Instance.LevelManager.OnChangeRoomEvent += Regenerate;
         }
 
         #endregion
@@ -398,6 +397,38 @@ namespace PlayerScripts
         public override void HealEntity(float amount)
         {
             base.HealEntity(amount);
+        }
+
+        #endregion
+
+        #region Regeneration
+        void RegainHealth(Room room)
+        {
+            if (room is CombatRoom)
+                room.RoomCleared += CombatRecovery;
+        }
+
+        void CombatRecovery()
+        {
+            HealEntity(10);
+            Debug.Log("Recovering");
+        }
+
+        void Regenerate(Room entering)
+        {
+            if (entering is StartRoom || entering is TreasureRoom)
+                StartCoroutine(Regenerate(0.75f));
+            else if (entering is ShopRoom)
+                StartCoroutine(Regenerate(0.25f));
+            else
+                StopAllCoroutines();
+        }
+
+        IEnumerator Regenerate(float value)
+        {
+            yield return new WaitForSeconds(1);
+            HealEntity(value);
+            StartCoroutine(Regenerate(value));
         }
 
         #endregion

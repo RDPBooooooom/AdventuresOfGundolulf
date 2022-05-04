@@ -9,7 +9,7 @@ namespace LivingEntities
     {
         #region Declaring Variables
 
-        [SerializeField] private GameObject _coin;
+        private GameObject _coin;
 
         #endregion
 
@@ -19,6 +19,7 @@ namespace LivingEntities
         {
             base.Start();
             _animator = GetComponent<Animator>();
+            _coin = Resources.Load<GameObject>("Prefabs/Objects/Coin");
         }
         
         #endregion

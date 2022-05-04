@@ -27,7 +27,6 @@ namespace Scrolls.StandardScrolls
         {
             _player = Managers.GameManager.Instance.Player;
             MonoBehaviourDummy.Dummy.StartCoroutine(Invincible());
-            Debug.Log("Activated " + GetType().Name);
         }
 
         IEnumerator Invincible()

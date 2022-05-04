@@ -6,7 +6,7 @@ namespace Scrolls.StandardScrolls
     {
         #region Fields
 
-        private GameObject _door = Resources.Load<GameObject>("Prefabs/Door");
+        private GameObject _door = Resources.Load<GameObject>("Prefabs/Objects/Door");
 
         #endregion
 
@@ -23,7 +23,6 @@ namespace Scrolls.StandardScrolls
         protected override void ApplyEffect()
         {
             SpawnDoor();
-            Debug.Log("Activated " + GetType().Name);
         }
 
         void SpawnDoor()

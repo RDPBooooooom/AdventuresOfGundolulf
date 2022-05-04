@@ -25,7 +25,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _player = Managers.GameManager.Instance.Player;
             _previousMaxHealth = _player.MaxHealth;
             GetNewHealth();

@@ -26,11 +26,9 @@ namespace Levels.Rooms
 
         private void Start()
         {
-            _currentRoom =
-                transform.parent.parent.GetComponent<Room>(); //Managers.GameManager.Instance.LevelManager.CurrentRoom;
+            _currentRoom = transform.parent.parent.GetComponent<Room>();
             UpdateColor(_currentRoom);
             _currentRoom.EnterRoom += UpdateColor;
-            //_currentRoom.LeaveRoom += UpdateColor;
         }
 
         #endregion

@@ -74,6 +74,7 @@ namespace Items.Stats
                 yield return new WaitForSeconds(1);
                 entityToHeal.HealEntity(_regenerateValue);
             }
+            _dummy.StartCoroutine(Regenerate(entityToHeal));
         }
 
         private void OnEnterRoom(Room entering)

@@ -24,7 +24,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _player = Managers.GameManager.Instance.Player;
             _player.Intelligence += _factor;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;

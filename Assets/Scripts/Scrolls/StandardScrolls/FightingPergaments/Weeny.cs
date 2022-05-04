@@ -28,7 +28,6 @@ namespace Scrolls.StandardScrolls
             _player = Managers.GameManager.Instance.Player;
             _player.Weeny = true;
             Managers.GameManager.Instance.LevelManager.CurrentRoom.LeaveRoom += OnLeavingRoom;
-            Debug.Log("Activated " + GetType().Name);
         }
 
         private void OnLeavingRoom(Levels.Rooms.Room leaving, Levels.Rooms.Room toEnter)

@@ -25,7 +25,6 @@ namespace Scrolls.StandardScrolls
 
         protected override void ApplyEffect()
         {
-            Debug.Log("Activated " + GetType().Name);
             _currentGoldAmount = _player.Gold;
             _player.Gold = CalculateNewGold();
         }
