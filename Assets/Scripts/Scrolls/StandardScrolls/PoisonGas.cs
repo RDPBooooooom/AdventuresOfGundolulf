@@ -5,9 +5,7 @@ using Managers;
 using System.Collections;
 using Levels.Rooms;
 using LivingEntities;
-using Microsoft.Unity.VisualStudio.Editor;
 using UI;
-using UnityEngine.Assertions.Must;
 using Image = UnityEngine.UI.Image;
 
 namespace Scrolls.StandardScrolls
