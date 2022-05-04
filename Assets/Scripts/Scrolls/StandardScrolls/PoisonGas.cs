@@ -5,6 +5,10 @@ using Managers;
 using System.Collections;
 using Levels.Rooms;
 using LivingEntities;
+using Microsoft.Unity.VisualStudio.Editor;
+using UI;
+using UnityEngine.Assertions.Must;
+using Image = UnityEngine.UI.Image;
 
 namespace Scrolls.StandardScrolls
 {
@@ -14,6 +18,9 @@ namespace Scrolls.StandardScrolls
 
         private Player _player;
         private CombatRoom _combatRoom;
+        private InGameUI _inGameUI;
+        private Image _image;
+        
         private float _duration = 15;
 
         #endregion
@@ -33,7 +40,11 @@ namespace Scrolls.StandardScrolls
             Debug.Log("Activated " + GetType().Name);
             _player = GameManager.Instance.Player;
             _combatRoom = (CombatRoom)GameManager.Instance.LevelManager.CurrentRoom;
-
+            
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
+            _image = _inGameUI.IngamePanel.GetComponent<Image>();
+            _image.enabled = true;
+            
             MonoBehaviourDummy.Dummy.StartCoroutine(EffectTick());
         }
 
@@ -45,6 +56,7 @@ namespace Scrolls.StandardScrolls
                 if (_combatRoom.Cleared)
                 {
                     MonoBehaviourDummy.Dummy.StopCoroutine(EffectTick());
+                    _image.enabled = false;
                     break;
                 }
 

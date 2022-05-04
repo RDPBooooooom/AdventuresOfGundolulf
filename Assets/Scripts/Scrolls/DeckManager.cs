@@ -61,7 +61,7 @@ namespace Scrolls
             
 
             _standardDeck.InitDeck();
-            _standardDeck.Shuffle();
+            //_standardDeck.Shuffle();
             //_bossDeck.AddScroll();
 
             _standardDeck.Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollCast);
