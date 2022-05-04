@@ -39,7 +39,7 @@ namespace Items.Stats
             base.Equip(equipOn);
 
             _oldHealth = equipOn.MaxHealth;
-            equipOn.MaxHealth /= 2;
+            equipOn.MaxHealth /= 1.25f;
 
 
             if (equipOn.Health > equipOn.MaxHealth)

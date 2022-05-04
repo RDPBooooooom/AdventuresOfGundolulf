@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 150
   _health: 150
-  _attack: 25
+  _attack: 10
   _intelligence: 0
   _range: 0
   _haste: 50
