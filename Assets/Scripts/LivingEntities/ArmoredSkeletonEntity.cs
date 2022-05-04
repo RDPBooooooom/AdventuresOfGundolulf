@@ -23,6 +23,10 @@ namespace LivingEntities
         [SerializeField] private float _blockSwitchTickRate = 1;
         [SerializeField] private float _blockSwitchChance = 0.35f;
 
+        private SkinnedMeshRenderer _material;
+        private Material _normalMaterial;
+        private Material _invincibleMaterial;
+
         private StateMachine<ArmoredSkeletonEntity> _stateMachine;
 
         private StateArmoredSkeletonChase _chaseState;
@@ -62,6 +66,10 @@ namespace LivingEntities
 
             Player player = GameManager.Instance.Player;
 
+            _invincibleMaterial = Resources.Load<Material>("Material/Invincible");
+            _material = transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+            _normalMaterial = _material.material;
+
             _chaseState = new StateArmoredSkeletonChase(this, player);
             _deathState = new StateArmoredSkeletonDeath(this);
             _attackState = new StateArmoredSkeletonAttack(this);
@@ -97,11 +105,20 @@ namespace LivingEntities
             _blockState.InitState(_stateMachine);
 
             _stateMachine.StartStateMachine();
+            this.OnUpdateInvincibilityEvent += UpdateInvincibilityStatus;
         }
 
         protected void Update()
         {
             _stateMachine.OnUpdate();
+        }
+
+        void UpdateInvincibilityStatus()
+        {
+            if (Invincible)
+                _material.material = _invincibleMaterial;
+            else
+                _material.material = _normalMaterial;
         }
     }
 }

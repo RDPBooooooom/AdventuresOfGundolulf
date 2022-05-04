@@ -123,7 +123,6 @@ namespace PlayerScripts
             _melee = new Melee(this);
             _spellCast = new SpellCast(this);
             ActiveItem = null;
-
             _groundLayer = LayerMask.GetMask("Floor");
 
             SubscribeToEvents();
@@ -396,15 +395,6 @@ namespace PlayerScripts
 
         #endregion
 
-        #region Override Methods
-
-        public override void HealEntity(float amount)
-        {
-            base.HealEntity(amount);
-        }
-
-        #endregion
-
         #region Regeneration
         void RegainHealth(Room room)
         {
@@ -422,7 +412,7 @@ namespace PlayerScripts
         {
             if (entering is StartRoom || entering is TreasureRoom)
             {
-                _regeneration = StartCoroutine(Regenerate(0.75f));
+                _regeneration = StartCoroutine(Regenerate(1.75f));
                 entering.LeaveRoom += StopRegeneration;
             }
             else if (entering is ShopRoom)

@@ -26,7 +26,7 @@ namespace Scrolls
 
         #region Constructor
 
-        public Scroll()
+        protected Scroll()
         {
             string name = GetType().Name;
 
