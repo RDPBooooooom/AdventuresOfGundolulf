@@ -22,13 +22,11 @@ namespace Abilities
             _owner.Invincible = true;
             _blockTime.Start();
             OnAbilityFinshed();
-            Debug.Log("Blocking");
         }
 
         private void UndoEffect()
         {
             _owner.Invincible = false;
-            Debug.Log("Finshed Blocking");
         }
     }
 }
