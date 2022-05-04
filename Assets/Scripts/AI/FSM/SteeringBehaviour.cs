@@ -89,13 +89,6 @@ namespace AI.FSM
                 Vector3 direction = (targetPos - _owner.transform.position).normalized;
             
                 targetPos -= direction * 1f;
-            
-                // When Point is behind dont move
-                if (Vector3.Dot(direction, _owner.transform.forward) < 0)
-                {
-                    _owner.ResetVelocity();
-                    return Vector3.zero;
-                }
             }
             
             Vector3 desiredVelocity =
