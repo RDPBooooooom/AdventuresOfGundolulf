@@ -111,7 +111,6 @@ namespace PlayerScripts
         public event StatUpdateHandler OnUpdateActiveItemEvent;
 
         #endregion
-        
 
         #region Unity Methods
 
