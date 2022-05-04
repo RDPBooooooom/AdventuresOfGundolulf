@@ -57,9 +57,7 @@ namespace Scrolls
             _standardDeck.AddScroll(new TopUpPerspective());
             _standardDeck.AddScroll(new Spinning());
             _standardDeck.AddScroll(new TeleporterMalfunction());
-
             
-
             _standardDeck.InitDeck();
             _standardDeck.Shuffle();
             //_bossDeck.AddScroll();
@@ -74,7 +72,7 @@ namespace Scrolls
             _castScrollUI.DrawnScrolls = _standardDeck.Draw(3).Cast<Scroll>().ToList();
 
             Time.timeScale = 0;
-            GameManager.Instance.Player.Input.Disable();
+            GameManager.Instance.Player.Input.Ingame.Teleport.Disable();
             GameManager.Instance.UIManager.DisablePausePanel = true;
             _castScrollUI.gameObject.SetActive(true);
         }
@@ -85,8 +83,8 @@ namespace Scrolls
 
         private void OnScrollCast(Scroll scroll)
         {
-            GameManager.Instance.Player.Input.Enable();
             Time.timeScale = 1;
+            GameManager.Instance.Player.Input.Ingame.Teleport.Enable();
             GameManager.Instance.UIManager.DisablePausePanel = false;
         }
         

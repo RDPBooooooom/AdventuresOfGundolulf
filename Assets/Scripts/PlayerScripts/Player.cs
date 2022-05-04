@@ -124,7 +124,6 @@ namespace PlayerScripts
             _melee = new Melee(this);
             _spellCast = new SpellCast(this);
             ActiveItem = null;
-
             _groundLayer = LayerMask.GetMask("Floor");
 
             SubscribeToEvents();
@@ -393,15 +392,6 @@ namespace PlayerScripts
                 GameManager.Instance.LevelManager.OnChangeRoomEvent += RegainHealth;
                 GameManager.Instance.LevelManager.OnChangeRoomEvent += Regenerate;
             }
-        }
-
-        #endregion
-
-        #region Override Methods
-
-        public override void HealEntity(float amount)
-        {
-            base.HealEntity(amount);
         }
 
         #endregion
