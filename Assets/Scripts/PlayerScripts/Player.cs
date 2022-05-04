@@ -40,6 +40,8 @@ namespace PlayerScripts
 
         private InGameUI _inGameUI;
 
+        private Coroutine _regeneration;
+
         #endregion
 
         #region Properties
@@ -417,18 +419,30 @@ namespace PlayerScripts
         void Regenerate(Room entering)
         {
             if (entering is StartRoom || entering is TreasureRoom)
-                StartCoroutine(Regenerate(0.75f));
+            {
+                _regeneration = StartCoroutine(Regenerate(0.75f));
+                entering.LeaveRoom += StopRegeneration;
+            }
             else if (entering is ShopRoom)
-                StartCoroutine(Regenerate(0.25f));
-            else
-                StopAllCoroutines();
+            {
+                _regeneration = StartCoroutine(Regenerate(0.25f));
+                entering.LeaveRoom += StopRegeneration;
+            }
         }
 
         IEnumerator Regenerate(float value)
         {
-            yield return new WaitForSeconds(1);
-            HealEntity(value);
-            StartCoroutine(Regenerate(value));
+            while (true)
+            {
+                yield return new WaitForSeconds(1);
+                HealEntity(value);
+            }
+        }
+
+        void StopRegeneration(Room leaving, Room leavingTo)
+        {
+            StopCoroutine(_regeneration);
+            leaving.LeaveRoom -= StopRegeneration;
         }
 
         #endregion
