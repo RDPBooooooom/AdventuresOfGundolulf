@@ -37,7 +37,7 @@ namespace Abilities
 
         public Teleport(LivingEntity owner, LivingEntity targetEntity) : base(owner)
         {
-            Cooldown = 2f;
+            Cooldown = 1.75f;//2f;
             _targetEntity = targetEntity;
         }
 

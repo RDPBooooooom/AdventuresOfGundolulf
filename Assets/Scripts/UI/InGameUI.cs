@@ -1,5 +1,6 @@
 using Managers;
 using PlayerScripts;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -33,6 +34,7 @@ namespace UI
         private SkinnedMeshRenderer _playerMaterial;
         private Material _normalMaterial;
         private Material _invincibleMaterial;
+        private Transform _healthbarParent;
 
         #endregion
 
@@ -64,8 +66,10 @@ namespace UI
             _invincibleMaterial = Resources.Load<Material>("Material/Invincible");
             _playerMaterial = _player.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
             _normalMaterial = _playerMaterial.material;
+            _healthbarParent = _healthDisplayBar.transform.parent;
             
             _player.OnUpdateHealthEvent += UpdateHealthbar;
+            _player.OnUpdateMaxHealthEvent += UpdateHealthbarSizeandPosition;
             _player.OnUpdateAttackEvent += UpdateAttackDisplay;
             _player.OnUpdateIntelligenceEvent += UpdateIntelligenceDisplay;
             _player.OnUpdateRangeEvent += UpdateRangeDisplay;
@@ -85,6 +89,7 @@ namespace UI
             UpdateActiveItem();
             audioSlider.onValueChanged.AddListener(GameManager.Instance.AudioManager.SetSoundsValue);
         }
+
 
         #endregion
 
@@ -129,7 +134,12 @@ namespace UI
         #region UpdateDisplays
         public void UpdateHealthbar()
         {
-            _healthDisplayBar.fillAmount = _player.Health / 100;
+            _healthDisplayBar.fillAmount = _player.Health / _player.MaxHealth; //100
+        }
+        private void UpdateHealthbarSizeandPosition()
+        {
+
+            _healthbarParent.localScale = new Vector3(_player.MaxHealth / 250, 0.4f,1);
         }
 
         public void UpdateGold()
