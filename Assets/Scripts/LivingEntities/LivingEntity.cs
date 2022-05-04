@@ -39,6 +39,8 @@ namespace LivingEntities
         protected SteeringBehaviour _steeringBehaviour;
 
         protected Animator _animator;
+        protected InGameUI _inGameUI;
+        protected Rigidbody _rigidbody;
         protected Immunities _immunity;
         private bool _stopActions;
         
@@ -244,12 +246,14 @@ namespace LivingEntities
             
             EquippedItems = new List<Item>();
             _animator = GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         protected virtual void Start()
         {
             _steeringBehaviour = new SteeringBehaviour(this);
-            
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
+
             Velocity = Vector3.zero;
             MaxForce = Speed * GameConstants.SpeedMultiplier;
             MaxTurnRate = 10f;
@@ -315,8 +319,8 @@ namespace LivingEntities
         {
             if (this is Player)
             {
-                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().IngamePanel.SetActive(false);
-                GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>().DeathPanel.SetActive(true);
+                _inGameUI.IngamePanel.SetActive(false);
+                _inGameUI.DeathPanel.SetActive(true);
 
                 Time.timeScale = 0;
             }

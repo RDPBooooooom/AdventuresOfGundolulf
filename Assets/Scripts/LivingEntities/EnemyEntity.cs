@@ -88,6 +88,7 @@ namespace LivingEntities
         public override void MoveEntity()
         {
             transform.Translate(Velocity * Time.deltaTime, Space.World);
+            //_rigidbody.AddForce(Velocity, ForceMode.VelocityChange);
             transform.rotation = Quaternion.LookRotation(Velocity, Vector3.up);
         }
 

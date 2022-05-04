@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LivingEntities;
 using Managers;
+using PlayerScripts;
 using UI;
 using UnityEngine;
 
@@ -14,6 +15,9 @@ namespace Levels.Rooms
 
         private List<LivingEntity> _enemiesPrefabs;
         private List<LivingEntity> _enemies;
+
+        private InGameUI _inGameUI;
+        private Player _player;
 
         #endregion
 
@@ -43,6 +47,13 @@ namespace Levels.Rooms
 
             IsLeavable = true;
             OnRoomCleared();
+
+            // Has to be adjusted if more than one level
+            _inGameUI.IngamePanel.SetActive(false);
+            _inGameUI.WinPanel.SetActive(true);
+            _player.Input.Ingame.Disable();
+
+            Time.timeScale = 0;
         }
 
         public override void Enter()
@@ -59,6 +70,9 @@ namespace Levels.Rooms
                 activeEnemy.OnDeathEvent += CheckCleared;
                 _enemies.Add(activeEnemy);
             }
+
+            _inGameUI = GameManager.Instance.UIManager.MainCanvas.GetComponent<InGameUI>();
+            _player = GameManager.Instance.Player;
         }
 
         private void LoadEnemies()

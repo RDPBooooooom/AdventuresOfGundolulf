@@ -1352,7 +1352,6 @@ MonoBehaviour:
   _obstacleAvoidanceMask:
     serializedVersion: 2
     m_Bits: 0
-  _coin: {fileID: 0}
 --- !u!136 &-3250475359678932304
 CapsuleCollider:
   m_ObjectHideFlags: 0

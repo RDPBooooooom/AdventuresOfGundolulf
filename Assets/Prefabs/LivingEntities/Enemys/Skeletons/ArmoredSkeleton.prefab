@@ -88,8 +88,9 @@ MonoBehaviour:
   _obstacleAvoidanceMask:
     serializedVersion: 2
     m_Bits: 0
-  _coin: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
-  _blockTime: 2
+  _blockDuration: 2
+  _blockSwitchTickRate: 1
+  _blockSwitchChance: 0.35
 --- !u!136 &5528871956057250370
 CapsuleCollider:
   m_ObjectHideFlags: 0

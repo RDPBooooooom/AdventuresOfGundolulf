@@ -1168,7 +1168,6 @@ MonoBehaviour:
   _obstacleAvoidanceMask:
     serializedVersion: 2
     m_Bits: 16384
-  _coin: {fileID: 1289676585866230031, guid: 92b5f7058ae34814892f496050344e74, type: 3}
 --- !u!136 &8283289484755687195
 CapsuleCollider:
   m_ObjectHideFlags: 0

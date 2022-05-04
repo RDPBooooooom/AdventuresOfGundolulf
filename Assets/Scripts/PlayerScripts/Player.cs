@@ -33,12 +33,9 @@ namespace PlayerScripts
         [SerializeField] private float _interactRange;
 
         private bool _stopMovement = false;
-        
         private bool _pacifist = false;
         private bool _weeny = false;
         private bool _notWeeny = false;
-
-        private InGameUI _inGameUI;
 
         private Coroutine _regeneration;
 
@@ -310,7 +307,9 @@ namespace PlayerScripts
 
         public override void MoveEntity()
         {
-            transform.Translate(Velocity * Time.deltaTime, Space.World);
+            //transform.Translate(Velocity * Time.deltaTime, Space.World);
+            _rigidbody.AddForce(Velocity, ForceMode.VelocityChange);
+            
         }
 
         private void LookDirection()
