@@ -41,6 +41,8 @@ namespace LivingEntities
         protected Animator _animator;
         protected Immunities _immunity;
         private bool _stopActions;
+        
+        private bool _invincible = false;
 
         #endregion
 
@@ -180,6 +182,16 @@ namespace LivingEntities
             get => _stopActions;
             set => _stopActions = value;
         }
+        
+        public bool Invincible
+        {
+            get => _invincible;
+            set
+            {
+                _invincible = value;
+                OnUpdateInvincibilityEvent?.Invoke();
+            }
+        }
 
         private List<Item> EquippedItems {  get; set; }
         public LivingEntity Target { get; set; }
@@ -217,6 +229,7 @@ namespace LivingEntities
         public event StatUpdateHandler OnUpdateHasteEvent;
         public event StatUpdateHandler OnUpdateSpeedEvent;
         public event OnDeathEventHandler OnDeathEvent;
+        public event InvincibilityHandler OnUpdateInvincibilityEvent;
 
         #endregion
 
@@ -261,6 +274,8 @@ namespace LivingEntities
 
         public virtual void DamageEntity(float amount)
         {
+            if (_invincible) return;
+            
             _animator.SetTrigger(AnimatorStrings.GetHitString);
 
             Health -= amount;

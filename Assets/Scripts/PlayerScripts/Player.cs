@@ -1,4 +1,5 @@
-﻿using Assets.Scripts;
+﻿using Abilities;
+using Assets.Scripts;
 using Assets.Scripts.Interfaces;
 using Items.Active;
 using LivingEntities;
@@ -30,7 +31,7 @@ namespace PlayerScripts
         [SerializeField] private float _interactRange;
 
         private bool _stopMovement = false;
-        private bool _invincible = false;
+        
         private bool _pacifist = false;
         private bool _weeny = false;
         private bool _notWeeny = false;
@@ -75,16 +76,6 @@ namespace PlayerScripts
             set => _input = value;
         }
 
-        public bool Invincible
-        {
-            get => _invincible;
-            set
-            {
-                _invincible = value;
-                OnUpdateInvincibilityEvent?.Invoke();
-            }
-        }
-
         public bool Pacifist
         {
             set => _pacifist = value;
@@ -117,7 +108,6 @@ namespace PlayerScripts
 
         public event StatUpdateHandler OnUpdateGoldEvent;
         public event StatUpdateHandler OnUpdateActiveItemEvent;
-        public event InvincibilityHandler OnUpdateInvincibilityEvent;
 
         #endregion
         
@@ -408,14 +398,6 @@ namespace PlayerScripts
         public override void HealEntity(float amount)
         {
             base.HealEntity(amount);
-        }
-
-        public override void DamageEntity(float amount)
-        {
-            if(!_invincible)
-            {
-                base.DamageEntity(amount);
-            }
         }
 
         #endregion

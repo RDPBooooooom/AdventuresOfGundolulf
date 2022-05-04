@@ -1,7 +1,7 @@
 using LivingEntities;
 using UnityEngine;
 
-namespace Abilites
+namespace Abilities
 {
     public class Projectile : MonoBehaviour
     {

@@ -1,4 +1,6 @@
-﻿namespace Interfaces
+﻿using Abilities;
+
+namespace Interfaces
 {
     public interface ITeleporter
     {

@@ -3,7 +3,7 @@ using Effects;
 using LivingEntities;
 using Utils;
 
-namespace Abilites
+namespace Abilities
 {
     public abstract class Ability
     {

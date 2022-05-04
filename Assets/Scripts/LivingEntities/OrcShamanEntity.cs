@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Abilities;
 using AI.FSM;
 using AI.FSM.Connections;
 using AI.FSM.EnemyStates.OrcShaman;
+using Effects;
 using Interfaces;
 using Managers;
 using PlayerScripts;
@@ -23,17 +25,26 @@ namespace LivingEntities
         private StateConnectionEntityInMeleeRange<OrcShamanEntity> _connectionEntityInMeleeRange;
         private StateAttackConnectionOnFinish<OrcShamanEntity> _connectionOnAttackFinish;
         private StateAttackConnectionOnFinish<OrcShamanEntity> _connectionOnSpellFinish;
-        private StateConnectionEntityInSpellcastRangeAndReady<OrcShamanEntity> _connectionEntitySpellcast;
-        
+
+        private CombinedConnection<OrcShamanEntity> _connectionReadyAndInSpellRange;
+        private StateConnectionAbilityReady<OrcShamanEntity> _connectionSpellcastReady;
+        private StateConnectionEntityInSpellcastRange<OrcShamanEntity> _connectionEntitySpellcast;
+
         public Melee Melee { get; protected set; }
         public SpellCast SpellCast { get; protected set; }
-        
+
+        [Header("Poisen Effect on Spell")] [SerializeField]
+        private float _poisenChance = 0.35f;
+
+        [SerializeField] private float _poisenDuration = 2;
+
         protected override void Awake()
         {
             base.Awake();
-            
+
             Melee = new Melee(this);
             SpellCast = new SpellCast(this);
+            SpellCast.AddEffect(new Poison(_poisenChance, _poisenDuration));
         }
 
         protected override void Start()
@@ -41,7 +52,7 @@ namespace LivingEntities
             base.Start();
 
             _steeringBehaviour.SeekOn();
-            
+
             Player player = GameManager.Instance.Player;
 
             _chaseState = new StateOrcShamanChase(this, player);
@@ -58,14 +69,18 @@ namespace LivingEntities
 
             _connectionOnAttackFinish = new StateAttackConnectionOnFinish<OrcShamanEntity>(_chaseState, _attackState);
             _attackState.AddConnection(_connectionOnAttackFinish);
-            
+
             _connectionOnSpellFinish = new StateAttackConnectionOnFinish<OrcShamanEntity>(_chaseState, _spellCastState);
             _spellCastState.AddConnection(_connectionOnSpellFinish);
 
             _connectionEntitySpellcast =
-                new StateConnectionEntityInSpellcastRangeAndReady<OrcShamanEntity>(_spellCastState, this, player.transform,
-                    SpellCast);
-            _chaseState.AddConnection(_connectionEntitySpellcast);
+                new StateConnectionEntityInSpellcastRange<OrcShamanEntity>(_spellCastState, this, player.transform);
+            _connectionSpellcastReady = new StateConnectionAbilityReady<OrcShamanEntity>(_spellCastState, SpellCast);
+
+            _connectionReadyAndInSpellRange = new CombinedConnection<OrcShamanEntity>(_spellCastState);
+            _connectionReadyAndInSpellRange.AddConnection(_connectionEntitySpellcast);
+            _connectionReadyAndInSpellRange.AddConnection(_connectionSpellcastReady);
+            _chaseState.AddConnection(_connectionReadyAndInSpellRange);
 
             _stateMachine = new StateMachine<OrcShamanEntity>(this, _chaseState);
 
@@ -76,7 +91,7 @@ namespace LivingEntities
 
             _stateMachine.StartStateMachine();
         }
-        
+
         protected void Update()
         {
             _stateMachine.OnUpdate();
