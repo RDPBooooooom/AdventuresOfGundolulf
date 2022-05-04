@@ -1,5 +1,6 @@
 ﻿using System;
 using LivingEntities;
+using PlayerScripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -83,10 +84,17 @@ namespace AI.FSM
 
         private Vector3 Seek(Vector3 targetPos)
         {
+            if (!(_owner is Player))
+            {
+                Vector3 direction = (targetPos - _owner.transform.position).normalized;
+            
+                targetPos -= direction * 1f;
+            }
+            
             Vector3 desiredVelocity =
                 (targetPos - _owner.transform.position).normalized *
                 _owner.MaxSpeed; // normalisierter vektor a = a / a.magnitude
-
+            
             return desiredVelocity - _owner.Velocity;
         }
 

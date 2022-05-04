@@ -387,8 +387,12 @@ namespace PlayerScripts
             _input.Ingame.Teleport.performed += PerformTeleport;
             _input.Ingame.Interact.performed += PerformInteract;
             _input.Ingame.ActiveItem.performed += PerformActiveItem;
-            GameManager.Instance.LevelManager.OnChangeRoomEvent += RegainHealth;
-            GameManager.Instance.LevelManager.OnChangeRoomEvent += Regenerate;
+
+            if (GameManager.Instance.LevelManager != null)
+            {
+                GameManager.Instance.LevelManager.OnChangeRoomEvent += RegainHealth;
+                GameManager.Instance.LevelManager.OnChangeRoomEvent += Regenerate;
+            }
         }
 
         #endregion
