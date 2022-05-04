@@ -28,8 +28,6 @@ namespace Items.Stats
             _oldSpeed = _player.Speed;
             equipOn.MaxHealth += 50;
             equipOn.HealEntity(50);
-
-            //equipOn.Speed = 0;
             equipOn.Speed = 5f;
         }
 
