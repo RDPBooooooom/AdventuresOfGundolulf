@@ -21,6 +21,8 @@ namespace Managers
         {
             GetAudioClips();
             audioSources = new List<AudioSource> { attackSword, attackMagic, teleport, door, ouch, ouchOrc };
+            SetSoundsValue(Utils.SharedValues.Volume);
+            GameManager.Instance.UIManager.MainCanvas.GetComponent<UI.InGameUI>().audioSlider.value = Utils.SharedValues.Volume;
         }
 
         void GetAudioClips()
@@ -37,6 +39,7 @@ namespace Managers
         {
             foreach (AudioSource audio in audioSources)
                 audio.volume = volume;
+            Utils.SharedValues.SetVolume(volume);
         }
 
         #region Playing clips
