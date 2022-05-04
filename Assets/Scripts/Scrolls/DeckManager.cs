@@ -59,7 +59,7 @@ namespace Scrolls
             _standardDeck.AddScroll(new TeleporterMalfunction());
             
             _standardDeck.InitDeck();
-            //_standardDeck.Shuffle();
+            _standardDeck.Shuffle();
             //_bossDeck.AddScroll();
 
             _standardDeck.Scrolls.ForEach(scroll => scroll.ActivateEvent += OnScrollCast);
