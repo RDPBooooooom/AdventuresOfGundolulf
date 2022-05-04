@@ -196,7 +196,6 @@ namespace UI
 
         private void PerformPauseIngame(InputAction.CallbackContext context)
         {
-            Debug.Log("Pause Input performed");
             PauseUnPause();
         }
 

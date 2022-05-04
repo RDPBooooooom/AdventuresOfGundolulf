@@ -20,6 +20,8 @@ namespace Scrolls.StandardScrolls
         private CombatRoom _combatRoom;
         private InGameUI _inGameUI;
         private Image _image;
+
+        private Coroutine _effect;
         
         private float _duration = 15;
 
@@ -45,7 +47,7 @@ namespace Scrolls.StandardScrolls
             _image = _inGameUI.IngamePanel.GetComponent<Image>();
             _image.enabled = true;
             
-            MonoBehaviourDummy.Dummy.StartCoroutine(EffectTick());
+            _effect = MonoBehaviourDummy.Dummy.StartCoroutine(EffectTick());
         }
 
         protected IEnumerator EffectTick()
@@ -55,7 +57,7 @@ namespace Scrolls.StandardScrolls
             {
                 if (_combatRoom.Cleared)
                 {
-                    MonoBehaviourDummy.Dummy.StopCoroutine(EffectTick());
+                    MonoBehaviourDummy.Dummy.StopCoroutine(_effect);
                     _image.enabled = false;
                     break;
                 }

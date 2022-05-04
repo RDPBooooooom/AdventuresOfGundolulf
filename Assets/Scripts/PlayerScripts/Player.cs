@@ -405,7 +405,6 @@ namespace PlayerScripts
         void CombatRecovery()
         {
             HealEntity(10);
-            Debug.Log("Recovering");
         }
 
         void Regenerate(Room entering)

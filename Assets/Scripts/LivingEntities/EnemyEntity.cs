@@ -28,7 +28,6 @@ namespace LivingEntities
 
         protected virtual void Drop()
         {
-            Debug.Log("Dropping");
             int amount = 1;//=0
             Random random = new Random();
             int chance = random.Next(1, 100);

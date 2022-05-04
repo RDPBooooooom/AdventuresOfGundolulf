@@ -19,11 +19,6 @@ namespace Managers
 
         public List<LivingEntity> GetRandomEnemies()
         {
-            foreach (LivingEntity livingEntity in _enemies)
-            {
-                Debug.Log(livingEntity);
-            }
-            
             return ListUtils.GetRandomElements(_enemies, 1);
         }
         
